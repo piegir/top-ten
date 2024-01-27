@@ -10,17 +10,17 @@ class Round:
         self.complete: bool = False
         self.theme: Theme = self.get_theme()
         self.propositions: list[str] = []
-        self.player_number: dict = {}
+        self.player_numbers: dict = {}
         self.assign_numbers(players)
 
         print(self.theme)
-        self.show_player_number()
+        self.show_player_numbers()
 
     def get_theme(self) -> Theme:
         return Theme()
 
-    def show_player_number(self):
-        for player, number in self.player_number.items():
+    def show_player_numbers(self):
+        for player, number in self.player_numbers.items():
             print(f"{player}: {number}")
 
     def assign_numbers(self, players: list[Player]):
@@ -31,4 +31,4 @@ class Round:
         """
         for nb, player in zip(random.sample(range(1, 11), len(players)),
                               players):
-            self.player_number[player]: int = nb
+            self.player_numbers[player]: int = nb
