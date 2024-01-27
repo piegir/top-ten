@@ -10,4 +10,4 @@ class Player:
         self.name: str = name
 
     def __str__(self):
-        return "Player %s: %s" % (self.id, self.name)
+        return "%s (#%s)" % (self.name, self.id)

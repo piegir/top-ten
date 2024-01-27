@@ -14,3 +14,8 @@ class Game:
     def get_players(self):
         for player in self.players:
             print(player)
+
+    def new_round(self):
+        current_round: Round = Round()
+        self.rounds.append(current_round)
+        current_round.play(self.players)
