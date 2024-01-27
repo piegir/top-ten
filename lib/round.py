@@ -1,12 +1,13 @@
 import itertools
+from typing import Iterator
 
 
 class Round:
-    id_round = itertools.count()
+    id_round: Iterator[int] = itertools.count(1)
 
     def __init__(self):
-        self.id = next(Round.id_round)
-        self.complete = False
-        self.theme = ""
-        self.propositions = []
-        self.player_card = {}
+        self.id: int = next(Round.id_round)
+        self.complete: bool = False
+        self.theme: str = ""
+        self.propositions: list[str] = []
+        self.player_card: dict = {}
