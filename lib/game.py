@@ -11,11 +11,10 @@ class Game:
         self.rounds_lost: int = 0
         self.complete: bool = False
 
-    def get_players(self):
+    def print_players(self):
         for player in self.players:
             print(player)
 
     def new_round(self):
-        current_round: Round = Round()
+        current_round: Round = Round(self.players)
         self.rounds.append(current_round)
-        current_round.play(self.players)
