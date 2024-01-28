@@ -11,7 +11,7 @@ class Round:
         self.players_list: list[Player] = players_list
         self.playing_player_index: int = 0
         self.card: list[Theme] = self.pick_random_card(nb_themes_per_card)
-        self.theme: Theme = Theme()
+        self.theme: Theme | None = None
         self.player_numbers: list[int] = self.assign_numbers()
         self.player_propositions: list[PlayerProposition] = []
         self.order_hypothesis: list[PlayerProposition] = []
