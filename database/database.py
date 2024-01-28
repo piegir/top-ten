@@ -23,12 +23,26 @@ class DataBase:
         else:
             possible_themes = self.themes
         selected_themes = possible_themes.sample(n).sort_index()
-        themes = []
-        for i in range(len(selected_themes)):
-            index = selected_themes.iloc[i].name
-            title = selected_themes.iloc[i].title
-            top1 = selected_themes.iloc[i].top1
-            top10 = selected_themes.iloc[i].top10
-            themes.append(
-                Theme(index=index, title=title, top1=top1, top10=top10))
+
+        themes = [
+            Theme(index=selected_themes.iloc[i].name,
+                  title=selected_themes.iloc[i].title,
+                  top1=selected_themes.iloc[i].top1,
+                  top10=selected_themes.iloc[i].top10)
+            for i in range(len(selected_themes))
+        ]
         return themes
+
+    def pick_random_card(self, nb_themes_per_card: int,
+                         played_themes: list[Theme]) -> list[Theme]:
+        """
+        Called by the playing player, sets the card to list of nb_themes themes
+        :param nb_themes_per_card: number of themes on the card
+        :param played_themes: themes already played
+        :return: the list of random themes
+        """
+        played_indices = [theme.index for theme in played_themes]
+        return self.get_n_themes(nb_themes_per_card, played_indices)
+
+
+database = DataBase()

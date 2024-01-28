@@ -34,7 +34,8 @@ class Game:
             Player] = self.players_list[self.starting_player:len(
                 self.players_list)] + self.players_list[0:self.starting_player]
         current_round: Round = Round(shifted_players_list,
-                                     self.nb_themes_per_card)
+                                     self.nb_themes_per_card,
+                                     self.played_themes)
         self.rounds.append(current_round)
 
     def is_round_in_progress(self) -> bool:
@@ -42,7 +43,9 @@ class Game:
         Checks if a round is in progress
         :return: True if a round is in progress, False if the last round is complete
         """
-        return not self.rounds[-1].round_complete
+        if len(self.rounds) == 0:
+            return False
+        return not self.rounds[-1].complete
 
     def is_game_complete(self) -> bool:
         """
@@ -50,4 +53,4 @@ class Game:
         :return: True if there has been max_nb_rounds played and the last one is complete
         """
         return (len(self.rounds)
-                == self.max_nb_rounds) and self.rounds[-1].round_complete
+                == self.max_nb_rounds) and self.rounds[-1].complete

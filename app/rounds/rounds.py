@@ -86,5 +86,8 @@ def check_round_result() -> bool:
 
     :return: True if round was won, False otherwise.
     """
-    check_round_valid("check round result")
-    return current_game.rounds[-1].success
+    if current_game is None:
+        raise HTTPException(
+            status_code=400,
+            detail="Couldn't check round result, game wasn't started.")
+    return current_game.rounds[-1].complete and current_game.rounds[-1].success
