@@ -1,34 +1,54 @@
-import random
-
 from lib.player import Player
 from lib.theme import Theme
+from lib.player_proposition import PlayerProposition
 
 
 class Round:
 
-    def __init__(self, players):
-        self.complete: bool = False
-        self.theme: Theme = self.get_theme()
-        self.propositions: list[str] = []
-        self.player_numbers: dict = {}
-        self.assign_numbers(players)
+    def __init__(self, players_list: list[Player]):
+        self.players_list: list[Player] = players_list
+        self.playing_player_index: int = 0
+        self.card: list[Theme] = []
+        self.theme: Theme = Theme()
+        self.player_numbers: list[int] = []
+        self.player_propositions: list[PlayerProposition] = []
+        self.order_hypothesis: list[PlayerProposition] = []
+        self.round_complete: bool = False
+        self.success: bool = False
 
-        print(self.theme)
-        self.show_player_numbers()
-
-    def get_theme(self) -> Theme:
-        return Theme()
-
-    def show_player_numbers(self):
-        for player, number in self.player_numbers.items():
-            print(f"{player}: {number}")
-
-    def assign_numbers(self, players: list[Player]):
+    def get_random_card(self, nb_themes: int):
         """
-        Assign a number to each player
-        :param players:
+        Called by the playing player, sets the card to list of nb_themes themes
+        :param nb_themes: number of themes on the card
+        """
+        self.card = []
+
+    def set_theme(self, theme_index: int):
+        """
+        Called by the playing player, sets the theme to their choice
+        :param theme_index: the index of the theme in the card
+        """
+        self.theme = Theme()
+
+    def assign_numbers(self):
+        """
+        Assigns a different random number between 1 and 10 to each player
+        """
+        self.player_numbers = []
+
+    def set_player_proposition(self, proposition: str, player: Player):
+        """
+        Sets the proposition for a player
+        :param proposition: The proposition of the player
+        :param player: The player setting the proposition
         :return:
         """
-        for nb, player in zip(random.sample(range(1, 11), len(players)),
-                              players):
-            self.player_numbers[player]: int = nb
+        self.player_propositions.append(PlayerProposition())
+
+    def make_hypothesis(self, hypothesis: list[PlayerProposition]) -> bool:
+        """
+        Sets order_hypothesis and checks its correctness
+        :param hypothesis: The order hypothesis
+        :return: isHypothesisCorrect
+        """
+        return False
