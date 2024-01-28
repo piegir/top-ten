@@ -16,7 +16,7 @@ class Game:
         self.played_themes: list[Theme] = []
         self.rounds: list[Round] = []
 
-    def start_new_round(self, nb_themes_per_card: int):
+    def start_new_round(self):
         """
         Start a new round
         :return:
