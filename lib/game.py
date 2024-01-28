@@ -40,7 +40,7 @@ class Game:
 
     def is_round_in_progress(self) -> bool:
         """
-        Checks if a round is in progress
+        Checks if a round is in progress.
         :return: True if a round is in progress, False if the last round is complete
         """
         if len(self.rounds) == 0:
