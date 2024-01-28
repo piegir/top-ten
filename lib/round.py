@@ -3,6 +3,7 @@ import random
 from lib.player import Player
 from lib.theme import Theme
 from lib.player_proposition import PlayerProposition
+from database.database import DataBase
 
 
 class Round:

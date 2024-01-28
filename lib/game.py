@@ -23,15 +23,19 @@ class Game:
         """
         if self.is_round_in_progress():
             return "A round is already in progress."
+        elif self.is_game_complete():
+            return "The game is already complete."
+        if len(self.rounds) > 0:
+            self.played_themes.append(self.rounds[-1].theme)
+            self.starting_player = (self.starting_player + 1) % len(
+                self.players_list)
+
         shifted_players_list: list[
             Player] = self.players_list[self.starting_player:len(
                 self.players_list)] + self.players_list[0:self.starting_player]
         current_round: Round = Round(shifted_players_list,
                                      self.nb_themes_per_card)
         self.rounds.append(current_round)
-        # At the end
-        self.starting_player = (self.starting_player + 1) % len(
-            self.players_list)
 
     def is_round_in_progress(self) -> bool:
         """
