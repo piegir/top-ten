@@ -1,12 +1,8 @@
-import itertools
-
-
 class Player:
-    id_player = itertools.count()
 
-    def __init__(self, name):
-        self.id = next(Player.id_player)
-        self.name = name
+    def __init__(self, name: str, id: int):
+        self.name: str = name
+        self.id: int = id
 
-    def __str__(self):
-        return "Name: %s, ID: %s" % (self.name, self.id)
+    def __str__(self) -> str:
+        return f"{self.name} (#{self.id})"
