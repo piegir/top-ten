@@ -1,8 +1,12 @@
-class Player:
+from pydantic import BaseModel, Field
 
-    def __init__(self, name: str, id: int):
-        self.name: str = name
-        self.id: int = id
+
+class Player(BaseModel):
+    """
+    Container of a player information. Extends `pydantic.BaseModel`.
+    """
+    name: str = Field(description="The player name", example="John Doe")
+    id: int = Field(description="The player id", example=0)
 
     def __str__(self) -> str:
         return f"{self.name} (#{self.id})"
