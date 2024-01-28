@@ -29,5 +29,6 @@ class DataBase:
             title = selected_themes.iloc[i].title
             top1 = selected_themes.iloc[i].top1
             top10 = selected_themes.iloc[i].top10
-            themes.append(Theme(index, title, top1, top10))
+            themes.append(
+                Theme(index=index, title=title, top1=top1, top10=top10))
         return themes
