@@ -25,12 +25,12 @@ class Round:
         """
         return []
 
-    def set_theme(self, theme_index: int):
+    def set_theme(self, theme: Theme):
         """
         Called by the playing player, sets the theme to their choice
-        :param theme_index: the index of the theme in the card
+        :param theme: the desired theme
         """
-        self.theme = self.card[theme_index]
+        self.theme = theme
 
     def assign_numbers(self):
         """
