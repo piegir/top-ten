@@ -68,17 +68,17 @@ class Round:
                 return False
         return True
 
-    def make_hypothesis(self, hypothesis: list[PlayerProposition]) -> bool:
+    def make_hypothesis(self, hypothesis: list[PlayerProposition]):
         """
-        Sets order_hypothesis
+        Make hypothesis on proposition ordering, compare to ground truth, complete the round and set according variables
         :param hypothesis: the order hypothesis
-        :return:
         """
         if not self.all_propositions_made():
-            print("Wait for your friends to make their propositions!")
-            return False
+            return "Wait for your friends to make their propositions!"
         self.order_hypothesis = hypothesis
         sorted_propositions = sorted(self.numbered_player_propositions,
                                      key=lambda x: x.number)
-        return [prop.player_proposition
-                for prop in sorted_propositions] == hypothesis
+        self.success = [
+            prop.player_proposition for prop in sorted_propositions
+        ] == hypothesis
+        self.complete = True
