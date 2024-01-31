@@ -152,8 +152,13 @@ def make_hypothesis(hypothesis_ids: list[int]) -> ActionStatus:
     hypothesis = [
         id_to_prop[hypothesis_id] for hypothesis_id in hypothesis_ids
     ]
-    game.current_game.rounds[-1].make_hypothesis(hypothesis)
-    return ActionStatus(status=True, message=f"Hypothesis was properly made.")
+    try:
+        game.current_game.rounds[-1].make_hypothesis(hypothesis)
+        return ActionStatus(status=True,
+                            message=f"Hypothesis was properly made.")
+    except Exception as error:
+        return ActionStatus(status=False,
+                            message=f"Hypothesis couldn't be made. {error}")
 
 
 @router.get("/check_round_result")

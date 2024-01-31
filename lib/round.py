@@ -75,7 +75,7 @@ class Round:
         :param hypothesis: the order hypothesis
         """
         if not self.all_propositions_made():
-            return "Wait for your friends to make their propositions!"
+            raise RuntimeError("Not all propositions have been made.")
         self.order_hypothesis = hypothesis
         sorted_propositions = sorted(self.numbered_player_propositions,
                                      key=lambda x: x.number)
