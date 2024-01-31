@@ -7,6 +7,9 @@ class Game:
 
     def __init__(self, players_list: list[Player], max_nb_rounds: int,
                  starting_player: int, nb_themes_per_card: int):
+        if len(players_list) > 10 or len(players_list) < 4:
+            raise ValueError(
+                "Nombre de joueurs incorrect. Veuillez être entre 4 et 10.")
         self.players_list: list[Player] = players_list
         self.max_nb_rounds: int = max_nb_rounds
         self.starting_player: int = starting_player
