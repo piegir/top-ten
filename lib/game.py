@@ -5,8 +5,11 @@ from lib.theme import Theme
 
 class Game:
 
-    def __init__(self, players_list: list[Player], max_nb_rounds: int,
-                 starting_player: int, nb_themes_per_card: int):
+    def __init__(self,
+                 players_list: list[Player],
+                 max_nb_rounds: int,
+                 starting_player: int = 0,
+                 nb_themes_per_card: int = 3):
         if len(players_list) > 10 or len(players_list) < 4:
             raise ValueError(
                 "Nombre de joueurs incorrect. Veuillez être entre 4 et 10.")
@@ -14,8 +17,6 @@ class Game:
         self.max_nb_rounds: int = max_nb_rounds
         self.starting_player: int = starting_player
         self.nb_themes_per_card: int = nb_themes_per_card
-        self.nb_rounds_won: int = 0
-        self.nb_rounds_lost: int = 0
         self.played_themes: list[Theme] = []
         self.rounds: list[Round] = []
 
@@ -25,9 +26,11 @@ class Game:
         :return:
         """
         if self.is_round_in_progress():
-            return "A round is already in progress."
-        elif self.is_game_complete():
-            return "The game is already complete."
+            print("A round is already in progress.")
+            return
+        if self.is_game_complete():
+            print("The game is already complete.")
+            return
         if len(self.rounds) > 0:
             self.played_themes.append(self.rounds[-1].theme)
             self.starting_player = (self.starting_player + 1) % len(
@@ -61,4 +64,11 @@ class Game:
     def is_game_won(self):
         if not self.is_game_complete():
             return False
-        return self.nb_rounds_won > self.nb_rounds_lost
+        nb_rounds_won = 0
+        nb_rounds_lost = 0
+        for played_round in self.rounds:
+            if played_round.success:
+                nb_rounds_won += 1
+            else:
+                nb_rounds_lost += 1
+        return nb_rounds_won > nb_rounds_lost
