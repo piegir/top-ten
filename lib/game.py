@@ -45,7 +45,7 @@ class Game:
         """
         if len(self.rounds) == 0:
             return False
-        return not self.rounds[-1].complete
+        return not self.rounds[-1].is_complete()
 
     def is_game_complete(self) -> bool:
         """
@@ -53,4 +53,9 @@ class Game:
         :return: True if there has been max_nb_rounds played and the last one is complete
         """
         return (len(self.rounds)
-                == self.max_nb_rounds) and self.rounds[-1].complete
+                == self.max_nb_rounds) and self.rounds[-1].is_complete()
+
+    def is_game_won(self):
+        if not self.is_game_complete():
+            return False
+        return self.nb_rounds_won > self.nb_rounds_lost

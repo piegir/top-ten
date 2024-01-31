@@ -18,9 +18,8 @@ class Round:
             NumberedPlayerProposition] = self.assign_numbers()
 
         self.playing_player_index: int = 0
-        self.complete: bool = False
         self.success: bool = False
-        self.order_hypothesis: list[PlayerProposition] = []
+        self.order_hypothesis: list[PlayerProposition] | None = None
         self.theme: Theme | None = None
 
     def set_theme(self, theme: Theme):
@@ -81,4 +80,6 @@ class Round:
         self.success = [
             prop.player_proposition for prop in sorted_propositions
         ] == hypothesis
-        self.complete = True
+
+    def is_complete(self):
+        return self.order_hypothesis is not None
