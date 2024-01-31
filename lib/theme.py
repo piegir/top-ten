@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field
 
 
 class Theme(BaseModel):
+    index: int = Field(description="The index of the theme in the database.",
+                       example=0)
     title: str = Field(
         description="The title of the theme, what it deals with.",
         example="Mr Bond, si vous ne me donnez pas le code secret, je vais... "
