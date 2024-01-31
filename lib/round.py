@@ -55,7 +55,9 @@ class Round:
                 player_index].player_proposition.proposition = proposition
             self.playing_player_index += 1
         else:
-            return "Wait for your turn!"
+            raise ValueError(
+                f"Player {player} tried playing during {self.players_list[self.playing_player_index]}'s turn."
+            )
 
     def all_propositions_made(self) -> bool:
         """
