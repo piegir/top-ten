@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from version import version
 
@@ -25,10 +26,22 @@ tags_metadata = [
     },
 ]
 
+origins = [
+    "http://localhost:3000",
+]
+
 top_ten_app = FastAPI(title="Top Ten API",
                       description=description,
                       version=version,
                       openapi_tags=tags_metadata)
+
+top_ten_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 top_ten_app.include_router(authentication.router)
 top_ten_app.include_router(game.router)
