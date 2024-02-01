@@ -97,7 +97,7 @@ def set_theme(
     return ActionStatus(
         status=True,
         message=f"Round theme was properly set. "
-        f"First player '{current_user.username}' should make its proposition (/rounds/set_player_proposition)."
+        f"First player '{current_user.username}' should make a proposition (/rounds/set_player_proposition)."
     )
 
 
@@ -184,7 +184,7 @@ def set_player_proposition(
                 status=True,
                 message=
                 f"{current_user.username}'s proposition '{proposition}' was properly set. "
-                f"It is now {current_player}'s turn to make its proposition")
+                f"It is now {current_player}'s turn to make a proposition")
     except Exception as error:
         return ActionStatus(
             status=False,
@@ -216,7 +216,7 @@ def get_player_propositions(
 
 @router.post("/make_hypothesis")
 def make_hypothesis(
-        hypothesis_names: list[int],
+        hypothesis_names: list[str],
         current_user: Annotated[User,
                                 Depends(get_current_user)]) -> ActionStatus:
     """

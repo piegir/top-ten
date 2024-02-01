@@ -58,7 +58,7 @@ def check_player_in_game(player: str, action_description: str):
     :param player: The username of the player to be checked
     :param action_description: The description of the action desired to be performed by the player.
     """
-    if player not in current_game.rounds[-1].players_list:
+    if player not in current_game.players_list:
         raise HTTPException(
             status_code=400,
             detail=
