@@ -1,6 +1,9 @@
-from fastapi import APIRouter, HTTPException
+from typing import Annotated
+
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 
+from app.authentication.authentication import oauth2_scheme
 from app.utils import ActionStatus
 
 from lib.game import Game
@@ -33,15 +36,17 @@ class GameConfig(BaseModel):
 
 
 @router.post("/start")
-def start_game(game_config: GameConfig) -> ActionStatus:
+def start_game(game_config: GameConfig,
+               token: Annotated[str, Depends(oauth2_scheme)]) -> ActionStatus:
     """
     API call to start a game.
 
     :param game_config: The game configuration.
+    :param token: The authentication token.
     :return: The status of starting the game.
     """
     global current_game
-
+    print(token)
     try:
         current_game = Game(game_config.players_list,
                             game_config.max_nb_rounds,
