@@ -55,7 +55,9 @@ class Round:
                 player_index].player_proposition.proposition = proposition
             self.playing_player_index += 1
         else:
-            return "Wait for your turn!"
+            raise ValueError(
+                f"Player {player} tried playing during {self.players_list[self.playing_player_index]}'s turn."
+            )
 
     def all_propositions_made(self) -> bool:
         """
@@ -73,7 +75,7 @@ class Round:
         :param hypothesis: the order hypothesis
         """
         if not self.all_propositions_made():
-            return "Wait for your friends to make their propositions!"
+            raise RuntimeError("Not all propositions have been made.")
         self.order_hypothesis = hypothesis
         sorted_propositions = sorted(self.numbered_player_propositions,
                                      key=lambda x: x.number)

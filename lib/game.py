@@ -12,7 +12,7 @@ class Game:
                  nb_themes_per_card: int = 3):
         if len(players_list) > 10 or len(players_list) < 4:
             raise ValueError(
-                "Incorrect number of players. You need to be between 4 and 10 players."
+                f"Incorrect number of players {len(players_list)}. You need to be between 4 and 10 players."
             )
         self.players_list: list[Player] = players_list
         self.max_nb_rounds: int = max_nb_rounds
@@ -27,11 +27,9 @@ class Game:
         :return:
         """
         if self.is_round_in_progress():
-            print("A round is already in progress.")
-            return
+            raise RuntimeError("A round is already in progress.")
         if self.is_game_complete():
-            print("The game is already complete.")
-            return
+            raise RuntimeError("The game is already complete.")
         if len(self.rounds) > 0:
             self.played_themes.append(self.rounds[-1].theme)
             self.starting_player = (self.starting_player + 1) % len(
