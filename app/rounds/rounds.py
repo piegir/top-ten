@@ -1,12 +1,11 @@
-from typing import Annotated
 from fastapi import APIRouter, HTTPException, Depends
-from app.authentication.authentication import User, get_current_user
+from typing import Annotated
 
+from app.authentication.authentication import User, get_current_user
+from app.utils import ActionStatus
+from app.game import game
 from lib.player_proposition import PlayerProposition
 from lib.theme import Theme
-
-from app.utils import ActionStatus
-import app.game.game as game
 
 router = APIRouter(prefix="/rounds", tags=["Round control"])
 

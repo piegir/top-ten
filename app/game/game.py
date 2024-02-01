@@ -1,9 +1,9 @@
-from typing import Annotated
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
-from app.authentication.authentication import User, oauth2_scheme, get_current_user, check_user_connected
-from app.utils import ActionStatus
+from typing import Annotated
 
+from app.authentication.authentication import User, get_current_user, check_user_connected
+from app.utils import ActionStatus
 from lib.game import Game
 
 router = APIRouter(prefix="/game", tags=["Game setup"])

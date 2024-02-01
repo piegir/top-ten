@@ -1,9 +1,9 @@
-import json
 import argon2
-from typing import Annotated
-from pydantic import BaseModel, Field, SecretStr
+import json
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from pydantic import BaseModel, Field, SecretStr
+from typing import Annotated
 
 from app.utils import ActionStatus
 

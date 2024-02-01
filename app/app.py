@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from version import version
 from starlette.responses import RedirectResponse
+from version import version
 
 from app.authentication import authentication
 from app.game import game

@@ -1,8 +1,8 @@
 import random
 
-from lib.theme import Theme
-from lib.player_proposition import PlayerProposition, NumberedPlayerProposition
 from database.database import database
+from lib.player_proposition import PlayerProposition, NumberedPlayerProposition
+from lib.theme import Theme
 
 
 class Round:
