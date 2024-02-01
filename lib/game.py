@@ -1,4 +1,3 @@
-from lib.player import Player
 from lib.round import Round
 from lib.theme import Theme
 
@@ -6,17 +5,17 @@ from lib.theme import Theme
 class Game:
 
     def __init__(self,
-                 players_list: list[Player],
+                 players_list: list[str],
                  max_nb_rounds: int,
-                 starting_player: int = 0,
+                 starting_player_index: int = 0,
                  nb_themes_per_card: int = 3):
         if len(players_list) > 10 or len(players_list) < 4:
             raise ValueError(
                 f"Incorrect number of players {len(players_list)}. You need to be between 4 and 10 players."
             )
-        self.players_list: list[Player] = players_list
+        self.players_list: list[str] = players_list
         self.max_nb_rounds: int = max_nb_rounds
-        self.starting_player: int = starting_player
+        self.starting_player_index: int = starting_player_index
         self.nb_themes_per_card: int = nb_themes_per_card
         self.played_themes: list[Theme] = []
         self.rounds: list[Round] = []
@@ -32,12 +31,13 @@ class Game:
             raise RuntimeError("The game is already complete.")
         if len(self.rounds) > 0:
             self.played_themes.append(self.rounds[-1].theme)
-            self.starting_player = (self.starting_player + 1) % len(
-                self.players_list)
+            self.starting_player_index = (self.starting_player_index +
+                                          1) % len(self.players_list)
 
         shifted_players_list: list[
-            Player] = self.players_list[self.starting_player:len(
-                self.players_list)] + self.players_list[0:self.starting_player]
+            str] = self.players_list[self.starting_player_index:len(
+                self.players_list)] + self.players_list[0:self.
+                                                        starting_player_index]
         current_round: Round = Round(shifted_players_list,
                                      self.nb_themes_per_card,
                                      self.played_themes)

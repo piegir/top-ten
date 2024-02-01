@@ -1,12 +1,7 @@
 {
   "admin": {
     "username": "admin",
-    "full_name": "Admin",
-    "hashed_password": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
-  },
-  "Pi": {
-    "username": "Pi",
-    "full_name": "Pi",
-    "hashed_password": "048785bebdc0c97efd15b2471c3b02a029ffa9b81881f1dc7be42da2e524d271"
+    "full_name": "admin",
+    "hashed_password": "$argon2i$v=19$m=65536,t=3,p=4$VAcZrVYV7P1whKBVmrb6Uw$KINHbfwW/wNl/30NrB8NUWmT11/YIywceDgHhy+GeCg"
   }
 }

@@ -1,12 +1,11 @@
-from lib.player import Player
 from lib.game import Game
 
 
 def play():
-    player1 = Player(name="Pierre", id=0)
-    player2 = Player(name="Eloise", id=1)
-    player3 = Player(name="Dylan", id=12)
-    player4 = Player(name="Cindy", id=36)
+    player1 = "Pierre"
+    player2 = "Eloise"
+    player3 = "Dylan"
+    player4 = "Cindy"
     players = [player1, player2, player3, player4]
     game = Game(players, 3, 0, 3)
     while not game.is_game_complete():
@@ -38,21 +37,25 @@ def play():
             proposition = input(f"{playing_player}, enter your proposition: ")
             current_round.set_player_proposition(proposition, playing_player)
 
-        id_to_prop = {
-            prop.player_proposition.player.id: prop.player_proposition
+        name_to_prop = {
+            prop.player_proposition.player: prop.player_proposition
             for prop in current_round.numbered_player_propositions
         }
+        available_choices = list(name_to_prop.keys())
         hypothesis = []
         print(
-            f"{first_player}, you will have to enter the IDs of the players in the correct order ({current_round.theme.top1} to {current_round.theme.top10}) without the #."
+            f"{first_player}, you will have to enter the usernames of the players in the correct order ({current_round.theme.top1} to {current_round.theme.top10})."
         )
+        i = 0
         for player in players:
-            hypothesis_id = input("- ")
-            while not hypothesis_id.isnumeric() or int(
-                    hypothesis_id) not in id_to_prop.keys():
-                hypothesis_id = input(
-                    "The entered ID is incorrect. Please enter a correct ID: ")
-            hypothesis.append(id_to_prop[int(hypothesis_id)])
+            hypothesis_name = input(f"{i}: ")
+            while hypothesis_name not in available_choices:
+                print("Enter a valid player username.")
+                hypothesis_name = input(f"{i}: ")
+            hypothesis.append(name_to_prop[hypothesis_name])
+            available_choices.remove(hypothesis_name)
+            i += 1
+
         current_round.make_hypothesis(hypothesis)
         if current_round.success:
             print("You won this round!")

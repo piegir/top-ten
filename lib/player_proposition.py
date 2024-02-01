@@ -1,11 +1,10 @@
 from pydantic import BaseModel, Field, field_validator
 
-from lib.player import Player
-
 
 class PlayerProposition(BaseModel):
-    player: Player = Field(description="The player that made the proposition.",
-                           example=Player(name="John Doe", id=0))
+    player: str = Field(
+        description="The username of the player that made the proposition.",
+        example="johndoe")
     proposition: str | None = Field(
         description="The content of the proposition made.", default=None)
 
@@ -16,7 +15,7 @@ class NumberedPlayerProposition(BaseModel):
         example=5)
     player_proposition: PlayerProposition = Field(
         description="The player proposition.",
-        example=PlayerProposition(player=Player(name="John Doe", id=0)))
+        example=PlayerProposition(player="johndoe"))
 
     @field_validator('number')
     def check_number_in_1_10(cls, v: int):
