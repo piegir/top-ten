@@ -1,16 +1,15 @@
 import random
 
-from lib.player import Player
-from lib.theme import Theme
-from lib.player_proposition import PlayerProposition, NumberedPlayerProposition
 from database.database import database
+from lib.player_proposition import PlayerProposition, NumberedPlayerProposition
+from lib.theme import Theme
 
 
 class Round:
 
-    def __init__(self, players_list: list[Player], nb_themes_per_card: int,
+    def __init__(self, players_list: list[str], nb_themes_per_card: int,
                  played_themes: list[Theme]):
-        self.players_list: list[Player] = players_list
+        self.players_list: list[str] = players_list
         self.card: list[Theme] = database.pick_random_card(
             nb_themes_per_card, played_themes)
 
@@ -42,11 +41,11 @@ class Round:
             for player, number in zip(self.players_list, player_numbers)
         ]
 
-    def set_player_proposition(self, proposition: str, player: Player):
+    def set_player_proposition(self, proposition: str, player: str):
         """
         Sets the proposition for a player
         :param proposition: the proposition
-        :param player: the player
+        :param player: the player's username
         :return:
         """
         player_index = self.players_list.index(player)

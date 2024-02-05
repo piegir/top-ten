@@ -1,17 +1,16 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
+from fastapi import APIRouter, HTTPException, Depends
+from typing import Annotated
 
-from lib.player import Player
+from app.authentication.authentication import User, get_current_user
+from app.utils import ActionStatus
+from app.game import game
 from lib.player_proposition import PlayerProposition
 from lib.theme import Theme
-
-from app.utils import ActionStatus
-import app.game.game as game
 
 router = APIRouter(prefix="/rounds", tags=["Round control"])
 
 
-def check_round_valid(action_description: str = "perform action"):
+def check_round_valid(action_description: str):
     """
     Check if there is a valid round ongoing.
 
@@ -28,83 +27,154 @@ def check_round_valid(action_description: str = "perform action"):
             detail=f"Couldn't {action_description}, no round in progress.")
 
 
-@router.get("/get_card")
-def get_card() -> list[Theme]:
+def check_player_in_game(player: str, action_description: str):
     """
-    API call to get the 'Card' from the current round.
+    Check if player is part of the game.
 
+    :param player: The username of the player to be checked
+    :param action_description: The description of the action desired to be performed by the player.
+    """
+    if player not in game.current_game.rounds[-1].players_list:
+        raise HTTPException(
+            status_code=400,
+            detail=
+            f"Couldn't {action_description}, player '{player}' not part of the game."
+        )
+
+
+def check_player_is_first(player: str, action_description: str):
+    """
+    Check if player is the first player of the game, i.e. if he's the player that can make the main interactions.
+
+    :param player: The username of the player to be checked
+    :param action_description: The description of the action desired to be performed by the player.
+    """
+    first_player = game.current_game.rounds[-1].players_list[0]
+    if player != first_player:
+        raise HTTPException(
+            status_code=400,
+            detail=
+            f"Only first player '{first_player}' can {action_description}.")
+
+
+@router.get("/get_card")
+def get_card(
+        current_user: Annotated[User,
+                                Depends(get_current_user)]) -> list[Theme]:
+    """
+    API call to get the card from the current round.
+
+    :param current_user: Current user performing the request (automatically obtained)
     :return: The list of themes on the card
     """
-    check_round_valid("get a card")
+    description = "get a card"
+    check_round_valid(description)
+    check_player_in_game(current_user.username, description)
+    check_player_is_first(current_user.username, description)
+
     return game.current_game.rounds[-1].card
 
 
 @router.post("/set_theme")
-def set_theme(theme: Theme) -> ActionStatus:
+def set_theme(
+        theme: Theme,
+        current_user: Annotated[User,
+                                Depends(get_current_user)]) -> ActionStatus:
     """
     API call to set the theme of the current round.
 
+    :param theme: The theme to be set
+    :param current_user: Current user performing the request (automatically obtained)
     :return: The status of setting the theme.
     """
-    check_round_valid("set the theme")
+    description = "set the theme"
+    check_round_valid(description)
+    check_player_in_game(current_user.username, description)
+    check_player_is_first(current_user.username, description)
+
     game.current_game.rounds[-1].set_theme(theme)
-    current_player = game.current_game.rounds[-1].players_list[
-        game.current_game.rounds[-1].playing_player_index]
     return ActionStatus(
         status=True,
         message=f"Round theme was properly set. "
-        f"{current_player} should make its proposition (/rounds/set_player_proposition)."
+        f"First player '{current_user.username}' should make a proposition (/rounds/set_player_proposition)."
     )
 
 
-@router.get("/get_player_number{player_id}")
-def get_player_number(player_id: int) -> int:
+@router.get("/get_theme")
+def get_theme(
+        current_user: Annotated[User,
+                                Depends(get_current_user)]) -> Theme | None:
     """
-    Get all player propositions.
+    API call to get the theme from the current round.
 
-    :param player_id: The player id whose number we want to obtain
+    :param current_user: Current user performing the request (automatically obtained)
+    :return: The list of themes on the card
+    """
+    description = "get the theme"
+    check_round_valid(description)
+    check_player_in_game(current_user.username, description)
+
+    return game.current_game.rounds[-1].theme
+
+
+@router.get("/get_number")
+def get_number(
+        current_user: Annotated[User, Depends(get_current_user)]) -> int:
+    """
+    API call to get own 'top' number.
+
+    :param current_user: Current user performing the request (automatically obtained)
     :return: The player's number.
     """
-    check_round_valid("get player number")
+    description = "get player number"
+    check_round_valid(description)
+    check_player_in_game(current_user.username, description)
+
     player_to_number = {
-        numbered_prop.player_proposition.player.id: numbered_prop.number
+        numbered_prop.player_proposition.player: numbered_prop.number
         for numbered_prop in
         game.current_game.rounds[-1].numbered_player_propositions
     }
-    return player_to_number[player_id]
+    return player_to_number[current_user.username]
 
 
 @router.post("/set_player_proposition")
-def set_player_proposition(proposition: str, player_id: int) -> ActionStatus:
+def set_player_proposition(
+        proposition: str,
+        current_user: Annotated[User,
+                                Depends(get_current_user)]) -> ActionStatus:
     """
-    Set a player's proposition.
+    API call to set a player's proposition.
 
     :param proposition: The content of the proposition made
-    :param player_id: The id of the player that made it
+    :param current_user: Current user performing the request (automatically obtained)
     :return: The status of setting the player's proposition.
     """
-    check_round_valid("set player proposition")
-    player = next(player
-                  for player in game.current_game.rounds[-1].players_list
-                  if player.id == player_id)
+    description = "set player proposition"
+    check_round_valid(description)
+    check_player_in_game(current_user.username, description)
+    # Check that not all propositions have already been made
     if game.current_game.rounds[-1].all_propositions_made():
         starting_player = game.current_game.rounds[-1].players_list[0]
         return ActionStatus(
             status=False,
             message=f"All propositions have already been made. "
-            f"{starting_player} should make a hypothesis (/rounds//make_hypothesis)"
+            f"{starting_player} should make a hypothesis (/rounds/make_hypothesis)"
         )
+
+    # Try setting the player's proposition
     try:
         game.current_game.rounds[-1].set_player_proposition(
-            proposition, player)
+            proposition, current_user.username)
+        # Check if all propositions have been made
         if game.current_game.rounds[-1].all_propositions_made():
             starting_player = game.current_game.rounds[-1].players_list[0]
             return ActionStatus(
                 status=True,
                 message=
-                f"{player}'s proposition '{proposition}' was properly set. "
+                f"{current_user.username}'s proposition '{proposition}' was properly set. "
                 f"All propositions have been made. "
-                f"{starting_player} should make a hypothesis (/rounds//make_hypothesis)"
+                f"{starting_player} should make a hypothesis (/rounds/make_hypothesis)"
             )
         else:
             current_player = game.current_game.rounds[-1].players_list[
@@ -112,23 +182,30 @@ def set_player_proposition(proposition: str, player_id: int) -> ActionStatus:
             return ActionStatus(
                 status=True,
                 message=
-                f"{player}'s proposition '{proposition}' was properly set. "
-                f"It is now {current_player}'s turn to make its proposition")
+                f"{current_user.username}'s proposition '{proposition}' was properly set. "
+                f"It is now {current_player}'s turn to make a proposition")
     except Exception as error:
         return ActionStatus(
             status=False,
             message=
-            f"{player}'s proposition '{proposition}' couldn't be set. {error}")
+            f"{current_user.username}'s proposition '{proposition}' couldn't be set. {error}"
+        )
 
 
 @router.get("/get_player_propositions")
-def get_player_propositions() -> list[PlayerProposition]:
+def get_player_propositions(
+    current_user: Annotated[User, Depends(get_current_user)]
+) -> list[PlayerProposition]:
     """
-    Get all player propositions.
+    API call to get all player propositions.
 
+    :param current_user: Current user performing the request (automatically obtained)
     :return: The list of all player propositions (ordered with the round order).
     """
-    check_round_valid("get player propositions")
+    description = "get player propositions"
+    check_round_valid(description)
+    check_player_in_game(current_user.username, description)
+
     player_propositions = [
         numbered_prop.player_proposition for numbered_prop in
         game.current_game.rounds[-1].numbered_player_propositions
@@ -137,20 +214,28 @@ def get_player_propositions() -> list[PlayerProposition]:
 
 
 @router.post("/make_hypothesis")
-def make_hypothesis(hypothesis_ids: list[int]) -> ActionStatus:
+def make_hypothesis(
+        hypothesis_names: list[str],
+        current_user: Annotated[User,
+                                Depends(get_current_user)]) -> ActionStatus:
     """
-    Set a hypothesis about correct order of propositions.
+    API call to set a hypothesis about correct order of propositions.
 
-    :param hypothesis_ids: The list of player ids as ordered for the hypothesis
+    :param hypothesis_names: The list of player usernames as ordered for the hypothesis
+    :param current_user: Current user performing the request (automatically obtained)
     :return: The status of setting the hypothesis.
     """
-    check_round_valid("make hypothesis")
-    id_to_prop = {
-        prop.player_proposition.player.id: prop.player_proposition
+    description = "make the hypothesis"
+    check_round_valid(description)
+    check_player_in_game(current_user.username, description)
+    check_player_is_first(current_user.username, description)
+
+    player_to_prop = {
+        prop.player_proposition.player: prop.player_proposition
         for prop in game.current_game.rounds[-1].numbered_player_propositions
     }
     hypothesis = [
-        id_to_prop[hypothesis_id] for hypothesis_id in hypothesis_ids
+        player_to_prop[hypothesis_id] for hypothesis_id in hypothesis_names
     ]
     try:
         game.current_game.rounds[-1].make_hypothesis(hypothesis)
@@ -162,15 +247,20 @@ def make_hypothesis(hypothesis_ids: list[int]) -> ActionStatus:
 
 
 @router.get("/check_round_result")
-def check_round_result() -> bool:
+def check_round_result(
+        current_user: Annotated[User, Depends(get_current_user)]) -> bool:
     """
-    Check round result.
+    API call to check round result.
 
+    :param current_user: Current user performing the request (automatically obtained)
     :return: True if round was won, False otherwise.
     """
+    description = "check round result"
     if game.current_game is None:
         raise HTTPException(
             status_code=400,
-            detail="Couldn't check round result, game wasn't started.")
+            detail=f"Couldn't {description}, game wasn't started.")
+    check_player_in_game(current_user.username, description)
+
     return game.current_game.rounds[-1].is_complete(
     ) and game.current_game.rounds[-1].success
