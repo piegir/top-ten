@@ -28,6 +28,7 @@ tags_metadata = [
 
 origins = [
     "http://localhost:3000",
+    "http://192.168.1.8:3000",
 ]
 
 top_ten_app = FastAPI(title="Top Ten API",
