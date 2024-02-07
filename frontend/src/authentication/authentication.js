@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import {restApiIp, restApiPort} from "../common/common.js";
 
 export let currentUser = {};
 
@@ -18,7 +19,7 @@ export function GetUserInfo() {
     const [fullName, setFullName] = useState(null);
 
     useEffect(() => {
-        fetch("http://192.168.1.8:8080/authentication/get_my_info", {
+        fetch(`http://${restApiIp}:${restApiPort}/authentication/get_my_info`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${currentUser.username}`,
