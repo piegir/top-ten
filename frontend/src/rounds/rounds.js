@@ -1,5 +1,5 @@
 import './rounds.css';
-import {Component} from "react";
+import React, {Component} from "react";
 import {currentUser} from "../authentication/authentication.js"
 
 let userNumbers = {
@@ -219,7 +219,7 @@ export class MakeProposition extends Component {
                         Your Proposition:
                     </div>
                     <div className="UserActionInputField">
-                        <textarea/>
+                        <textarea name="Text1" cols="40" rows="5"></textarea>
                     </div>
                 </div>
                 <div className="UserActionButtonBox">
