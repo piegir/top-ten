@@ -5,6 +5,13 @@
     --box-color: #d6e4f0;
 }
 
+.BoxTitle {
+    text-align: center;
+    font-size: 25px;
+    color: var(--title-color);
+    padding-bottom: 10px;
+}
+
 .App {
     background-color: var(--page-color);
     font-size: 20px;

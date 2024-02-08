@@ -59,6 +59,9 @@ export function CurrentUserNumber() {
 export function PlayerPropositions() {
     return (
         <div className="PlayersBox">
+            <div className="BoxTitle">
+                Player Propositions
+            </div>
             <table className="PlayerPropositionsTable">
                 <tr>
                     <th>
@@ -88,10 +91,10 @@ export function PlayerPropositions() {
 export function SelectTheme() {
     return (
         <div className="UserActionBox">
-            <div className="UserActionTitle">
-                Select Theme
+            <div className="BoxTitle">
+                Select a theme
             </div>
-            <table>
+            <table className="ThemesTable">
                 <tr>
                     <td>
                         Theme
@@ -117,7 +120,7 @@ export function SelectTheme() {
                             </td>
                             <td>
                                 <button>
-                                    Select Theme {themeIndex + 1}
+                                    Select theme {themeIndex + 1}
                                 </button>
                             </td>
                         </tr>
@@ -162,7 +165,7 @@ export function CurrentTheme() {
 export function MakeProposition() {
     return (
         <div className="UserActionBox">
-            <div className="UserActionTitle">
+            <div className="BoxTitle">
                 Make Proposition
             </div>
             <div className="UserActionInput">
@@ -170,13 +173,11 @@ export function MakeProposition() {
                     Your Proposition:
                 </div>
                 <div className="UserActionInputField">
-                    <input
-                        type="text"
-                    />
+                    <textarea name="Text1" cols="40" rows="5"></textarea>
                 </div>
             </div>
-            <div className="UserActionButton">
-                <button>
+            <div className="UserActionButtonBox">
+                <button className="UserActionButton">
                     Submit
                 </button>
             </div>
@@ -187,7 +188,7 @@ export function MakeProposition() {
 export function MakeHypothesis() {
     return (
         <div className="UserActionBox">
-            <div className="UserActionTitle">
+            <div className="BoxTitle">
                 Make Hypothesis
             </div>
             <div className="UserActionOrder">
@@ -222,8 +223,8 @@ export function MakeHypothesis() {
                     })}
                 </table>
             </div>
-            <div className="UserActionButton">
-                <button>
+            <div className="UserActionButtonBox">
+                <button className="UserActionButton">
                     Submit
                 </button>
             </div>

@@ -19,7 +19,7 @@ export let roundStarted = true;
 export function GameSetup() {
     return (
         <div className="UserActionBox">
-            <div className="UserActionTitle">
+            <div className="BoxTitle">
                 Game Preparation
             </div>
             <div>
@@ -32,15 +32,17 @@ export function GameSetup() {
                             <div className="UserActionInputField">
                                 <input
                                     type="text"
+                                    inputmode="numeric"
                                     value={optionValue}
+                                    className="NumberInput"
                                 />
                             </div>
                         </div>
                     )
                 })}
             </div>
-            <div className="UserActionButton">
-                <button>
+            <div className="UserActionButtonBox">
+                <button className="UserActionButton">
                     Start Game
                 </button>
             </div>
@@ -51,11 +53,11 @@ export function GameSetup() {
 export function StartRound() {
     return (
         <div className="UserActionBox">
-            <div className="UserActionTitle">
-                Start Round
+            <div className="BoxTitle">
+                Ready to start the round?
             </div>
-            <div className="UserActionButton">
-                <button>
+            <div className="UserActionButtonBox">
+                <button className="UserActionButton">
                     Start Round
                 </button>
             </div>
