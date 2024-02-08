@@ -5,17 +5,17 @@ export function Players() {
         "Player1",
         "Player2",
         "Player3",
-        "Player4",
+        "Player4"
     ]
     let propositions = [
         "Proposition1",
         "Proposition2",
         "Proposition3",
-        "Proposition4",
+        "Proposition4"
     ]
     return (
         <div className="PlayersBox">
-            <table>
+            <table className="PlayersTable">
             <tr>
                 <th>
                     Players
