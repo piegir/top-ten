@@ -15,28 +15,28 @@ export function Players() {
     ]
     return (
         <div className="PlayersBox">
-            <div className="Players">
-                <p>Players</p>
-
-                {playersList.map((playerName) => {
-                    return (
-                        <div>
+            <table>
+            <tr>
+                <th>
+                    Players
+                </th>
+                <th>
+                    Propositions
+                </th>
+            </tr>
+            {playersList.map((playerName, index) => {
+                return (
+                    <tr>
+                        <td>
                             {playerName}
-                        </div>
-                    )
-                })}
-            </div>
-            <div className="Propositions">
-                <p>Propositions</p>
-
-                {propositions.map((proposition) => {
-                    return (
-                        <div>
-                            {proposition}
-                        </div>
-                    )
-                })}
-            </div>
+                        </td>
+                        <td>
+                            {propositions[index]}
+                        </td>
+                    </tr>
+                )
+            })}
+            </table>
         </div>
     );
 }
