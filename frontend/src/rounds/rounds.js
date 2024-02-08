@@ -89,15 +89,15 @@ export function CurrentTheme() {
         <div className="CurrentTheme">
             <table>
                 <tr>
-                    <td>
+                    <th>
                         Theme
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         Top1
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         Top10
-                    </td>
+                    </th>
                 </tr>
                 <tr>
                     <td>
@@ -115,6 +115,13 @@ export function CurrentTheme() {
     );
 }
 
+let playerPropositions = {
+    "Player1": "My Neighbor",
+    "Player2": "Hitler",
+    "Player3": "Martin Luther King",
+    "Player4": "Donald Trump",
+};
+
 export function MakeProposition() {
     return (
         <div className="UserActionBox">
@@ -130,6 +137,53 @@ export function MakeProposition() {
                         type="text"
                     />
                 </div>
+            </div>
+            <div className="UserActionButton">
+                <button>
+                    Submit
+                </button>
+            </div>
+        </div>
+    );
+}
+
+export function MakeHypothesis() {
+    return (
+        <div className="UserActionBox">
+            <div className="UserActionTitle">
+                Make Hypothesis
+            </div>
+            <div className="UserActionOrder">
+                <table>
+                    <tr>
+                        <th>
+                            Players
+                        </th>
+                        <th>
+                            Propositions
+                        </th>
+                    </tr>
+                    {Object.entries(playerPropositions).map(([playerName, proposition]) => {
+                        return (
+                            <tr>
+                                <td>
+                                    {playerName}
+                                </td>
+                                <td>
+                                    {proposition}
+                                </td>
+                                <td>
+                                    <button>
+                                        ^
+                                    </button>
+                                    <button>
+                                        v
+                                    </button>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </table>
             </div>
             <div className="UserActionButton">
                 <button>

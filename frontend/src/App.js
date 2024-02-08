@@ -3,7 +3,7 @@ import React from "react";
 import {Username} from "./authentication/authentication.js";
 import {Players} from "./players/players.js"
 import {GameSetup, StartRound, roundStarted, GameProgress} from "./game/game.js"
-import {CurrentUserNumber, SelectTheme, CurrentTheme, MakeProposition} from "./rounds/rounds"
+import {CurrentUserNumber, SelectTheme, CurrentTheme, MakeProposition, MakeHypothesis} from "./rounds/rounds"
 
 
 function GamePreparation() {
@@ -110,11 +110,30 @@ function WaitPropositionMaking() {
     );
 }
 
+function HypothesisMaking() {
+    return (
+        <div className="App">
+            <GameProgress/>
+            <Username/>
+            <CurrentUserNumber/>
+            <CurrentTheme/>
+            <div className="Grid">
+                <div className="Title">
+                    Top Ten
+                </div>
+                <Players/>
+                <MakeHypothesis/>
+            </div>
+        </div>
+
+    );
+}
+
 
 
 function App() {
     return (
-        <PropositionMaking/>
+        <HypothesisMaking/>
     )
 }
 
