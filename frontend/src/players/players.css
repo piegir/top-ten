@@ -3,17 +3,13 @@
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 3;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     border-style: solid;
     border-color: var(--title-color);
     border-radius: 10px;
     padding: 15px;
 }
 
-table, th, td {
-    grid-column-start: 1;
-    grid-column-end: 4;
+.PlayersTable {
     width: 100%;
     border: 1px solid;
     border-collapse: collapse;
@@ -21,11 +17,15 @@ table, th, td {
     padding: 5px;
 }
 
-tr {
-    line-height: 10px;
+.PlayersTable td:last-child {
+    width: 80%;
 }
 
-th {
-    line-height: 14px;
+.PlayersTable tr {
+    line-height: 10%;
+}
+
+.PlayersTable th {
+    line-height: 50%;
     text-align: center;
 }
