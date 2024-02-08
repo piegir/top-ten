@@ -1,7 +1,9 @@
 import {useState, useEffect} from "react";
 import {restApiIp, restApiPort} from "../common/common.js";
 
-export let currentUser = {};
+export let currentUser = {
+    username: "Player1",
+};
 
 export function SetCurrentUser() {
     const [username, setUsername] = useState("");

@@ -1,0 +1,25 @@
+.PlayersBox {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-style: solid;
+    border-color: steelblue;
+    border-radius: 1px;
+}
+
+.Players {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    align-items: center;
+    color: steelblue;
+    font-size: 20px;
+}
+
+.Propositions {
+    grid-column-start: 2;
+    color: steelblue;
+    font-size: 20px;
+}

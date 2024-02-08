@@ -1,0 +1,42 @@
+.UserActionBox {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    color: steelblue;
+    display: grid;
+    border-style: solid;
+    border-color: steelblue;
+    border-radius: 1px;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.UserActionTitle {
+    text-align: center;
+}
+
+.UserActionInput {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+}
+
+.UserActionInputOption {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: right;
+}
+
+.UserActionInputField {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    text-align: left;
+}
+
+.UserActionButton {
+    text-align: center;
+}
+
+input {
+    text-align: center;
+}
