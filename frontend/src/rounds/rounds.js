@@ -1,6 +1,6 @@
-import React from "react";
-import {currentUser} from "../authentication/authentication.js"
 import './rounds.css';
+import {Component} from "react";
+import {currentUser} from "../authentication/authentication.js"
 
 let userNumbers = {
     "Player1": 5,
@@ -13,12 +13,6 @@ let playersList = [
     "Player2",
     "Player3",
     "Player4"
-]
-let propositions = [
-    "Proposition1",
-    "Proposition2",
-    "Proposition3",
-    "Proposition4"
 ]
 let themes = [
     {
@@ -45,6 +39,13 @@ let playerPropositions = {
     "Player4": "Donald Trump",
 };
 
+let hypothesis = {
+    "Player3": "Martin Luther King",
+    "Player1": "My Neighbor",
+    "Player4": "Donald Trump",
+    "Player2": "Hitler",
+};
+
 export function CurrentUserNumber() {
     return (
         <div className="CurrentUserNumber">
@@ -59,6 +60,9 @@ export function CurrentUserNumber() {
 export function PlayerPropositions() {
     return (
         <div className="PlayersBox">
+            <div className="BoxTitle">
+                Player Propositions
+            </div>
             <table className="PlayerPropositionsTable">
                 <tr>
                     <th>
@@ -68,60 +72,17 @@ export function PlayerPropositions() {
                         Propositions
                     </th>
                 </tr>
-                {playersList.map((playerName, index) => {
+                {playersList.map((playerName) => {
                     return (
                         <tr>
                             <td>
                                 {playerName}
                             </td>
                             <td>
-                                {propositions[index]}
+                                {playerPropositions[playerName]}
                             </td>
                         </tr>
                     )
-                })}
-            </table>
-        </div>
-    );
-}
-
-export function SelectTheme() {
-    return (
-        <div className="UserActionBox">
-            <div className="UserActionTitle">
-                Select Theme
-            </div>
-            <table>
-                <tr>
-                    <td>
-                        Theme
-                    </td>
-                    <td>
-                        Top1
-                    </td>
-                    <td>
-                        Top10
-                    </td>
-                </tr>
-                {themes.map((themeObject, themeIndex) => {
-                    return (
-                        <tr>
-                            <td>
-                                {themeObject.theme}
-                            </td>
-                            <td>
-                                {themeObject.top1}
-                            </td>
-                            <td>
-                                {themeObject.top10}
-                            </td>
-                            <td>
-                                <button>
-                                    Select Theme {themeIndex + 1}
-                                </button>
-                            </td>
-                        </tr>
-                    );
                 })}
             </table>
         </div>
@@ -159,40 +120,131 @@ export function CurrentTheme() {
     );
 }
 
-export function MakeProposition() {
+export function PlayerNumberedPropositions() {
+    let sortedPlayersList = [...playersList];
+    sortedPlayersList.sort((a, b) => {
+        return userNumbers[a] > userNumbers[b] ? 1 : -1;
+    })
     return (
-        <div className="UserActionBox">
-            <div className="UserActionTitle">
-                Make Proposition
+        <div className="PlayersBox">
+            <div className="BoxTitle">
+                Reality
             </div>
-            <div className="UserActionInput">
-                <div className="UserActionInputOption">
-                    Your Proposition:
-                </div>
-                <div className="UserActionInputField">
-                    <input
-                        type="text"
-                    />
-                </div>
-            </div>
-            <div className="UserActionButton">
-                <button>
-                    Submit
-                </button>
-            </div>
+            <table className="PlayerPropositionsTable">
+                <tr>
+                    <th>
+                        Players
+                    </th>
+                    <th>
+                        Numbers
+                    </th>
+                    <th>
+                        Propositions
+                    </th>
+                </tr>
+                {sortedPlayersList.map((playerName) => {
+                    return (
+                        <tr>
+                            <td>
+                                {playerName}
+                            </td>
+                            <td>
+                                {userNumbers[playerName]}
+                            </td>
+                            <td>
+                                {playerPropositions[playerName]}
+                            </td>
+                        </tr>
+                    )
+                })}
+            </table>
         </div>
     );
 }
 
-export function MakeHypothesis() {
-    return (
-        <div className="UserActionBox">
-            <div className="UserActionTitle">
-                Make Hypothesis
-            </div>
-            <div className="UserActionOrder">
+export class SelectTheme extends Component {
+    render () {
+        return (
+            <div className="UserActionBox">
+                <div className="BoxTitle">
+                    Select Theme
+                </div>
                 <table>
                     <tr>
+                        <td>
+                            Theme
+                        </td>
+                        <td>
+                            Top1
+                        </td>
+                        <td>
+                            Top10
+                        </td>
+                    </tr>
+                    {themes.map((themeObject, themeIndex) => {
+                        return (
+                            <tr>
+                                <td>
+                                    {themeObject.theme}
+                                </td>
+                                <td>
+                                    {themeObject.top1}
+                                </td>
+                                <td>
+                                    {themeObject.top10}
+                                </td>
+                                <td>
+                                    <button onClick={this.props.handler}>
+                                        Select Theme {themeIndex + 1}
+                                    </button>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </table>
+            </div>
+        );
+    }
+}
+
+export class MakeProposition extends Component {
+    render () {
+        return (
+            <div className="UserActionBox">
+                <div className="BoxTitle">
+                    Make Proposition
+                </div>
+                <div className="UserActionInput">
+                    <div className="UserActionInputOption">
+                        Your Proposition:
+                    </div>
+                    <div className="UserActionInputField">
+                        <input
+                            type="text"
+                        />
+                    </div>
+                </div>
+                <div className="UserActionButton">
+                    <button onClick={this.props.handler}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        );
+    }
+}
+
+export class MakeHypothesis extends Component {
+    render () {
+        return (
+            <div className="UserActionBox">
+                <div className="BoxTitle">
+                    Make Hypothesis
+                </div>
+                <table className="PlayerPropositionsTable">
+                    <tr>
+                        <th>
+                        </th>
                         <th>
                             Players
                         </th>
@@ -200,15 +252,9 @@ export function MakeHypothesis() {
                             Propositions
                         </th>
                     </tr>
-                    {Object.entries(playerPropositions).map(([playerName, proposition]) => {
+                    {Object.entries(hypothesis).map(([playerName, proposition]) => {
                         return (
                             <tr>
-                                <td>
-                                    {playerName}
-                                </td>
-                                <td>
-                                    {proposition}
-                                </td>
                                 <td>
                                     <button>
                                         ^
@@ -217,16 +263,63 @@ export function MakeHypothesis() {
                                         v
                                     </button>
                                 </td>
+                                <td>
+                                    {playerName}
+                                </td>
+                                <td>
+                                    {proposition}
+                                </td>
                             </tr>
                         )
                     })}
                 </table>
+                <div className="UserActionButton">
+                    <button onClick={this.props.handler}>
+                        Submit
+                    </button>
+                </div>
             </div>
-            <div className="UserActionButton">
-                <button>
-                    Submit
-                </button>
+        );
+    }
+}
+
+export class CheckResults extends Component {
+    render () {
+        return (
+            <div className="UserActionBox">
+                <div className="BoxTitle">
+                    Hypothesis
+                </div>
+                <div>
+                    <table className="PlayerPropositionsTable">
+                        <tr>
+                            <th>
+                                Players
+                            </th>
+                            <th>
+                                Propositions
+                            </th>
+                        </tr>
+                        {Object.entries(hypothesis).map(([playerName, proposition]) => {
+                            return (
+                                <tr>
+                                    <td>
+                                        {playerName}
+                                    </td>
+                                    <td>
+                                        {proposition}
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </table>
+                </div>
+                <div className="UserActionButton">
+                    <button onClick={this.props.handler}>
+                        Start a new round
+                    </button>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }

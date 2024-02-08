@@ -11,6 +11,9 @@ let usersList = [
 export function Users() {
     return (
         <div className="PlayersBox">
+            <div className="BoxTitle">
+                Users
+            </div>
             <table className="UsersTable">
             <tr>
                 <th>

@@ -1,5 +1,5 @@
 import './game.css';
-import React from "react";
+import {Component} from "react";
 
 let gameOptions = {
     "Number of rounds": 7,
@@ -16,51 +16,55 @@ let roundHistory = [
 ];
 export let roundStarted = true;
 
-export function GameSetup() {
-    return (
-        <div className="UserActionBox">
-            <div className="UserActionTitle">
-                Game Preparation
-            </div>
-            <div>
-                {Object.entries(gameOptions).map(([optionName, optionValue]) => {
-                    return (
-                        <div className="UserActionInput">
-                            <div className="UserActionInputOption">
-                                {optionName}:
+export class GameSetup extends Component {
+    render () {
+        return (
+            <div className="UserActionBox">
+                <div className="BoxTitle">
+                    Game Preparation
+                </div>
+                <div>
+                    {Object.entries(gameOptions).map(([optionName, optionValue]) => {
+                        return (
+                            <div className="UserActionInput">
+                                <div className="UserActionInputOption">
+                                    {optionName}:
+                                </div>
+                                <div className="UserActionInputField">
+                                    <input
+                                        type="text"
+                                        value={optionValue}
+                                    />
+                                </div>
                             </div>
-                            <div className="UserActionInputField">
-                                <input
-                                    type="text"
-                                    value={optionValue}
-                                />
-                            </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
+                </div>
+                <div className="UserActionButton">
+                    <button onClick={this.props.handler}>
+                        Start Game
+                    </button>
+                </div>
             </div>
-            <div className="UserActionButton">
-                <button>
-                    Start Game
-                </button>
-            </div>
-        </div>
-    );
+        );
+    }
 }
 
-export function StartRound() {
-    return (
-        <div className="UserActionBox">
-            <div className="UserActionTitle">
-                Start Round
-            </div>
-            <div className="UserActionButton">
-                <button>
+export class StartRound extends Component {
+    render () {
+        return (
+            <div className="UserActionBox">
+                <div className="BoxTitle">
                     Start Round
-                </button>
+                </div>
+                <div className="UserActionButton">
+                    <button onClick={this.props.handler}>
+                        Start Round
+                    </button>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export function GameProgress() {
