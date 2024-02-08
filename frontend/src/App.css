@@ -6,26 +6,26 @@
 }
 
 .App {
-  background-color: var(--page-color);
-  font-size: 20px;
+    background-color: var(--page-color);
+    font-size: 20px;
 }
 
 .Grid {
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 30% 70%;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 40% 60%;
 }
 
 .Title {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  display: flex;
-  justify-content: center;
-  color: var(--title-color);
-  font-size: 60px;
-  font-weight: bolder;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    display: flex;
+    justify-content: center;
+    color: var(--title-color);
+    font-size: 60px;
+    font-weight: bolder;
 }
