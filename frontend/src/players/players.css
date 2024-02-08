@@ -6,20 +6,26 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     border-style: solid;
-    border-color: steelblue;
-    border-radius: 1px;
+    border-color: var(--title-color);
+    border-radius: 10px;
+    padding: 15px;
 }
 
-.Players {
+table, th, td {
     grid-column-start: 1;
-    grid-column-end: 1;
-    align-items: center;
-    color: steelblue;
-    font-size: 20px;
+    grid-column-end: 4;
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+    color: var(--text-color);
+    padding: 5px;
 }
 
-.Propositions {
-    grid-column-start: 2;
-    color: steelblue;
-    font-size: 20px;
+tr {
+    line-height: 10px;
+}
+
+th {
+    line-height: 14px;
+    text-align: center;
 }

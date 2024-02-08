@@ -3,16 +3,19 @@
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
-    color: steelblue;
+    color: var(--text-color);
     display: grid;
     border-style: solid;
-    border-color: steelblue;
-    border-radius: 1px;
+    border-color: var(--title-color);
+    border-radius: 10px;
     grid-template-rows: repeat(3, 1fr);
+    padding-top: 10px;
 }
 
 .UserActionTitle {
     text-align: center;
+    font-size: 25px;
+    color: var(--title-color);
 }
 
 .UserActionInput {
