@@ -1,12 +1,25 @@
 import './game.css';
 import React from "react";
 
-export function GameSetup() {
-    let gameOptions = {
-        "Number of rounds": 7,
-        "Number of themes per card": 3,
-    }
 
+let gameOptions = {
+    "Number of rounds": 7,
+    "Number of themes per card": 3,
+}
+
+export let roundStarted = true;
+
+let roundHistory = [
+    1,
+    2,
+    1,
+    0,
+    null,
+    null,
+    null,
+];
+
+export function GameSetup() {
     return (
         <div className="UserActionBox">
             <div className="UserActionTitle">
@@ -36,4 +49,75 @@ export function GameSetup() {
             </div>
         </div>
     );
+}
+
+export function StartRound() {
+    return (
+        <div className="UserActionBox">
+            <div className="UserActionTitle">
+                Start Round
+            </div>
+            <div className="UserActionButton">
+                <button>
+                    Start Round
+                </button>
+            </div>
+        </div>
+    );
+}
+
+export function GameProgress() {
+    return (
+        <div className="GameProgress">
+            <table>
+                <tr>
+                    <td>
+                        Round
+                    </td>
+                    {roundHistory.map((roundStatus, roundIndex) => {
+                        return (
+                            <td>
+                                {roundIndex + 1}
+                            </td>
+                        )
+                    })}
+                </tr>
+                <tr>
+                    <td>
+                        Status
+                    </td>
+                    {roundHistory.map((roundStatus, roundIndex) => {
+                        switch (roundStatus) {
+                            case null:
+                                return (
+                                    <td>
+
+                                    </td>
+                                );
+                            case 0:
+                                return (
+                                    <td>
+                                        ?
+                                    </td>
+                                );
+                            case 1:
+                                return (
+                                    <td style={{color: "green"}}>
+                                        W
+                                    </td>
+                                );
+                            case 2:
+                                return (
+                                    <td style={{color: "red"}}>
+                                        L
+                                    </td>
+                                );
+
+                        }
+                    })}
+                </tr>
+            </table>
+        </div>
+    )
+
 }

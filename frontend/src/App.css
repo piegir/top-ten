@@ -2,12 +2,6 @@
   background-color: lightgray;
 }
 
-.Username {
-  position: fixed;
-  top: 0;
-  right: 10px;
-}
-
 .Grid {
   width: 100vw;
   height: 100vh;

@@ -1,4 +1,5 @@
-import {useState, useEffect} from "react";
+import './authentication.css';
+import React, {useState, useEffect} from "react";
 import {restApiIp, restApiPort} from "../common/common.js";
 
 export let currentUser = {
@@ -39,4 +40,15 @@ export function GetUserInfo() {
         username: username,
         fullName: fullName,
     }
+}
+
+export function Username() {
+    return (
+        <div className="Username">
+            <p>
+                Username:<br/>
+                {currentUser.username}
+            </p>
+        </div>
+    )
 }

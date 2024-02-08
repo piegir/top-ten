@@ -40,3 +40,9 @@
 input {
     text-align: center;
 }
+
+.GameProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
