@@ -219,9 +219,7 @@ export class MakeProposition extends Component {
                         Your Proposition:
                     </div>
                     <div className="UserActionInputField">
-                        <input
-                            type="text"
-                        />
+                        <textarea/>
                     </div>
                 </div>
                 <div className="UserActionButtonBox">

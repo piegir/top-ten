@@ -34,6 +34,7 @@ export class GameSetup extends Component {
                                     <input
                                         type="text"
                                         value={optionValue}
+                                        className="NumberInput"
                                     />
                                 </div>
                             </div>
