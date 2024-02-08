@@ -1,0 +1,16 @@
+.UsersTable {
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+    color: var(--text-color);
+    padding: 5px;
+}
+
+.UsersTable tr {
+    line-height: 10%;
+}
+
+.UsersTable th {
+    line-height: 50%;
+    text-align: center;
+}

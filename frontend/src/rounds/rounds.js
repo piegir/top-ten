@@ -8,19 +8,18 @@ let userNumbers = {
     "Player3": 2,
     "Player4": 8,
 };
-
-export function CurrentUserNumber() {
-    return (
-        <div className="CurrentUserNumber">
-            <p>
-                Your Top Number:<br/>
-                {userNumbers[currentUser.username]}
-            </p>
-        </div>
-    )
-}
-
-
+let playersList = [
+    "Player1",
+    "Player2",
+    "Player3",
+    "Player4"
+]
+let propositions = [
+    "Proposition1",
+    "Proposition2",
+    "Proposition3",
+    "Proposition4"
+]
 let themes = [
     {
         theme: "A person",
@@ -38,6 +37,53 @@ let themes = [
         top10: "Ugly",
     }
 ];
+let currentTheme = themes[0];
+let playerPropositions = {
+    "Player1": "My Neighbor",
+    "Player2": "Hitler",
+    "Player3": "Martin Luther King",
+    "Player4": "Donald Trump",
+};
+
+export function CurrentUserNumber() {
+    return (
+        <div className="CurrentUserNumber">
+            <p>
+                Your Top Number:<br/>
+                {userNumbers[currentUser.username]}
+            </p>
+        </div>
+    )
+}
+
+export function PlayerPropositions() {
+    return (
+        <div className="PlayersBox">
+            <table className="PlayerPropositionsTable">
+                <tr>
+                    <th>
+                        Players
+                    </th>
+                    <th>
+                        Propositions
+                    </th>
+                </tr>
+                {playersList.map((playerName, index) => {
+                    return (
+                        <tr>
+                            <td>
+                                {playerName}
+                            </td>
+                            <td>
+                                {propositions[index]}
+                            </td>
+                        </tr>
+                    )
+                })}
+            </table>
+        </div>
+    );
+}
 
 export function SelectTheme() {
     return (
@@ -82,8 +128,6 @@ export function SelectTheme() {
     );
 }
 
-let currentTheme = themes[0];
-
 export function CurrentTheme() {
     return (
         <div className="CurrentTheme">
@@ -114,13 +158,6 @@ export function CurrentTheme() {
         </div>
     );
 }
-
-let playerPropositions = {
-    "Player1": "My Neighbor",
-    "Player2": "Hitler",
-    "Player3": "Martin Luther King",
-    "Player4": "Donald Trump",
-};
 
 export function MakeProposition() {
     return (

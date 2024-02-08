@@ -1,14 +1,10 @@
 import './game.css';
 import React from "react";
 
-
 let gameOptions = {
     "Number of rounds": 7,
     "Number of themes per card": 3,
 }
-
-export let roundStarted = true;
-
 let roundHistory = [
     1,
     2,
@@ -18,6 +14,7 @@ let roundHistory = [
     null,
     null,
 ];
+export let roundStarted = true;
 
 export function GameSetup() {
     return (

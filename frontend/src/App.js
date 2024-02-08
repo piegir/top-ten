@@ -1,9 +1,9 @@
 import './App.css';
 import React from "react";
 import {Username} from "./authentication/authentication.js";
-import {Players} from "./players/players.js"
+import {Users} from "./users/users.js"
 import {GameSetup, StartRound, roundStarted, GameProgress} from "./game/game.js"
-import {CurrentUserNumber, SelectTheme, CurrentTheme, MakeProposition, MakeHypothesis} from "./rounds/rounds"
+import {CurrentUserNumber, PlayerPropositions, SelectTheme, CurrentTheme, MakeProposition, MakeHypothesis} from "./rounds/rounds"
 
 
 function GamePreparation() {
@@ -14,7 +14,7 @@ function GamePreparation() {
                 <div className="Title">
                     Top Ten
                 </div>
-                <Players/>
+                <Users/>
                 <GameSetup/>
             </div>
         </div>
@@ -31,7 +31,7 @@ function RoundStarting() {
                 <div className="Title">
                     Top Ten
                 </div>
-                <Players/>
+                <Users/>
                 <StartRound/>
             </div>
         </div>
@@ -48,7 +48,7 @@ function ThemeSelection() {
                 <div className="Title">
                     Top Ten
                 </div>
-                <Players/>
+                <Users/>
                 <SelectTheme/>
             </div>
         </div>
@@ -66,7 +66,7 @@ function WaitThemeSelection() {
                 <div className="Title">
                     Top Ten
                 </div>
-                <Players/>
+                <Users/>
             </div>
         </div>
 
@@ -84,7 +84,7 @@ function PropositionMaking() {
                 <div className="Title">
                     Top Ten
                 </div>
-                <Players/>
+                <PlayerPropositions/>
                 <MakeProposition/>
             </div>
         </div>
@@ -103,7 +103,7 @@ function WaitPropositionMaking() {
                 <div className="Title">
                     Top Ten
                 </div>
-                <Players/>
+                <PlayerPropositions/>
             </div>
         </div>
 
@@ -121,7 +121,7 @@ function HypothesisMaking() {
                 <div className="Title">
                     Top Ten
                 </div>
-                <Players/>
+                <PlayerPropositions/>
                 <MakeHypothesis/>
             </div>
         </div>

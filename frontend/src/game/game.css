@@ -1,28 +1,7 @@
-.UserActionBox {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    color: var(--text-color);
-    display: grid;
-    border-style: solid;
-    border-color: var(--title-color);
-    border-radius: 10px;
-    grid-template-rows: repeat(3, 1fr);
-    padding: 15px;
-}
-
 .UserActionTitle {
-    grid-row-start: 1;
-    grid-row-end: 2;
     text-align: center;
     font-size: 25px;
     color: var(--title-color);
-}
-
-.UserActionOrder {
-    grid-row-start: 2;
-    grid-row-end: 3;
 }
 
 .UserActionInput {
