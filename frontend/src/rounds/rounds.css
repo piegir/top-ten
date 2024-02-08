@@ -1,6 +1,10 @@
+.ThemesTable td:last-child {
+    width: 15%;
+}
+
 .CurrentUserNumber {
     position: fixed;
-    top: 10%;
+    top: 13%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -8,7 +12,7 @@
 
 .CurrentTheme {
     position: fixed;
-    top: 20%;
+    top: 25%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

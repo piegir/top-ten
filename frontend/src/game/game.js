@@ -40,8 +40,8 @@ export class GameSetup extends Component {
                         )
                     })}
                 </div>
-                <div className="UserActionButton">
-                    <button onClick={this.props.handler}>
+                <div className="UserActionButtonBox">
+                    <button onClick={this.props.handler} className="UserActionButton">
                         Start Game
                     </button>
                 </div>
@@ -55,10 +55,10 @@ export class StartRound extends Component {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
-                    Start Round
+                    Ready to start the round?
                 </div>
-                <div className="UserActionButton">
-                    <button onClick={this.props.handler}>
+                <div className="UserActionButtonBox">
+                    <button onClick={this.props.handler} className="UserActionButton">
                         Start Round
                     </button>
                 </div>

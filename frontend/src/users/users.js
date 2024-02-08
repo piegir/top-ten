@@ -12,13 +12,14 @@ export function Users() {
     return (
         <div className="PlayersBox">
             <div className="BoxTitle">
-                Users
+                Who's playing?
             </div>
             <table className="UsersTable">
             <tr>
                 <th>
                     Players
                 </th>
+                <th></th>
             </tr>
             {usersList.map((username, index) => {
                 return (

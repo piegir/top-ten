@@ -83,11 +83,11 @@ class WaitThemeSelection extends Component {
             <div className="App">
                 <GameProgress/>
                 <Username/>
-                <CurrentUserNumber/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten
                     </div>
+                    <CurrentUserNumber/>
                     <Users/>
                     <div className="UserActionBox"/>
                 </div>
@@ -133,6 +133,7 @@ class WaitPropositionMaking extends Component {
                         Top Ten
                     </div>
                     <PlayerPropositions/>
+                    <div className="UserActionBox"/>
                 </div>
             </div>
 

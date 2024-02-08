@@ -169,7 +169,7 @@ export class SelectTheme extends Component {
                 <div className="BoxTitle">
                     Select Theme
                 </div>
-                <table>
+                <table className="ThemesTable">
                     <tr>
                         <td>
                             Theme
@@ -195,7 +195,7 @@ export class SelectTheme extends Component {
                                 </td>
                                 <td>
                                     <button onClick={this.props.handler}>
-                                        Select Theme {themeIndex + 1}
+                                        Select theme {themeIndex + 1}
                                     </button>
                                 </td>
                             </tr>
@@ -224,8 +224,8 @@ export class MakeProposition extends Component {
                         />
                     </div>
                 </div>
-                <div className="UserActionButton">
-                    <button onClick={this.props.handler}>
+                <div className="UserActionButtonBox">
+                    <button onClick={this.props.handler} className="UserActionButton">
                         Submit
                     </button>
                 </div>
@@ -273,8 +273,8 @@ export class MakeHypothesis extends Component {
                         )
                     })}
                 </table>
-                <div className="UserActionButton">
-                    <button onClick={this.props.handler}>
+                <div className="UserActionButtonBox">
+                    <button onClick={this.props.handler} className="UserActionButton">
                         Submit
                     </button>
                 </div>
@@ -314,8 +314,8 @@ export class CheckResults extends Component {
                         })}
                     </table>
                 </div>
-                <div className="UserActionButton">
-                    <button onClick={this.props.handler}>
+                <div className="UserActionButtonBox">
+                    <button onClick={this.props.handler} className="UserActionButton">
                         Start a new round
                     </button>
                 </div>
