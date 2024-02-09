@@ -4,3 +4,22 @@
     right: 10px;
     font-size: 15px;
 }
+
+.LoginBox {
+    position: fixed;
+    top: 40%;
+    width: 100%;
+    justify-content: center;
+}
+
+.LoginUsername {
+    text-align: center;
+}
+
+.LoginPassword {
+    text-align: center;
+}
+
+.LoginButton {
+    text-align: center;
+}
