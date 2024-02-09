@@ -5,11 +5,18 @@
     font-size: 15px;
 }
 
-.LoginBox {
+.LoginSignupBox {
     position: fixed;
     top: 40%;
-    width: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     justify-content: center;
+    border-style: solid;
+    padding: 20px;
+}
+
+.LoginSignupTabButtons {
+    text-align: center;
 }
 
 .LoginUsername {

@@ -54,7 +54,7 @@ export function Username() {
 }
 
 
-export class LoginSignup extends Component {
+class Login extends Component {
     state = {username: ""};
 
     liveUpdateUsername = (event) => {
@@ -67,7 +67,7 @@ export class LoginSignup extends Component {
 
     render() {
         return (
-            <div className="LoginBox">
+            <div>
                 <div className="LoginUsername">
                     <div>
                         Username:
@@ -96,6 +96,101 @@ export class LoginSignup extends Component {
                     }>
                         Login
                     </button>
+                </div>
+            </div>
+        );
+    }
+}
+
+
+class Signup extends Component {
+    state = {username: ""};
+
+    liveUpdateUsername = (event) => {
+        this.setState({username: event.target.value});
+    }
+
+    setUsername = () => {
+        currentUser.username = this.state.username;
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="LoginUsername">
+                    <div>
+                        Username:
+                    </div>
+                    <div>
+                        <input onChange={this.liveUpdateUsername}
+                               type="text"
+                        />
+                    </div>
+                </div>
+                <div className="LoginPassword">
+                    <div>
+                        Password:
+                    </div>
+                    <div>
+                        <input
+                            type="password"
+                        />
+                    </div>
+                </div>
+                <div className="LoginPassword">
+                    <div>
+                        Confirm password:
+                    </div>
+                    <div>
+                        <input
+                            type="password"
+                        />
+                    </div>
+                </div>
+                <div className="LoginButton">
+                    <button onClick={() => {
+                        this.setUsername();
+                        this.props.handler();
+                    }
+                    }>
+                        Signup
+                    </button>
+                </div>
+            </div>
+        );
+    }
+}
+
+export class LoginSignup extends Component {
+    state = {signup: false};
+
+    switchToSignup = () => {
+        this.setState({signup: true});
+    }
+
+    switchToLogin = () => {
+        this.setState({signup: false});
+    }
+
+    render() {
+        return (
+            <div className="LoginSignupBox">
+                <div className="LoginSignupTabButtons">
+                    <button onClick={this.switchToLogin}>
+                        Login
+                    </button>
+                    <button onClick={this.switchToSignup}>
+                        Signup
+                    </button>
+                </div>
+                <div>
+                    {this.state.signup ?
+                        <Signup handler={() => {
+                            this.props.handler();
+                        }}/> :
+                        <Login handler={() => {
+                            this.props.handler();
+                        }}/>}
                 </div>
             </div>
         );
