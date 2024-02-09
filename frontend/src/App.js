@@ -1,6 +1,6 @@
 import './App.css';
 import {Component} from "react";
-import {LoginSignup, Username} from "./authentication/authentication.js";
+import {currentUser, LoginSignup, Username} from "./authentication/authentication.js";
 import {Users} from "./users/users.js"
 import {GameSetup, StartRound, roundStarted, GameProgress} from "./game/game.js"
 import {
@@ -24,9 +24,7 @@ class AskCredentials extends Component {
                         Top Ten
                     </div>
                 </div>
-                <LoginSignup handler={() => {
-                    this.props.handler();
-                }}/>
+                <LoginSignup loginHandler={this.props.loginHandler} signupHandler={this.props.signupHandler}/>
             </div>
 
         );
@@ -37,15 +35,13 @@ class GamePreparation extends Component {
     render() {
         return (
             <div className="App">
-                <Username/>
+                <Username logOutHandler={this.props.logOutHandler}/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten
                     </div>
                     <Users/>
-                    <GameSetup handler={() => {
-                        this.props.handler();
-                    }}/>
+                    <GameSetup gameStartingHandler={this.props.gameStartingHandler}/>
                 </div>
             </div>
 
@@ -58,15 +54,13 @@ class RoundStarting extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username/>
+                <Username logOutHandler={this.props.logOutHandler}/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten
                     </div>
                     <Users/>
-                    <StartRound handler={() => {
-                        this.props.handler();
-                    }}/>
+                    <StartRound roundStartingHandler={this.props.roundStartingHandler}/>
                 </div>
             </div>
 
@@ -79,15 +73,13 @@ class ThemeSelection extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username/>
+                <Username logOutHandler={this.props.logOutHandler}/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten
                     </div>
                     <Users/>
-                    <SelectTheme handler={() => {
-                        this.props.handler();
-                    }}/>
+                    <SelectTheme themeSelectedHandler={this.props.themeSelectedHandler}/>
                 </div>
             </div>
 
@@ -100,7 +92,7 @@ class WaitThemeSelection extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username/>
+                <Username logOutHandler={this.props.logOutHandler}/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten
@@ -120,7 +112,7 @@ class PropositionMaking extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username/>
+                <Username logOutHandler={this.props.logOutHandler}/>
                 <CurrentUserNumber/>
                 <CurrentTheme/>
                 <div className="Grid">
@@ -128,9 +120,7 @@ class PropositionMaking extends Component {
                         Top Ten
                     </div>
                     <PlayerPropositions/>
-                    <MakeProposition handler={() => {
-                        this.props.handler();
-                    }}/>
+                    <MakeProposition handler={this.props.nextStepHandler}/>
                 </div>
             </div>
 
@@ -143,7 +133,7 @@ class WaitPropositionMaking extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username/>
+                <Username logOutHandler={this.props.logOutHandler}/>
                 <CurrentUserNumber/>
                 <CurrentTheme/>
                 <div className="Grid">
@@ -164,7 +154,7 @@ class HypothesisMaking extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username/>
+                <Username logOutHandler={this.props.logOutHandler}/>
                 <CurrentUserNumber/>
                 <CurrentTheme/>
                 <div className="Grid">
@@ -172,9 +162,7 @@ class HypothesisMaking extends Component {
                         Top Ten
                     </div>
                     <PlayerPropositions/>
-                    <MakeHypothesis handler={() => {
-                        this.props.handler();
-                    }}/>
+                    <MakeHypothesis handler={this.props.nextStepHandler}/>
                 </div>
             </div>
 
@@ -187,7 +175,7 @@ class ResultsChecking extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username/>
+                <Username logOutHandler={this.props.logOutHandler}/>
                 <CurrentUserNumber/>
                 <CurrentTheme/>
                 <div className="Grid">
@@ -195,9 +183,7 @@ class ResultsChecking extends Component {
                         Top Ten
                     </div>
                     <PlayerNumberedPropositions/>
-                    <CheckResults handler={() => {
-                        this.props.handler();
-                    }}/>
+                    <CheckResults handler={this.props.nextStepHandler}/>
                 </div>
             </div>
 
@@ -219,101 +205,124 @@ let views = {
 
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        window.onbeforeunload = (event) => {
+            const e = event;
+            // Cancel the event
+            e.preventDefault();
+            if (e) {
+                e.returnValue = ''; // Legacy method for cross browser support
+            }
+            return ''; // Legacy method for cross browser support
+        };
+
+    }
     state = {view: views.AskCredentials};
 
-    goToGamePreparation = () => {
-        this.setState({view: views.GamePreparation});
-    };
+    /// View Changers
 
-    goToRoundStarting = () => {
+    setRoundStartingView = () => {
         this.setState({view: views.RoundStarting});
     };
 
-    goToThemeSelection = () => {
+    setThemeSelectionView = () => {
         this.setState({view: views.ThemeSelection});
     };
 
-    goToWaitThemeSelection = () => {
+    setWaitThemeSelectionView = () => {
         this.setState({view: views.WaitThemeSelection});
     };
 
-    goToPropositionMaking = () => {
+    setPropositionMakingView = () => {
         this.setState({view: views.PropositionMaking});
     };
 
-    goToWaitPropositionMaking = () => {
+    setWaitPropositionMakingView = () => {
         this.setState({view: views.WaitPropositionMaking});
     };
 
-    goToHypothesisMaking = () => {
+    setHypothesisMakingView = () => {
         this.setState({view: views.HypothesisMaking});
     };
 
-    goToResultsChecking = () => {
+    setResultsCheckingView = () => {
         this.setState({view: views.ResultsChecking});
+    };
+
+
+    /// Logic Handlers
+    logoutHandler = () => {
+        if (window.confirm("Logging out will make you leave the game you are part of. Are you sure?")) {
+            currentUser.username = "";
+            this.setState({view: views.AskCredentials});
+        }
+    };
+
+    loginHandler = (loginInfo) => {
+        currentUser.username = loginInfo.username;
+        this.setState({view: views.GamePreparation});
+    };
+
+    signupHandler = (signupInfo) => {
+        currentUser.username = signupInfo.username;
+        this.setState({view: views.GamePreparation});
+    };
+
+    gameStartingHandler = () => {
+        this.setRoundStartingView();
+    };
+
+    roundStartingHandler = () => {
+        this.setThemeSelectionView();
+    };
+
+    themeSelectedHandler = () => {
+        this.setPropositionMakingView();
     };
 
     render() {
         switch (this.state.view) {
             case views.AskCredentials:
                 return (
-                    <AskCredentials handler={() => {
-                        this.goToGamePreparation();
-                    }}/>
+                    <AskCredentials loginHandler={this.loginHandler} signupHandler={this.signupHandler}/>
                 )
             case views.GamePreparation:
                 return (
-                    <GamePreparation handler={() => {
-                        this.goToRoundStarting();
-                    }}/>
+                    <GamePreparation gameStartingHandler={this.gameStartingHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.RoundStarting:
                 return (
-                    <RoundStarting handler={() => {
-                        this.goToThemeSelection();
-                    }}/>
+                    <RoundStarting roundStartingHandler={this.roundStartingHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.ThemeSelection:
                 return (
-                    <ThemeSelection handler={() => {
-                        this.goToPropositionMaking();
-                    }}/>
+                    <ThemeSelection themeSelectedHandler={this.themeSelectedHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.WaitThemeSelection:
                 return (
-                    <WaitThemeSelection handler={() => {
-                        this.goToPropositionMaking();
-                    }}/>
+                    <WaitThemeSelection nextStepHandler={this.setPropositionMakingView} logOutHandler={this.logoutHandler}/>
                 )
             case views.PropositionMaking:
                 return (
-                    <PropositionMaking handler={() => {
-                        this.goToHypothesisMaking();
-                    }}/>
+                    <PropositionMaking nextStepHandler={this.setHypothesisMakingView} logOutHandler={this.logoutHandler}/>
                 )
             case views.WaitPropositionMaking:
                 return (
-                    <WaitPropositionMaking handler={() => {
-                        this.goToHypothesisMaking();
-                    }}/>
+                    <WaitPropositionMaking nextStepHandler={this.setHypothesisMakingView} logOutHandler={this.logoutHandler}/>
                 )
             case views.HypothesisMaking:
                 return (
-                    <HypothesisMaking handler={() => {
-                        this.goToResultsChecking();
-                    }}/>
+                    <HypothesisMaking nextStepHandler={this.setResultsCheckingView} logOutHandler={this.logoutHandler}/>
                 )
             case views.ResultsChecking:
                 return (
-                    <ResultsChecking handler={() => {
-                        this.goToRoundStarting();
-                    }}/>
+                    <ResultsChecking nextStepHandler={this.setRoundStartingView} logOutHandler={this.logoutHandler}/>
                 )
             default:
                 return (
-                    <GamePreparation handler={() => {
-                        this.goToRoundStarting();
-                    }}/>
+                    <GamePreparation nextStepHandler={this.setRoundStartingView} logOutHandler={this.logoutHandler}/>
                 )
         }
     }

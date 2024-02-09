@@ -189,7 +189,7 @@ export class SelectTheme extends Component {
                                     {themeObject.top10}
                                 </td>
                                 <td>
-                                    <button onClick={this.props.handler}>
+                                    <button onClick={this.props.themeSelectedHandler}>
                                         Select theme {themeIndex + 1}
                                     </button>
                                 </td>

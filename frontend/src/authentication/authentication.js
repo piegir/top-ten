@@ -42,15 +42,20 @@ export function GetUserInfo() {
     }
 }
 
-export function Username() {
-    return (
-        <div className="Username">
-            <p>
-                Username:<br/>
-                {currentUser.username}
-            </p>
-        </div>
-    )
+export class Username extends Component {
+    render () {
+        return (
+            <div className="Username">
+                <p>
+                    Username:<br/>
+                    {currentUser.username}
+                </p>
+                <button onClick={this.props.logOutHandler}>
+                    Logout
+                </button>
+            </div>
+        )
+    }
 }
 
 
@@ -59,10 +64,6 @@ class Login extends Component {
 
     liveUpdateUsername = (event) => {
         this.setState({username: event.target.value});
-    }
-
-    setUsername = () => {
-        currentUser.username = this.state.username;
     }
 
     render() {
@@ -90,8 +91,7 @@ class Login extends Component {
                 </div>
                 <div className="LoginButton">
                     <button onClick={() => {
-                            this.setUsername();
-                            this.props.handler();
+                            this.props.loginHandler(this.state);
                         }
                     }>
                         Login
@@ -108,10 +108,6 @@ class Signup extends Component {
 
     liveUpdateUsername = (event) => {
         this.setState({username: event.target.value});
-    }
-
-    setUsername = () => {
-        currentUser.username = this.state.username;
     }
 
     render() {
@@ -149,8 +145,7 @@ class Signup extends Component {
                 </div>
                 <div className="LoginButton">
                     <button onClick={() => {
-                        this.setUsername();
-                        this.props.handler();
+                        this.props.signupHandler(this.state);
                     }
                     }>
                         Signup
@@ -185,12 +180,8 @@ export class LoginSignup extends Component {
                 </div>
                 <div>
                     {this.state.signup ?
-                        <Signup handler={() => {
-                            this.props.handler();
-                        }}/> :
-                        <Login handler={() => {
-                            this.props.handler();
-                        }}/>}
+                        <Signup signupHandler={this.props.signupHandler}/> :
+                        <Login loginHandler={this.props.loginHandler}/>}
                 </div>
             </div>
         );
