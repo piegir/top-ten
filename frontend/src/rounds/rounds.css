@@ -52,3 +52,19 @@ th, td {
     line-height: 50%;
     text-align: center;
 }
+
+
+.UpDownButtons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.UpButton {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.DownButton {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}

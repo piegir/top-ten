@@ -39,12 +39,7 @@ let playerPropositions = {
     "Player4": "Donald Trump",
 };
 
-let hypothesis = {
-    "Player3": "Martin Luther King",
-    "Player1": "My Neighbor",
-    "Player4": "Donald Trump",
-    "Player2": "Hitler",
-};
+let hypothesis = [];
 
 export function CurrentUserNumber() {
     return (
@@ -163,7 +158,7 @@ export function PlayerNumberedPropositions() {
 }
 
 export class SelectTheme extends Component {
-    render () {
+    render() {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
@@ -208,7 +203,7 @@ export class SelectTheme extends Component {
 }
 
 export class MakeProposition extends Component {
-    render () {
+    render() {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
@@ -233,7 +228,41 @@ export class MakeProposition extends Component {
 }
 
 export class MakeHypothesis extends Component {
-    render () {
+
+    state = {data: [
+        {
+            player: "Player1",
+            proposition: "My Neighbor",
+        },
+        {
+            player: "Player2",
+            proposition: "Hitler",
+        },
+        {
+            player: "Player3",
+            proposition: "Martin Luther King",
+        },
+        {
+            player: "Player4",
+            proposition: "Donald Trump",
+        },
+    ]};
+
+
+    raise = (index) => {
+        let newHypothesis = [...this.state.data];
+        [newHypothesis[index-1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index-1]];
+        this.setState({data: newHypothesis});
+    };
+
+    lower = (index) => {
+        let newHypothesis = [...this.state.data];
+        [newHypothesis[index+1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index+1]];
+        this.setState({data: newHypothesis});
+    };
+
+
+    render() {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
@@ -250,29 +279,38 @@ export class MakeHypothesis extends Component {
                             Propositions
                         </th>
                     </tr>
-                    {Object.entries(hypothesis).map(([playerName, proposition]) => {
+                    {this.state.data.map((proposition, index) => {
                         return (
                             <tr>
                                 <td>
-                                    <button>
-                                        ^
-                                    </button>
-                                    <button>
-                                        v
-                                    </button>
+                                    <div className="UpDownButtons">
+                                        {index > 0 ? <button onClick={() => {
+                                            this.raise(index)
+                                        }} className="UpButton">
+                                            ^
+                                        </button> : null}
+                                        {index < this.state.data.length - 1 ?<button onClick={() => {
+                                            this.lower(index)
+                                        }} className="DownButton">
+                                            v
+                                        </button> : null}
+                                    </div>
                                 </td>
                                 <td>
-                                    {playerName}
+                                    {proposition.player}
                                 </td>
                                 <td>
-                                    {proposition}
+                                    {proposition.proposition}
                                 </td>
                             </tr>
                         )
                     })}
                 </table>
                 <div className="UserActionButtonBox">
-                    <button onClick={this.props.handler} className="UserActionButton">
+                    <button onClick={() => {
+                        this.props.handler();
+                        hypothesis = this.state.data;
+                    }} className="UserActionButton">
                         Submit
                     </button>
                 </div>
@@ -282,7 +320,7 @@ export class MakeHypothesis extends Component {
 }
 
 export class CheckResults extends Component {
-    render () {
+    render() {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
@@ -298,14 +336,14 @@ export class CheckResults extends Component {
                                 Propositions
                             </th>
                         </tr>
-                        {Object.entries(hypothesis).map(([playerName, proposition]) => {
+                        {hypothesis.map((proposition) => {
                             return (
                                 <tr>
                                     <td>
-                                        {playerName}
+                                        {proposition.player}
                                     </td>
                                     <td>
-                                        {proposition}
+                                        {proposition.proposition}
                                     </td>
                                 </tr>
                             )
