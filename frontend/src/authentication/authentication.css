@@ -1,0 +1,32 @@
+.Username {
+    position: fixed;
+    top: 0;
+    right: 10px;
+    font-size: 15px;
+}
+
+.LoginSignupBox {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    border-style: solid;
+    padding: 20px;
+}
+
+.LoginSignupTabButtons {
+    text-align: center;
+}
+
+.LoginUsername {
+    text-align: center;
+}
+
+.LoginPassword {
+    text-align: center;
+}
+
+.LoginButton {
+    text-align: center;
+}

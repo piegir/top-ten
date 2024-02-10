@@ -1,0 +1,70 @@
+.ThemesTable td:last-child {
+    width: 15%;
+}
+
+.CurrentUserNumber {
+    position: fixed;
+    top: 13%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.CurrentTheme {
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+    border-color: black;
+}
+
+.PlayerPropositionsTable {
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+    color: var(--text-color);
+    padding: 5px;
+}
+
+.PlayerPropositionsTable td:last-child {
+    width: 80%;
+}
+
+.PlayerPropositionsTable tr {
+    line-height: 10%;
+}
+
+.PlayerPropositionsTable th {
+    line-height: 50%;
+    text-align: center;
+}
+
+
+.UpDownButtons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.UpButton {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.DownButton {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}

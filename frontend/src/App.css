@@ -1,0 +1,67 @@
+:root {
+    --page-color: #f6f6f6;
+    --title-color: #163172;
+    --text-color: #1e56a0;
+    --box-color: #d6e4f0;
+}
+
+.BoxTitle {
+    text-align: center;
+    font-size: 25px;
+    color: var(--title-color);
+    padding-bottom: 10px;
+}
+
+.App {
+    background-color: var(--page-color);
+    font-size: 20px;
+}
+
+.Grid {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 40% 60%;
+}
+
+.Title {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    display: flex;
+    justify-content: center;
+    color: var(--title-color);
+    font-size: 60px;
+    font-weight: bolder;
+}
+
+.PlayersBox {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    border-style: solid;
+    border-color: var(--title-color);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.UserActionBox {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    color: var(--text-color);
+    border-style: solid;
+    border-color: var(--title-color);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.BoxTitle {
+    text-align: center;
+    font-size: 25px;
+    color: var(--title-color);
+}
