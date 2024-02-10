@@ -200,9 +200,9 @@ let views = {
     PropositionMaking: 5,
     WaitPropositionMaking: 6,
     HypothesisMaking: 7,
-    ResultsChecking: 8,
+    WaitHypothesisMaking: 8,
+    ResultsChecking: 9,
 }
-
 
 class App extends Component {
 
@@ -220,37 +220,6 @@ class App extends Component {
 
     }
     state = {view: views.AskCredentials};
-
-    /// View Changers
-
-    setRoundStartingView = () => {
-        this.setState({view: views.RoundStarting});
-    };
-
-    setThemeSelectionView = () => {
-        this.setState({view: views.ThemeSelection});
-    };
-
-    setWaitThemeSelectionView = () => {
-        this.setState({view: views.WaitThemeSelection});
-    };
-
-    setPropositionMakingView = () => {
-        this.setState({view: views.PropositionMaking});
-    };
-
-    setWaitPropositionMakingView = () => {
-        this.setState({view: views.WaitPropositionMaking});
-    };
-
-    setHypothesisMakingView = () => {
-        this.setState({view: views.HypothesisMaking});
-    };
-
-    setResultsCheckingView = () => {
-        this.setState({view: views.ResultsChecking});
-    };
-
 
     /// Logic Handlers
     logoutHandler = () => {
@@ -271,23 +240,44 @@ class App extends Component {
     };
 
     gameStartingHandler = () => {
-        this.setRoundStartingView();
+        this.setState({view: views.RoundStarting});
     };
 
     roundStartingHandler = () => {
-        this.setThemeSelectionView();
+        let roundFirstPlayer = currentUser.username;
+        // TODO: replace with API call checking for first player
+        if (currentUser.username === roundFirstPlayer) {
+            this.setState({view: views.ThemeSelection});
+        }
+        else {
+            this.setState({view: views.WaitThemeSelection});
+        }
     };
 
     themeSelectedHandler = () => {
-        this.setPropositionMakingView();
+        let roundCurrentPlayer = currentUser.username;
+        // TODO: replace with API call checking for current player
+        if (currentUser.username === roundCurrentPlayer) {
+            this.setState({view: views.PropositionMaking});
+        }
+        else {
+            this.setState({view: views.WaitPropositionMaking});
+        }
     };
 
     propositionMadeHandler = () => {
-        this.setHypothesisMakingView();
+        let roundFirstPlayer = currentUser.username;
+        // TODO: replace with API call checking for first player and that all propositions were made
+        if (currentUser.username === roundFirstPlayer) {
+            this.setState({view: views.HypothesisMaking});
+        }
+        else {
+            this.setState({view: views.WaitHypothesisMaking});
+        }
     };
 
     hypothesisMadeHandler = () => {
-        this.setResultsCheckingView();
+        this.setState({view: views.ResultsChecking});
     };
 
     render() {
