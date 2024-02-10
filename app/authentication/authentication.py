@@ -26,7 +26,7 @@ def add_user(username: str) -> ActionStatus:
         return ActionStatus(status=False,
                             message=f"Username '{username}' already taken.")
     connected_users.add(username)
-    return ActionStatus(status=True, message=f"'{username}' connected.")
+    return ActionStatus(status=True, message=f"Connected as {username}.")
 
 
 def remove_user(username: str) -> ActionStatus:
@@ -37,11 +37,10 @@ def remove_user(username: str) -> ActionStatus:
     :return: The status of adding the user.
     """
     if not user_connected(username):
-        return ActionStatus(status=False,
-                            message=f"'{username}' not connected.")
+        return ActionStatus(status=False, message=f"{username} not connected.")
     connected_users.remove(username)
     return ActionStatus(status=True,
-                        message=f"'{username}' properly disconnected.")
+                        message=f"{username} properly disconnected.")
 
 
 @router.post("/oauth2_login", include_in_schema=False)

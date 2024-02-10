@@ -1,6 +1,6 @@
 import './App.css';
 import {Component} from "react";
-import {currentUser, Login, Username} from "./authentication/authentication.js";
+import {currentUser, userLogin, userLogout, Login, Username} from "./authentication/authentication.js";
 import {Users} from "./users/users.js"
 import {GameSetup, StartRound, roundStarted, GameProgress} from "./game/game.js"
 import {
@@ -13,6 +13,7 @@ import {
     PlayerNumberedPropositions,
     CheckResults
 } from "./rounds/rounds"
+import {wait} from "./common/common.js";
 
 
 class AskCredentials extends Component {
@@ -218,20 +219,44 @@ class App extends Component {
             return ''; // Legacy method for cross browser support
         };
 
+        window.onpagehide = (event) => {
+            userLogout().then();
+            // Wait 1s to make sure the user was logged out.
+            wait(1000);
+        };
+
     }
     state = {view: views.AskCredentials};
 
     /// Logic Handlers
-    logoutHandler = () => {
-        if (window.confirm("Logging out will make you leave the game you are part of. Are you sure?")) {
-            currentUser.username = "";
-            this.setState({view: views.AskCredentials});
-        }
-    };
-
     loginHandler = (loginInfo) => {
         currentUser.username = loginInfo.username;
-        this.setState({view: views.GamePreparation});
+        userLogin()
+            .then((loginSuccess) => {
+                if (loginSuccess.status) {
+                    alert(loginSuccess.message);
+                    this.setState({view: views.GamePreparation});
+                }
+                else {
+                    alert(loginSuccess.message);
+                }
+            });
+    };
+
+    logoutHandler = () => {
+        if (window.confirm("Logging out will make you leave the game you are part of. Are you sure?")) {
+            userLogout()
+                .then((logoutSuccess) => {
+                    if (logoutSuccess.status) {
+                        alert(logoutSuccess.message);
+                        currentUser.username = "";
+                        this.setState({view: views.AskCredentials});
+                    }
+                    else {
+                        alert(logoutSuccess.message);
+                    }
+                });
+        }
     };
 
     gameStartedHandler = () => {
