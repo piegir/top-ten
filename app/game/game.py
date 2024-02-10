@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 from typing import Annotated
 
-from app.authentication.authentication import User, get_current_user, check_user_connected
+from app.authentication.authentication import oauth2_scheme, user_connected
 from app.utils import ActionStatus
 from lib.game import Game
 
@@ -46,7 +46,7 @@ def check_all_players_connected(players_list: list[str]):
 
     :param players_list: The list of players usernames
     """
-    if not all(check_user_connected(username) for username in players_list):
+    if not all(user_connected(username) for username in players_list):
         raise HTTPException(status_code=400,
                             detail="Some selected players are not connected.")
 
@@ -69,23 +69,22 @@ def check_player_in_game(player: str, action_description: str):
 @router.post("/start")
 def start_game(
         game_config: GameConfig,
-        current_user: Annotated[User,
-                                Depends(get_current_user)]) -> ActionStatus:
+        current_username: Annotated[str,
+                                    Depends(oauth2_scheme)]) -> ActionStatus:
     """
     API call to start a game.
 
     :param game_config: The game configuration
-    :param current_user: Current user performing the request (automatically obtained)
+    :param current_username: Username of the current user performing the request (automatically obtained)
     :return: The status of starting the game.
     """
     global current_game
     check_all_players_connected(game_config.players_list)
-    if current_user.username not in game_config.players_list:
+    if current_username not in game_config.players_list:
         return ActionStatus(
             status=False,
             message="Game couldn't be started. "
-            f"Requesting player '{current_user.username}' not part of the game."
-        )
+            f"Requesting player '{current_username}' not part of the game.")
 
     try:
         current_game = Game(game_config.players_list,
@@ -103,17 +102,17 @@ def start_game(
 
 @router.post("/start_new_round")
 def start_new_round(
-        current_user: Annotated[User,
-                                Depends(get_current_user)]) -> ActionStatus:
+        current_username: Annotated[str,
+                                    Depends(oauth2_scheme)]) -> ActionStatus:
     """
     API call to start a new round for the current game.
 
-    :param current_user: Current user performing the request (automatically obtained)
+    :param current_username: Username of the current user performing the request (automatically obtained)
     :return: The status of starting the round.
     """
     description = "start new round"
     check_game_created(description)
-    check_player_in_game(current_user.username, description)
+    check_player_in_game(current_username, description)
 
     try:
         current_game.start_new_round()
@@ -131,47 +130,47 @@ def start_new_round(
 
 @router.get("/is_round_in_progress")
 def is_round_in_progress(
-        current_user: Annotated[User, Depends(get_current_user)]) -> bool:
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
     """
     API call to check if a round is currently in progress in the game.
 
-    :param current_user: Current user performing the request (automatically obtained)
+    :param current_username: Username of the current user performing the request (automatically obtained)
     :return: True if a round is progress, False otherwise.
     """
     description = "check round in progress"
     check_game_created(description)
-    check_player_in_game(current_user.username, description)
+    check_player_in_game(current_username, description)
 
     return current_game.is_round_in_progress()
 
 
 @router.get("/is_game_complete")
 def is_game_complete(
-        current_user: Annotated[User, Depends(get_current_user)]) -> bool:
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
     """
     API call to check if the game is complete.
 
-    :param current_user: Current user performing the request (automatically obtained)
+    :param current_username: Username of the current user performing the request (automatically obtained)
     :return: True if the game is complete, False otherwise.
     """
     description = "start new round"
     check_game_created(description)
-    check_player_in_game(current_user.username, description)
+    check_player_in_game(current_username, description)
 
     return current_game.is_game_complete()
 
 
 @router.get("/is_game_won")
 def is_game_won(
-        current_user: Annotated[User, Depends(get_current_user)]) -> bool:
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
     """
     API call to check if the game is won.
 
-    :param current_user: Current user performing the request (automatically obtained)
+    :param current_username: Username of the current user performing the request (automatically obtained)
     :return: True if the game is won, False otherwise.
     """
     description = "check for game win"
     check_game_created(description)
-    check_player_in_game(current_user.username, description)
+    check_player_in_game(current_username, description)
 
     return current_game.is_game_won()
