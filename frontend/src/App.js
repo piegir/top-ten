@@ -1,6 +1,6 @@
 import './App.css';
 import {Component} from "react";
-import {currentUser, LoginSignup, Username} from "./authentication/authentication.js";
+import {currentUser, Login, Username} from "./authentication/authentication.js";
 import {Users} from "./users/users.js"
 import {GameSetup, StartRound, roundStarted, GameProgress} from "./game/game.js"
 import {
@@ -24,7 +24,7 @@ class AskCredentials extends Component {
                         Top Ten
                     </div>
                 </div>
-                <LoginSignup loginHandler={this.props.loginHandler} signupHandler={this.props.signupHandler}/>
+                <Login loginHandler={this.props.loginHandler}/>
             </div>
 
         );
@@ -234,11 +234,6 @@ class App extends Component {
         this.setState({view: views.GamePreparation});
     };
 
-    signupHandler = (signupInfo) => {
-        currentUser.username = signupInfo.username;
-        this.setState({view: views.GamePreparation});
-    };
-
     gameStartedHandler = () => {
         this.setState({view: views.RoundStarting});
     };
@@ -288,7 +283,7 @@ class App extends Component {
         switch (this.state.view) {
             case views.AskCredentials:
                 return (
-                    <AskCredentials loginHandler={this.loginHandler} signupHandler={this.signupHandler}/>
+                    <AskCredentials loginHandler={this.loginHandler}/>
                 )
             case views.GamePreparation:
                 return (
@@ -324,7 +319,7 @@ class App extends Component {
                 )
             default:
                 return (
-                    <AskCredentials loginHandler={this.loginHandler} signupHandler={this.signupHandler}/>
+                    <AskCredentials loginHandler={this.loginHandler}/>
                 )
         }
     }
