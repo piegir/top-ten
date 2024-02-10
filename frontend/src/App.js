@@ -120,7 +120,7 @@ class PropositionMaking extends Component {
                         Top Ten
                     </div>
                     <PlayerPropositions/>
-                    <MakeProposition handler={this.props.nextStepHandler}/>
+                    <MakeProposition propositionMadeHandler={this.props.propositionMadeHandler}/>
                 </div>
             </div>
 
@@ -162,7 +162,7 @@ class HypothesisMaking extends Component {
                         Top Ten
                     </div>
                     <PlayerPropositions/>
-                    <MakeHypothesis handler={this.props.nextStepHandler}/>
+                    <MakeHypothesis hypothesisMadeHandler={this.props.hypothesisMadeHandler}/>
                 </div>
             </div>
 
@@ -183,7 +183,7 @@ class ResultsChecking extends Component {
                         Top Ten
                     </div>
                     <PlayerNumberedPropositions/>
-                    <CheckResults handler={this.props.nextStepHandler}/>
+                    <CheckResults handler={this.props.roundStartingHandler}/>
                 </div>
             </div>
 
@@ -282,6 +282,14 @@ class App extends Component {
         this.setPropositionMakingView();
     };
 
+    propositionMadeHandler = () => {
+        this.setHypothesisMakingView();
+    };
+
+    hypothesisMadeHandler = () => {
+        this.setResultsCheckingView();
+    };
+
     render() {
         switch (this.state.view) {
             case views.AskCredentials:
@@ -302,27 +310,27 @@ class App extends Component {
                 )
             case views.WaitThemeSelection:
                 return (
-                    <WaitThemeSelection nextStepHandler={this.setPropositionMakingView} logOutHandler={this.logoutHandler}/>
+                    <WaitThemeSelection themeSelectedHandler={this.themeSelectedHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.PropositionMaking:
                 return (
-                    <PropositionMaking nextStepHandler={this.setHypothesisMakingView} logOutHandler={this.logoutHandler}/>
+                    <PropositionMaking propositionMadeHandler={this.propositionMadeHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.WaitPropositionMaking:
                 return (
-                    <WaitPropositionMaking nextStepHandler={this.setHypothesisMakingView} logOutHandler={this.logoutHandler}/>
+                    <WaitPropositionMaking propositionMadeHandler={this.propositionMadeHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.HypothesisMaking:
                 return (
-                    <HypothesisMaking nextStepHandler={this.setResultsCheckingView} logOutHandler={this.logoutHandler}/>
+                    <HypothesisMaking hypothesisMadeHandler={this.hypothesisMadeHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.ResultsChecking:
                 return (
-                    <ResultsChecking nextStepHandler={this.setRoundStartingView} logOutHandler={this.logoutHandler}/>
+                    <ResultsChecking roundStartingHandler={this.roundStartingHandler} logOutHandler={this.logoutHandler}/>
                 )
             default:
                 return (
-                    <GamePreparation nextStepHandler={this.setRoundStartingView} logOutHandler={this.logoutHandler}/>
+                    <AskCredentials loginHandler={this.loginHandler} signupHandler={this.signupHandler}/>
                 )
         }
     }
