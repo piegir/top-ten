@@ -41,7 +41,7 @@ class GamePreparation extends Component {
                         Top Ten
                     </div>
                     <Users/>
-                    <GameSetup gameStartingHandler={this.props.gameStartingHandler}/>
+                    <GameSetup gameStartedHandler={this.props.gameStartedHandler}/>
                 </div>
             </div>
 
@@ -60,7 +60,7 @@ class RoundStarting extends Component {
                         Top Ten
                     </div>
                     <Users/>
-                    <StartRound roundStartingHandler={this.props.roundStartingHandler}/>
+                    <StartRound roundStartedHandler={this.props.roundStartedHandler}/>
                 </div>
             </div>
 
@@ -183,7 +183,7 @@ class ResultsChecking extends Component {
                         Top Ten
                     </div>
                     <PlayerNumberedPropositions/>
-                    <CheckResults handler={this.props.roundStartingHandler}/>
+                    <CheckResults roundFinishedHandler={this.props.roundFinishedHandler}/>
                 </div>
             </div>
 
@@ -239,11 +239,11 @@ class App extends Component {
         this.setState({view: views.GamePreparation});
     };
 
-    gameStartingHandler = () => {
+    gameStartedHandler = () => {
         this.setState({view: views.RoundStarting});
     };
 
-    roundStartingHandler = () => {
+    roundStartedHandler = () => {
         let roundFirstPlayer = currentUser.username;
         // TODO: replace with API call checking for first player
         if (currentUser.username === roundFirstPlayer) {
@@ -280,6 +280,10 @@ class App extends Component {
         this.setState({view: views.ResultsChecking});
     };
 
+    roundFinishedHandler = () => {
+        this.setState({view: views.RoundStarting});
+    };
+
     render() {
         switch (this.state.view) {
             case views.AskCredentials:
@@ -288,11 +292,11 @@ class App extends Component {
                 )
             case views.GamePreparation:
                 return (
-                    <GamePreparation gameStartingHandler={this.gameStartingHandler} logOutHandler={this.logoutHandler}/>
+                    <GamePreparation gameStartedHandler={this.gameStartedHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.RoundStarting:
                 return (
-                    <RoundStarting roundStartingHandler={this.roundStartingHandler} logOutHandler={this.logoutHandler}/>
+                    <RoundStarting roundStartedHandler={this.roundStartedHandler} logOutHandler={this.logoutHandler}/>
                 )
             case views.ThemeSelection:
                 return (
@@ -316,7 +320,7 @@ class App extends Component {
                 )
             case views.ResultsChecking:
                 return (
-                    <ResultsChecking roundStartingHandler={this.roundStartingHandler} logOutHandler={this.logoutHandler}/>
+                    <ResultsChecking roundFinishedHandler={this.roundFinishedHandler} logOutHandler={this.logoutHandler}/>
                 )
             default:
                 return (

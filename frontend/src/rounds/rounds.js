@@ -351,7 +351,7 @@ export class CheckResults extends Component {
                     </table>
                 </div>
                 <div className="UserActionButtonBox">
-                    <button onClick={this.props.roundStartingHandler} className="UserActionButton">
+                    <button onClick={this.props.roundFinishedHandler} className="UserActionButton">
                         Start a new round
                     </button>
                 </div>
