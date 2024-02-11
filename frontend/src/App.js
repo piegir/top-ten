@@ -61,7 +61,8 @@ class RoundStarting extends Component {
                         Top Ten
                     </div>
                     <Users/>
-                    <StartRound roundStartedHandler={this.props.roundStartedHandler}/>
+                    <StartRound goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
+                                goToWaitThemeSelectionHandler={this.props.goToWaitThemeSelectionHandler}/>
                 </div>
             </div>
 
@@ -226,6 +227,7 @@ class App extends Component {
         };
 
     }
+
     state = {view: views.AskCredentials};
 
     /// Logic Handlers
@@ -236,8 +238,7 @@ class App extends Component {
                 if (loginSuccess.status) {
                     alert(loginSuccess.message);
                     this.setState({view: views.GamePreparation});
-                }
-                else {
+                } else {
                     alert(loginSuccess.message);
                 }
             });
@@ -251,8 +252,7 @@ class App extends Component {
                         alert(logoutSuccess.message);
                         currentUser.username = "";
                         this.setState({view: views.AskCredentials});
-                    }
-                    else {
+                    } else {
                         alert(logoutSuccess.message);
                     }
                 });
@@ -263,15 +263,12 @@ class App extends Component {
         this.setState({view: views.RoundStarting});
     };
 
-    roundStartedHandler = () => {
-        let roundFirstPlayer = currentUser.username;
-        // TODO: replace with API call checking for first player
-        if (currentUser.username === roundFirstPlayer) {
-            this.setState({view: views.ThemeSelection});
-        }
-        else {
-            this.setState({view: views.WaitThemeSelection});
-        }
+    goToThemeSelectionHandler = () => {
+        this.setState({view: views.ThemeSelection});
+    };
+
+    goToWaitThemeSelectionHandler = () => {
+        this.setState({view: views.WaitThemeSelection});
     };
 
     themeSelectedHandler = () => {
@@ -279,8 +276,7 @@ class App extends Component {
         // TODO: replace with API call checking for current player
         if (currentUser.username === roundCurrentPlayer) {
             this.setState({view: views.PropositionMaking});
-        }
-        else {
+        } else {
             this.setState({view: views.WaitPropositionMaking});
         }
     };
@@ -290,8 +286,7 @@ class App extends Component {
         // TODO: replace with API call checking for first player and that all propositions were made
         if (currentUser.username === roundFirstPlayer) {
             this.setState({view: views.HypothesisMaking});
-        }
-        else {
+        } else {
             this.setState({view: views.WaitHypothesisMaking});
         }
     };
@@ -316,31 +311,39 @@ class App extends Component {
                 )
             case views.RoundStarting:
                 return (
-                    <RoundStarting roundStartedHandler={this.roundStartedHandler} logOutHandler={this.logoutHandler}/>
+                    <RoundStarting goToThemeSelectionHandler={this.goToThemeSelectionHandler}
+                                   goToWaitThemeSelectionHandler={this.goToWaitThemeSelectionHandler}
+                                   logOutHandler={this.logoutHandler}/>
                 )
             case views.ThemeSelection:
                 return (
-                    <ThemeSelection themeSelectedHandler={this.themeSelectedHandler} logOutHandler={this.logoutHandler}/>
+                    <ThemeSelection themeSelectedHandler={this.themeSelectedHandler}
+                                    logOutHandler={this.logoutHandler}/>
                 )
             case views.WaitThemeSelection:
                 return (
-                    <WaitThemeSelection themeSelectedHandler={this.themeSelectedHandler} logOutHandler={this.logoutHandler}/>
+                    <WaitThemeSelection themeSelectedHandler={this.themeSelectedHandler}
+                                        logOutHandler={this.logoutHandler}/>
                 )
             case views.PropositionMaking:
                 return (
-                    <PropositionMaking propositionMadeHandler={this.propositionMadeHandler} logOutHandler={this.logoutHandler}/>
+                    <PropositionMaking propositionMadeHandler={this.propositionMadeHandler}
+                                       logOutHandler={this.logoutHandler}/>
                 )
             case views.WaitPropositionMaking:
                 return (
-                    <WaitPropositionMaking propositionMadeHandler={this.propositionMadeHandler} logOutHandler={this.logoutHandler}/>
+                    <WaitPropositionMaking propositionMadeHandler={this.propositionMadeHandler}
+                                           logOutHandler={this.logoutHandler}/>
                 )
             case views.HypothesisMaking:
                 return (
-                    <HypothesisMaking hypothesisMadeHandler={this.hypothesisMadeHandler} logOutHandler={this.logoutHandler}/>
+                    <HypothesisMaking hypothesisMadeHandler={this.hypothesisMadeHandler}
+                                      logOutHandler={this.logoutHandler}/>
                 )
             case views.ResultsChecking:
                 return (
-                    <ResultsChecking roundFinishedHandler={this.roundFinishedHandler} logOutHandler={this.logoutHandler}/>
+                    <ResultsChecking roundFinishedHandler={this.roundFinishedHandler}
+                                     logOutHandler={this.logoutHandler}/>
                 )
             default:
                 return (

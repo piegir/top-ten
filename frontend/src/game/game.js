@@ -1,10 +1,10 @@
 import './game.css';
 import {Component} from "react";
+import {makeGetCall, makePostCall, wait} from "../common/common";
+import {getConnectedUsers} from "../users/users";
+import {currentUser} from "../authentication/authentication";
+import {getFirstRoundPlayer} from "../rounds/rounds";
 
-let gameOptions = {
-    "Number of rounds": 7,
-    "Number of themes per card": 3,
-}
 let roundHistory = [
     1,
     2,
@@ -16,15 +16,103 @@ let roundHistory = [
 ];
 export let roundStarted = true;
 
+function startGame(gameOptions) {
+    return getConnectedUsers().then((playersList) => {
+        let gameConfig = {
+            "players_list": playersList,
+            "max_nb_rounds": gameOptions["Number of rounds"],
+            "starting_player_index": 0,
+            "nb_themes_per_card": gameOptions["Number of themes per card"],
+        }
+        return makePostCall("/game/start", gameConfig);
+    })
+}
+
+function isGameStarted() {
+    return makeGetCall("/game/is_started");
+}
+
+function getFirstGamePlayer() {
+    return makeGetCall("/game/get_first_player");
+}
+
+function startRound() {
+    return makePostCall("/game/start_new_round");
+}
+
+function isRoundStarted() {
+    return makeGetCall("/game/is_round_in_progress");
+}
+
+
 export class GameSetup extends Component {
-    render () {
+
+    state = {
+        gameOptions: {
+            "Number of rounds": 7,
+            "Number of themes per card": 3,
+        },
+        gameStarted: false,
+    };
+
+    gameStartedCheckingId = setInterval(() => {
+        isGameStarted().then((gameStarted) => {
+            this.setState({
+                gameOptions: this.state.gameOptions,
+                gameStarted: gameStarted,
+            });
+            if (gameStarted) {
+                this.props.gameStartedHandler();
+            }
+        })
+    }, 1000, []);
+
+    componentWillUnmount() {
+        clearInterval(this.gameStartedCheckingId);
+    }
+
+    liveUpdateNumberOfRounds = (event) => {
+        this.setState({
+            gameOptions: {
+                "Number of rounds": event.target.value,
+                "Number of themes per card": this.state.gameOptions["Number of themes per card"],
+            }
+        });
+    }
+
+    liveUpdateNumberOfThemesPerCard = (event) => {
+        this.setState({
+            gameOptions: {
+                "Number of rounds": this.state.gameOptions["Number of rounds"],
+                "Number of themes per card": event.target.value,
+            }
+        });
+    }
+
+    optionsCallbacks = {
+        "Number of rounds": this.liveUpdateNumberOfRounds,
+        "Number of themes per card": this.liveUpdateNumberOfThemesPerCard,
+    }
+
+    startGameHandler = () => {
+        startGame(this.state.gameOptions).then((startGameSuccess) => {
+            if (startGameSuccess.status) {
+                alert(startGameSuccess.message);
+                this.props.gameStartedHandler();
+            } else {
+                alert(startGameSuccess.message);
+            }
+        });
+    }
+
+    render() {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
                     Game Preparation
                 </div>
                 <div>
-                    {Object.entries(gameOptions).map(([optionName, optionValue]) => {
+                    {Object.entries(this.state.gameOptions).map(([optionName, optionValue]) => {
                         return (
                             <div className="UserActionInput">
                                 <div className="UserActionInputOption">
@@ -35,6 +123,7 @@ export class GameSetup extends Component {
                                         type="text"
                                         value={optionValue}
                                         className="NumberInput"
+                                        onChange={this.optionsCallbacks[optionName]}
                                     />
                                 </div>
                             </div>
@@ -42,7 +131,8 @@ export class GameSetup extends Component {
                     })}
                 </div>
                 <div className="UserActionButtonBox">
-                    <button onClick={this.props.gameStartedHandler} className="UserActionButton">
+                    <button onClick={this.startGameHandler}
+                            className="UserActionButton">
                         Start Game
                     </button>
                 </div>
@@ -52,14 +142,55 @@ export class GameSetup extends Component {
 }
 
 export class StartRound extends Component {
-    render () {
+
+    state = {roundStarted: false};
+
+    roundStartedCheckingId = setInterval(() => {
+        isRoundStarted().then((roundStarted) => {
+            this.setState({roundStarted: roundStarted});
+            if (roundStarted) {
+                getFirstRoundPlayer().then((firstPlayer) => {
+                    if (currentUser.username === firstPlayer) {
+                        this.props.goToThemeSelectionHandler();
+                    }
+                    else {
+                        this.props.goToWaitThemeSelectionHandler();
+                    }
+                });
+            }
+        })
+    }, 1000, []);
+
+    componentWillUnmount() {
+        clearInterval(this.roundStartedCheckingId);
+    }
+
+    startRoundHandler = () => {
+        getFirstGamePlayer().then((firstPlayer) => {
+            if (currentUser.username === firstPlayer) {
+                startRound().then((startRoundSuccess) => {
+                    if (startRoundSuccess.status) {
+                        alert(startRoundSuccess.message);
+                        this.props.goToThemeSelectionHandler();
+                    } else {
+                        alert(startRoundSuccess.message);
+                    }
+                })
+            } else {
+                alert(`Only the first player ${firstPlayer} can start the round.`);
+            }
+        });
+    }
+
+    render() {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
                     Ready to start the round?
                 </div>
                 <div className="UserActionButtonBox">
-                    <button onClick={this.props.roundStartedHandler} className="UserActionButton">
+                    <button onClick={this.startRoundHandler}
+                            className="UserActionButton">
                         Start Round
                     </button>
                 </div>

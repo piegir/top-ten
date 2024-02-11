@@ -1,6 +1,7 @@
 import './rounds.css';
 import React, {Component} from "react";
 import {currentUser} from "../authentication/authentication.js"
+import {makeGetCall} from "../common/common";
 
 let userNumbers = {
     "Player1": 5,
@@ -40,6 +41,12 @@ let playerPropositions = {
 };
 
 let hypothesis = [];
+
+
+export function getFirstRoundPlayer() {
+    return makeGetCall("/rounds/get_first_player");
+}
+
 
 export function CurrentUserNumber() {
     return (

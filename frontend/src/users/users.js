@@ -1,36 +1,52 @@
 import './users.css';
+import {Component} from "react";
+import {makeGetCall} from "../common/common";
 
 
-let usersList = [
-    "Player1",
-    "Player2",
-    "Player3",
-    "Player4"
-]
 
-export function Users() {
-    return (
-        <div className="PlayersBox">
-            <div className="BoxTitle">
-                Who's playing?
-            </div>
-            <table className="UsersTable">
-            <tr>
-                <th>
-                    Players
-                </th>
-                <th></th>
-            </tr>
-            {usersList.map((username, index) => {
-                return (
+export function getConnectedUsers() {
+    return makeGetCall("/authentication/get_connected_users");
+}
+
+
+export class Users extends Component {
+
+    state = {usersList: []};
+
+    userFetchingId = setInterval(() => {
+        getConnectedUsers().then((listOfUsers) => {
+            this.setState({usersList: listOfUsers});
+        })
+    }, 1000, []);
+
+    componentWillUnmount() {
+        clearInterval(this.userFetchingId);
+    }
+
+    render () {
+        return (
+            <div className="PlayersBox">
+                <div className="BoxTitle">
+                    Who's playing?
+                </div>
+                <table className="UsersTable">
                     <tr>
-                        <td>
-                            {username}
-                        </td>
+                        <th>
+                            Players
+                        </th>
+                        <th></th>
                     </tr>
-                )
-            })}
-            </table>
-        </div>
-    );
+                    {this.state.usersList.map((username, index) => {
+                        return (
+                            <tr>
+                                <td>
+                                    {username}
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </table>
+            </div>
+        );
+    }
 }

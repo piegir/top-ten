@@ -1,6 +1,6 @@
 import './authentication.css';
 import React, {Component} from "react";
-import {makePostCall} from "../common/common.js";
+import {makeGetCall, makePostCall} from "../common/common.js";
 
 export let currentUser = {
     username: "Player1",
