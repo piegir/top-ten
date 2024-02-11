@@ -10,6 +10,15 @@ export let getConnectedUsers = () => {
 
 export class Users extends Component {
 
+    constructor(props) {
+        super(props);
+        if (this.props.checkOnlyOnce) {
+            setTimeout(() => {
+                clearInterval(this.userFetchingId);
+            }, 2000);
+        }
+    }
+
     state = {usersList: []};
 
     userFetchingId = setInterval(() => {

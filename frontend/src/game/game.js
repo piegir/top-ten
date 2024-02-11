@@ -24,7 +24,7 @@ export class GamePreparation extends Component {
                             Top Ten
                         </div>
                     </div>
-                    <Users getUsersListHandler={getConnectedUsers}/>
+                    <Users getUsersListHandler={getConnectedUsers} checkOnlyOnce={false}/>
                     <GameSetup goToRoundStartingHandler={this.props.goToRoundStartingHandler}/>
                 </div>
             </div>
@@ -45,7 +45,7 @@ export class RoundStarting extends Component {
                         </div>
                     </div>
                     <GameProgress/>
-                    <Users getUsersListHandler={getGamePlayers}/>
+                    <Users getUsersListHandler={getGamePlayers} checkOnlyOnce={true}/>
                     <StartRound goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
                                 goToWaitThemeSelectionHandler={this.props.goToWaitThemeSelectionHandler}/>
                 </div>

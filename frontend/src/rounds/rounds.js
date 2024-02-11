@@ -3,7 +3,7 @@ import {makeGetCall} from "../common/common.js";
 import React, {Component} from "react";
 import {GameProgress} from "../game/game_progress.js";
 import {Username} from "../authentication/authentication.js";
-import {getConnectedUsers, Users} from "../authentication/users.js";
+import {Users} from "../authentication/users.js";
 import {CurrentTheme, SelectTheme} from "./theme_selection.js";
 import {CurrentUserNumber, PlayerPropositions, MakeProposition} from "./proposition_making.js";
 import {PlayerNumberedPropositions, MakeHypothesis, CheckResults} from "./hypothesis_making.js";
@@ -25,7 +25,7 @@ export class ThemeSelection extends Component {
                         </div>
                     </div>
                     <GameProgress/>
-                    <Users getUsersListHandler={getRoundPlayers}/>
+                    <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true}/>
                     <SelectTheme goToPropositionMakingHandler={this.props.goToPropositionMakingHandler}/>
                 </div>
             </div>
@@ -48,7 +48,7 @@ export class WaitThemeSelection extends Component {
                         <GameProgress/>
                         <CurrentUserNumber/>
                     </div>
-                    <Users getUsersListHandler={getRoundPlayers}/>
+                    <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true}/>
                     <div className="UserActionBox"/>
                 </div>
             </div>

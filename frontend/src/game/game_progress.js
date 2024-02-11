@@ -15,9 +15,8 @@ let status = {
 }
 
 export class GameProgress extends Component {
-    state = {roundsHistory: []};
-
-    roundsHistoryFetchingId = setInterval(() => {
+    constructor(props) {
+        super(props);
         getGameOptions().then((gameOptions) => {
             let newRoundsHistory = Array(gameOptions["Number of rounds"]).fill(null);
             getRoundsHistory().then((roundsHistory) => {
@@ -28,11 +27,8 @@ export class GameProgress extends Component {
             })
 
         })
-    }, 1000, []);
-
-    componentWillUnmount() {
-        clearInterval(this.roundsHistoryFetchingId);
     }
+    state = {roundsHistory: []};
 
     render () {
         return (
@@ -80,7 +76,8 @@ export class GameProgress extends Component {
                                             L
                                         </td>
                                     );
-
+                                default:
+                                    return null;
                             }
                         })}
                     </tr>
