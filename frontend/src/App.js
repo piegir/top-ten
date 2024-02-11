@@ -1,7 +1,6 @@
 import './App.css';
 import {Component} from "react";
 import {currentUser, userLogin, userLogout, AskCredentials} from "./authentication/authentication.js";
-import {Users} from "./users/users.js"
 import {GamePreparation, RoundStarting} from "./game/game.js"
 import {ThemeSelection, WaitThemeSelection, PropositionMaking, WaitPropositionMaking, HypothesisMaking, ResultsChecking} from "./rounds/rounds"
 import {wait} from "./common/common.js";
