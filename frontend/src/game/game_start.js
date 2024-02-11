@@ -182,7 +182,7 @@ export class GameSetup extends Component {
                     Game Preparation
                 </div>
                 <div>
-                    {Object.entries(this.state.gameOptions).map(([optionName, optionValue]) => {
+                    {Object.keys(this.optionsCallbacks).map((optionName) => {
                         return (
                             <div className="UserActionInput">
                                 <div className="UserActionInputOption">
@@ -191,10 +191,10 @@ export class GameSetup extends Component {
                                 <div className="UserActionInputField">
                                     {this.state.isFirstPlayer ? <input
                                         type="text"
-                                        value={optionValue}
+                                        value={this.state.gameOptions[optionName]}
                                         className="NumberInput"
                                         onChange={this.optionsCallbacks[optionName]}
-                                    /> : optionValue}
+                                    /> : this.state.gameOptions[optionName]}
                                 </div>
                             </div>
                         )
