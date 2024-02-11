@@ -14,7 +14,6 @@ let roundHistory = [
     null,
     null,
 ];
-export let roundStarted = true;
 
 function startGame(gameOptions) {
     return getConnectedUsers().then((playersList) => {
