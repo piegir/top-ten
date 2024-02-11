@@ -1,8 +1,16 @@
 .Username {
-    position: fixed;
-    top: 0;
-    right: 10px;
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 1;
     font-size: 15px;
+    color: var(--title-color);
+    text-align: center;
+    padding-right: 10px;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: "...";
+    white-space: nowrap;
 }
 
 .LoginSignupBox {
@@ -12,7 +20,8 @@
     transform: translate(-50%, -50%);
     justify-content: center;
     border-style: solid;
-    padding: 20px;
+    padding: 50px;
+    border-radius: 15px;
 }
 
 .LoginSignupTabButtons {
@@ -29,4 +38,23 @@
 
 .LoginButton {
     text-align: center;
+}
+
+.LogoutButton {
+    text-align: center;
+    font-size: 1vw;
+    background-color: var(--subtitle-color);
+    font-family: "Komikax";
+    border-radius: 10px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: var(--background-color);
+    border: solid 1px var(--background-color);
+}
+
+.LogoutButton:hover {
+    background-color: var(--background-color);
+    color: var(--subtitle-color);
+    border: solid 1px var(--subtitle-color);
 }

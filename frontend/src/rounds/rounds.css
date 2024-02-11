@@ -1,5 +1,57 @@
-.ThemesTable td:last-child {
-    width: 15%;
+.ThemesTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    word-break: break-all;
+    border-color: var(--subtitle-color);
+}
+
+.ThemesTable td:first-child {
+    width:55%;
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable td {
+    border: solid 1px;
+    padding: 5px;
+    padding-left: 10px;
+    border-color: var(--subtitle-color);
+}
+
+.ThemesTable tr:first-child td {
+    text-align: center;
+    color: var(--subtitle-color);
+    border-top: solid 2px;
+}
+
+.ThemesTable tr:first-child td:first-child {
+    border-top-left-radius: 5px;
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:first-child td:last-child, .ThemesTable tr:nth-child(2) td:last-child {
+    border-top-right-radius: 5px;
+    border-right: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:last-child td:first-child {
+    border-bottom-left-radius: 5px;
+}
+
+.ThemesTable tr:last-child td:last-child {
+    border-bottom-right-radius: 5px;
+}
+
+.ThemesTable tr:last-child td {
+    border-bottom: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:nth-child(3) td:last-child, .ThemesTable tr:nth-child(4) td:last-child {
+    border-right: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:nth-child(2) td:last-child {
+    border-top: solid 2px var(--subtitle-color);
 }
 
 .CurrentUserNumber {
@@ -11,48 +63,124 @@
 }
 
 .CurrentTheme {
-    position: fixed;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: auto;
+    line-height: 20%;
+    border-color: var(--subtitle-color);
+    width: fit-content;
+    height: fit-content;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
-table, td, th {
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-th, td {
+.CurrentTheme td, .CurrentTheme th {
     padding: 15px;
-    border-color: black;
+    border: solid 1px var(--subtitle-color);
+    text-align: center;
+}
+
+.CurrentTheme th {
+    border-top: solid 2px var(--subtitle-color);
+    color: var(--title-color);
+}
+
+.CurrentTheme tr:last-child td {
+    color: var(--text-color);
+    border-bottom: solid 2px var(--subtitle-color);
+}
+
+.CurrentTheme td:first-child, .CurrentTheme th:first-child {
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.CurrentTheme td:last-child, .CurrentTheme th:last-child {
+    border-right: solid 2px var(--subtitle-color);
+}
+
+.CurrentTheme th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.CurrentTheme th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.CurrentTheme tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.CurrentTheme tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
 }
 
 .PlayerPropositionsTable {
     width: 100%;
-    border: 1px solid;
-    border-collapse: collapse;
     color: var(--text-color);
-    padding: 5px;
-}
-
-.PlayerPropositionsTable td:last-child {
-    width: 80%;
-}
-
-.PlayerPropositionsTable tr {
-    line-height: 10%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-color: var(--subtitle-color);
 }
 
 .PlayerPropositionsTable th {
     line-height: 50%;
     text-align: center;
+    border-color: var(--subtitle-color);
+    color: var(--subtitle-color);
+    padding: 15px;
+    border: solid 1px var(--subtitle-color);
 }
 
+.PlayerPropositionsTable td {
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: solid 1px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable th {
+    border-top: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable tr:last-child td {
+    border-bottom: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable td:first-child {
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable th:first-child {
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable th:last-child {
+    border-right: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable td:last-child {
+    max-width: 100%;
+    border-right: solid 2px var(--subtitle-color);
+    word-break: break-all;
+}
+
+.PlayerPropositionsTable th:last-child {
+    width: 80%;
+}
+
+.PlayerPropositionsTable th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.PlayerPropositionsTable th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.PlayerPropositionsTable tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.PlayerPropositionsTable tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
 
 .UpDownButtons {
     display: grid;
@@ -62,9 +190,43 @@ th, td {
 .UpButton {
     grid-column-start: 1;
     grid-column-end: 2;
+    text-align: center;
+    font-size: 1vw;
+    background-color: var(--subtitle-color);
+    font-family: "Komikax";
+    border-radius: 10px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: var(--background-color);
+    border: solid 1px var(--background-color);
 }
 
 .DownButton {
     grid-column-start: 2;
     grid-column-end: 3;
+    text-align: center;
+    font-size: 1vw;
+    background-color: var(--subtitle-color);
+    font-family: "Komikax";
+    border-radius: 10px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: var(--background-color);
+    border: solid 1px var(--background-color);
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+textarea {
+  padding: 10px;
+  max-width: 100%;
+  line-height: 1.5;
+  border-radius: 5px;
+  border: 1px solid var(--title-color);
+  box-shadow: 1px 1px 1px #999;
 }

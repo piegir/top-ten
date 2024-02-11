@@ -2,6 +2,7 @@ import './authentication.css';
 import React, {useState, useEffect, Component} from "react";
 import {restApiIp, restApiPort} from "../common/common.js";
 
+
 export let currentUser = {
     username: "Player1",
 };
@@ -46,11 +47,8 @@ export class Username extends Component {
     render () {
         return (
             <div className="Username">
-                <p>
-                    Username:<br/>
-                    {currentUser.username}
-                </p>
-                <button onClick={this.props.logOutHandler}>
+                {currentUser.username}<br/>
+                <button className="LogoutButton" onClick={this.props.logOutHandler}>
                     Logout
                 </button>
             </div>

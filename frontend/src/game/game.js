@@ -70,8 +70,8 @@ export class StartRound extends Component {
 
 export function GameProgress() {
     return (
-        <div className="GameProgress">
-            <table>
+        <div>
+            <table className="GameProgress">
                 <tr>
                     <td>
                         Round

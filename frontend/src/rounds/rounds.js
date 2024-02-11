@@ -16,7 +16,7 @@ let playersList = [
 ]
 let themes = [
     {
-        theme: "A person",
+        theme: "A person who is always but really always tired",
         top1: "Good",
         top10: "Bad",
     },
@@ -33,7 +33,7 @@ let themes = [
 ];
 let currentTheme = themes[0];
 let playerPropositions = {
-    "Player1": "My Neighbor",
+    "Player1": "My Neighbor is bds dsgafe afbgsbakjdca fdgrshgaez dsfghgtsasrg ghdrxadefrgs",
     "Player2": "Hitler",
     "Player3": "Martin Luther King",
     "Player4": "Donald Trump",
@@ -86,8 +86,8 @@ export function PlayerPropositions() {
 
 export function CurrentTheme() {
     return (
-        <div className="CurrentTheme">
-            <table>
+        <div>
+            <table className="CurrentTheme">
                 <tr>
                     <th>
                         Theme
@@ -131,7 +131,7 @@ export function PlayerNumberedPropositions() {
                         Players
                     </th>
                     <th>
-                        Numbers
+                        Top
                     </th>
                     <th>
                         Propositions
@@ -143,7 +143,7 @@ export function PlayerNumberedPropositions() {
                             <td>
                                 {playerName}
                             </td>
-                            <td>
+                            <td style={{textAlign:"center"}}>
                                 {userNumbers[playerName]}
                             </td>
                             <td>
@@ -162,7 +162,7 @@ export class SelectTheme extends Component {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
-                    Select Theme
+                    Select a theme
                 </div>
                 <table className="ThemesTable">
                     <tr>
@@ -189,7 +189,7 @@ export class SelectTheme extends Component {
                                     {themeObject.top10}
                                 </td>
                                 <td>
-                                    <button onClick={this.props.themeSelectedHandler}>
+                                    <button className="LogoutButton" onClick={this.props.themeSelectedHandler}>
                                         Select theme {themeIndex + 1}
                                     </button>
                                 </td>
@@ -207,11 +207,11 @@ export class MakeProposition extends Component {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
-                    Make Proposition
+                    Make your proposition
                 </div>
                 <div className="UserActionInput">
                     <div className="UserActionInputOption">
-                        Your Proposition:
+                        Your proposition:
                     </div>
                     <div className="UserActionInputField">
                         <textarea name="Text1" cols="40" rows="5"></textarea>
@@ -266,7 +266,7 @@ export class MakeHypothesis extends Component {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
-                    Make Hypothesis
+                    Make your hypothesis
                 </div>
                 <table className="PlayerPropositionsTable">
                     <tr>

@@ -1,67 +1,92 @@
 :root {
-    --page-color: #f6f6f6;
-    --title-color: #163172;
-    --text-color: #1e56a0;
-    --box-color: #d6e4f0;
+    --subtitle-color: rgba(22, 49, 114, 1);
+    --title-color: rgba(18, 37, 81, 1);
+    --text-color: rgba(30, 86, 160, 1);
+    --background-color: rgba(214, 228, 240, 1);
+    --headbox-color: rgba(30, 86, 160, 0.6);
+    --box-color: rgba(30, 86, 160, 0.2);
 }
 
-.BoxTitle {
+body {
+    margin: 10px;
+    background-color: var(--background-color);
+}
+
+.BoxTitle { /* Title of players and action boxes */
     text-align: center;
-    font-size: 25px;
-    color: var(--title-color);
+    font-size: 1.5vw;
+    color: var(--subtitle-color);
     padding-bottom: 10px;
 }
 
 .App {
-    background-color: var(--page-color);
-    font-size: 20px;
+    font-size: 1vw;
+    font-family: "Komikax";
 }
 
 .Grid {
-    width: 100vw;
-    height: 100vh;
+    height: 97vh;
+    width: 98vw;
+    grid-gap: 5px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 40% 60%;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: 10% 35% 55%;
 }
 
-.Title {
+.HeadBox {
     grid-column-start: 1;
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 1;
-    display: flex;
-    justify-content: center;
+    background-color: var(--headbox-color);
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    column-gap: 10px;
+    padding-right: 10px;
+}
+
+.Title {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    text-align: center;
+    line-height: 100%;
+    font-size: 4vw;
     color: var(--title-color);
-    font-size: 60px;
     font-weight: bolder;
 }
 
 .PlayersBox {
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
     border-style: solid;
     border-color: var(--title-color);
     border-radius: 10px;
     padding: 15px;
+    background-color: var(--box-color);
 }
 
 .UserActionBox {
     grid-column-start: 2;
     grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
     color: var(--text-color);
     border-style: solid;
     border-color: var(--title-color);
     border-radius: 10px;
     padding: 15px;
+    background-color: var(--box-color);
 }
 
-.BoxTitle {
-    text-align: center;
-    font-size: 25px;
-    color: var(--title-color);
+.MiddleBox {
+    display: grid;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
 }
