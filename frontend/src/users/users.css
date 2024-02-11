@@ -1,8 +1,36 @@
 .UsersTable {
     width: 100%;
     color: var(--text-color);
-    padding: 5px;
     border: none!important;
+    border-radius: 15px;
+    border-spacing: 0;
+    border-collapse: separate;
+    border-color: var(--subtitle-color);
+}
+
+.UsersTable th {
+    line-height: 50%;
+    text-align: center;
+    border-color: var(--subtitle-color);
+    color: var(--subtitle-color);
+    padding: 15px;
+}
+
+.UsersTable td {
+    padding: 15px;
+}
+
+.UsersTable th:first-child {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top: solid 2px;
+    border-left: solid 2px;
+    border-right: solid 2px;
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: "";
+    white-space: nowrap;
+    border-bottom: 0;
 }
 
 .UsersTable th:last-child {
@@ -10,11 +38,23 @@
     border: none!important;
 }
 
-.UsersTable tr {
-    line-height: 10%;
+.UsersTable td:first-child {
+    border-color: var(--subtitle-color);
+    border-left: solid 2px var(--subtitle-color);
+    border-right: solid 2px var(--subtitle-color);
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: "";
+    white-space: nowrap;
 }
 
-.UsersTable th {
-    line-height: 50%;
-    text-align: center;
+.UsersTable tr td{
+    line-height: 10%;
+    border-top: solid 2px var(--subtitle-color);
+}
+
+.UsersTable tr:last-child td {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom: solid 2px var(--subtitle-color);
 }

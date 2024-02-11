@@ -18,11 +18,8 @@ export class Username extends Component {
     render () {
         return (
             <div className="Username">
-                <p>
-                    Username:<br/>
-                    {currentUser.username}
-                </p>
-                <button onClick={this.props.logOutHandler}>
+                {currentUser.username}<br/>
+                <button className="LogoutButton" onClick={this.props.logOutHandler}>
                     Logout
                 </button>
             </div>

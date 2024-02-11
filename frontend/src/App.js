@@ -36,10 +36,12 @@ class GamePreparation extends Component {
     render() {
         return (
             <div className="App">
-                <Username logOutHandler={this.props.logOutHandler}/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username logOutHandler={this.props.logOutHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
                     </div>
                     <Users/>
                     <GameSetup gameStartedHandler={this.props.gameStartedHandler}/>
@@ -54,12 +56,14 @@ class RoundStarting extends Component {
     render() {
         return (
             <div className="App">
-                <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username logOutHandler={this.props.logOutHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
                     </div>
+                    <GameProgress/>
                     <Users/>
                     <StartRound roundStartedHandler={this.props.roundStartedHandler}/>
                 </div>
@@ -73,12 +77,14 @@ class ThemeSelection extends Component {
     render() {
         return (
             <div className="App">
-                <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username logOutHandler={this.props.logOutHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
                     </div>
+                    <GameProgress/>
                     <Users/>
                     <SelectTheme themeSelectedHandler={this.props.themeSelectedHandler}/>
                 </div>
@@ -92,18 +98,19 @@ class WaitThemeSelection extends Component {
     render() {
         return (
             <div className="App">
-                <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username logOutHandler={this.props.logOutHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
                     </div>
+                    <GameProgress/>
                     <CurrentUserNumber/>
                     <Users/>
                     <div className="UserActionBox"/>
                 </div>
             </div>
-
         );
     }
 }
@@ -112,19 +119,22 @@ class PropositionMaking extends Component {
     render() {
         return (
             <div className="App">
-                <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
-                <CurrentUserNumber/>
-                <CurrentTheme/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username logOutHandler={this.props.logOutHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
+                    </div>
+                    <div className="MiddleBox">
+                        <GameProgress/>
+                        <CurrentTheme/>
+                        <CurrentUserNumber/>
                     </div>
                     <PlayerPropositions/>
                     <MakeProposition propositionMadeHandler={this.props.propositionMadeHandler}/>
                 </div>
             </div>
-
         );
     }
 }
@@ -133,19 +143,22 @@ class WaitPropositionMaking extends Component {
     render() {
         return (
             <div className="App">
-                <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
-                <CurrentUserNumber/>
-                <CurrentTheme/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username logOutHandler={this.props.logOutHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
+                    </div>
+                    <div className="MiddleBox">
+                        <GameProgress/>
+                        <CurrentTheme/>
+                        <CurrentUserNumber/>
                     </div>
                     <PlayerPropositions/>
                     <div className="UserActionBox"/>
                 </div>
             </div>
-
         );
     }
 }
@@ -154,19 +167,22 @@ class HypothesisMaking extends Component {
     render() {
         return (
             <div className="App">
-                <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
-                <CurrentUserNumber/>
-                <CurrentTheme/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username logOutHandler={this.props.logOutHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
+                    </div>
+                    <div className="MiddleBox">
+                        <GameProgress/>
+                        <CurrentTheme/>
+                        <CurrentUserNumber/>
                     </div>
                     <PlayerPropositions/>
                     <MakeHypothesis hypothesisMadeHandler={this.props.hypothesisMadeHandler}/>
                 </div>
             </div>
-
         );
     }
 }
@@ -175,19 +191,22 @@ class ResultsChecking extends Component {
     render() {
         return (
             <div className="App">
-                <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
-                <CurrentUserNumber/>
-                <CurrentTheme/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username logOutHandler={this.props.logOutHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
+                    </div>
+                    <div className="MiddleBox">
+                        <GameProgress/>
+                        <CurrentTheme/>
+                        <CurrentUserNumber/>
                     </div>
                     <PlayerNumberedPropositions/>
                     <CheckResults roundFinishedHandler={this.props.roundFinishedHandler}/>
                 </div>
             </div>
-
         );
     }
 }
