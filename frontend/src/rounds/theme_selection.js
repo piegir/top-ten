@@ -51,7 +51,7 @@ export class SelectTheme extends Component {
                                     {themeObject.top10}
                                 </td>
                                 <td>
-                                    <button onClick={this.props.themeSelectedHandler}>
+                                    <button onClick={this.props.goToPropositionMakingHandler}>
                                         Select theme {themeIndex + 1}
                                     </button>
                                 </td>

@@ -11,13 +11,13 @@ export class GamePreparation extends Component {
     render() {
         return (
             <div className="App">
-                <Username logOutHandler={this.props.logOutHandler}/>
+                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten
                     </div>
                     <Users/>
-                    <GameSetup gameStartedHandler={this.props.gameStartedHandler}/>
+                    <GameSetup goToRoundStartingHandler={this.props.goToRoundStartingHandler}/>
                 </div>
             </div>
 
@@ -30,7 +30,7 @@ export class RoundStarting extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
+                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten

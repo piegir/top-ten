@@ -80,7 +80,7 @@ export class MakeProposition extends Component {
                     </div>
                 </div>
                 <div className="UserActionButtonBox">
-                    <button onClick={this.props.propositionMadeHandler} className="UserActionButton">
+                    <button onClick={this.props.goToHypothesisMakingHandler} className="UserActionButton">
                         Submit
                     </button>
                 </div>

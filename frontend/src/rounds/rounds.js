@@ -18,13 +18,13 @@ export class ThemeSelection extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
+                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten
                     </div>
                     <Users/>
-                    <SelectTheme themeSelectedHandler={this.props.themeSelectedHandler}/>
+                    <SelectTheme goToPropositionMakingHandler={this.props.goToPropositionMakingHandler}/>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@ export class WaitThemeSelection extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
+                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <div className="Grid">
                     <div className="Title">
                         Top Ten
@@ -57,7 +57,7 @@ export class PropositionMaking extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
+                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <CurrentUserNumber/>
                 <CurrentTheme/>
                 <div className="Grid">
@@ -65,7 +65,7 @@ export class PropositionMaking extends Component {
                         Top Ten
                     </div>
                     <PlayerPropositions/>
-                    <MakeProposition propositionMadeHandler={this.props.propositionMadeHandler}/>
+                    <MakeProposition goToHypothesisMakingHandler={this.props.goToHypothesisMakingHandler}/>
                 </div>
             </div>
 
@@ -78,7 +78,7 @@ export class WaitPropositionMaking extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
+                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <CurrentUserNumber/>
                 <CurrentTheme/>
                 <div className="Grid">
@@ -99,7 +99,7 @@ export class HypothesisMaking extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
+                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <CurrentUserNumber/>
                 <CurrentTheme/>
                 <div className="Grid">
@@ -107,7 +107,7 @@ export class HypothesisMaking extends Component {
                         Top Ten
                     </div>
                     <PlayerPropositions/>
-                    <MakeHypothesis hypothesisMadeHandler={this.props.hypothesisMadeHandler}/>
+                    <MakeHypothesis goToResultsCheckingHandler={this.props.goToResultsCheckingHandler}/>
                 </div>
             </div>
 
@@ -120,7 +120,7 @@ export class ResultsChecking extends Component {
         return (
             <div className="App">
                 <GameProgress/>
-                <Username logOutHandler={this.props.logOutHandler}/>
+                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <CurrentUserNumber/>
                 <CurrentTheme/>
                 <div className="Grid">
@@ -128,7 +128,7 @@ export class ResultsChecking extends Component {
                         Top Ten
                     </div>
                     <PlayerNumberedPropositions/>
-                    <CheckResults roundFinishedHandler={this.props.roundFinishedHandler}/>
+                    <CheckResults goToRoundStartingHandler={this.props.goToRoundStartingHandler}/>
                 </div>
             </div>
 

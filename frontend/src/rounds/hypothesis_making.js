@@ -128,7 +128,7 @@ export class MakeHypothesis extends Component {
                 <div className="UserActionButtonBox">
                     <button onClick={() => {
                         hypothesis = this.state.data;
-                        this.props.hypothesisMadeHandler();
+                        this.props.goToResultsCheckingHandler();
                     }} className="UserActionButton">
                         Submit
                     </button>
@@ -170,7 +170,7 @@ export class CheckResults extends Component {
                     </table>
                 </div>
                 <div className="UserActionButtonBox">
-                    <button onClick={this.props.roundFinishedHandler} className="UserActionButton">
+                    <button onClick={this.props.goToRoundStartingHandler} className="UserActionButton">
                         Start a new round
                     </button>
                 </div>

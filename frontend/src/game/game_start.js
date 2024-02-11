@@ -37,7 +37,7 @@ export class GameSetup extends Component {
                 gameStarted: gameStarted,
             });
             if (gameStarted) {
-                this.props.gameStartedHandler();
+                this.props.goToRoundStartingHandler();
             }
         })
     }, 1000, []);
@@ -73,7 +73,7 @@ export class GameSetup extends Component {
         startGame(this.state.gameOptions).then((startGameSuccess) => {
             if (startGameSuccess.status) {
                 alert(startGameSuccess.message);
-                this.props.gameStartedHandler();
+                this.props.goToRoundStartingHandler();
             } else {
                 alert(startGameSuccess.message);
             }

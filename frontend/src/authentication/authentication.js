@@ -21,6 +21,22 @@ class Login extends Component {
         this.setState({username: event.target.value});
     }
 
+    loginHandler = () => {
+        // Store username as provided by the user
+        currentUser.username = this.state.username;
+        // Perform REST API login
+        userLogin()
+            .then((loginSuccess) => {
+                if (loginSuccess.status) {
+                    alert(loginSuccess.message);
+                    this.props.goToGamePreparationHandler();
+                } else {
+                    alert(loginSuccess.message);
+                }
+            });
+    }
+
+
     render() {
         return (
             <div className="LoginBox">
@@ -35,10 +51,7 @@ class Login extends Component {
                     </div>
                 </div>
                 <div className="LoginButton">
-                    <button onClick={() => {
-                        this.props.loginHandler(this.state);
-                    }
-                    }>
+                    <button onClick={this.loginHandler}>
                         Confirm
                     </button>
                 </div>
@@ -49,6 +62,22 @@ class Login extends Component {
 
 
 export class Username extends Component {
+
+    logoutHandler = () => {
+        if (window.confirm("Logging out will make you leave the game you are part of. Are you sure?")) {
+            userLogout()
+                .then((logoutSuccess) => {
+                    if (logoutSuccess.status) {
+                        alert(logoutSuccess.message);
+                        currentUser.username = "";
+                        this.props.goToAskCredentialsHandler();
+                    } else {
+                        alert(logoutSuccess.message);
+                    }
+                });
+        }
+    }
+
     render () {
         return (
             <div className="Username">
@@ -56,7 +85,7 @@ export class Username extends Component {
                     Username:<br/>
                     {currentUser.username}
                 </p>
-                <button onClick={this.props.logOutHandler}>
+                <button onClick={this.logoutHandler}>
                     Logout
                 </button>
             </div>
@@ -74,7 +103,7 @@ export class AskCredentials extends Component {
                         Top Ten
                     </div>
                 </div>
-                <Login loginHandler={this.props.loginHandler}/>
+                <Login goToGamePreparationHandler={this.props.goToGamePreparationHandler}/>
             </div>
 
         );
