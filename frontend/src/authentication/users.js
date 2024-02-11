@@ -4,17 +4,16 @@ import {makeGetCall} from "../common/common";
 
 
 
-export function getConnectedUsers() {
+export let getConnectedUsers = () => {
     return makeGetCall("/authentication/get_connected_users");
 }
-
 
 export class Users extends Component {
 
     state = {usersList: []};
 
     userFetchingId = setInterval(() => {
-        getConnectedUsers().then((listOfUsers) => {
+        this.props.getUsersListHandler().then((listOfUsers) => {
             this.setState({usersList: listOfUsers});
         })
     }, 1000, []);

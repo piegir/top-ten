@@ -106,16 +106,16 @@ def is_started(
     return game_created()
 
 
-@router.get("/get_first_player")
-def get_first_player(
-        current_username: Annotated[str, Depends(oauth2_scheme)]) -> str:
+@router.get("/get_players")
+def get_players(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> list[str]:
     """
-    API call to get the username of the first player of the game.
+    API call to get the username of all players of the game.
 
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
-    :return: The username of the first player of the game (in the players list).
+    :return: The list of players in the game (in order).
     """
-    return current_game.players_list[current_game.starting_player_index]
+    return current_game.players_list
 
 
 @router.post("/start_new_round")

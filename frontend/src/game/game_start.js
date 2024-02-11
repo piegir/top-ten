@@ -1,6 +1,7 @@
 import {Component} from "react";
 import {makeGetCall, makePostCall} from "../common/common";
-import {getConnectedUsers} from "../users/users";
+import {getConnectedUsers} from "../authentication/users";
+import {currentUser} from "../authentication/authentication";
 
 
 function startGame(gameOptions) {
@@ -8,9 +9,10 @@ function startGame(gameOptions) {
         let gameConfig = {
             "players_list": playersList,
             "max_nb_rounds": gameOptions["Number of rounds"],
-            "starting_player_index": 0,
+            "starting_player_index": gameOptions["Starting Player Index"],
             "nb_themes_per_card": gameOptions["Number of themes per card"],
         }
+        alert(JSON.stringify(gameConfig));
         return makePostCall("/game/start", gameConfig);
     })
 }
@@ -26,6 +28,7 @@ export class GameSetup extends Component {
         gameOptions: {
             "Number of rounds": 7,
             "Number of themes per card": 3,
+            "Starting Player Index": 0,
         },
         gameStarted: false,
     };
@@ -51,6 +54,7 @@ export class GameSetup extends Component {
             gameOptions: {
                 "Number of rounds": event.target.value,
                 "Number of themes per card": this.state.gameOptions["Number of themes per card"],
+                "Starting Player Index": this.state.gameOptions["Starting Player Index"],
             }
         });
     }
@@ -60,6 +64,17 @@ export class GameSetup extends Component {
             gameOptions: {
                 "Number of rounds": this.state.gameOptions["Number of rounds"],
                 "Number of themes per card": event.target.value,
+                "Starting Player Index": this.state.gameOptions["Starting Player Index"],
+            }
+        });
+    }
+
+    liveUpdateStartingPlayerIndex = (event) => {
+        this.setState({
+            gameOptions: {
+                "Number of rounds": this.state.gameOptions["Number of rounds"],
+                "Number of themes per card": this.state.gameOptions["Number of themes per card"],
+                "Starting Player Index": event.target.value,
             }
         });
     }
@@ -67,15 +82,24 @@ export class GameSetup extends Component {
     optionsCallbacks = {
         "Number of rounds": this.liveUpdateNumberOfRounds,
         "Number of themes per card": this.liveUpdateNumberOfThemesPerCard,
+        "Starting Player Index": this.liveUpdateStartingPlayerIndex,
     }
 
     startGameHandler = () => {
-        startGame(this.state.gameOptions).then((startGameSuccess) => {
-            if (startGameSuccess.status) {
-                alert(startGameSuccess.message);
-                this.props.goToRoundStartingHandler();
-            } else {
-                alert(startGameSuccess.message);
+        getConnectedUsers().then((usersList) => {
+            let firstUser = usersList[0];
+            if (currentUser.username === firstUser) {
+                startGame(this.state.gameOptions).then((startGameSuccess) => {
+                    if (startGameSuccess.status) {
+                        alert(startGameSuccess.message);
+                        this.props.goToRoundStartingHandler();
+                    } else {
+                        alert(startGameSuccess.message);
+                    }
+                });
+            }
+            else {
+                alert(`Only the first user ${firstUser} can start the game.`);
             }
         });
     }

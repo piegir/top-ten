@@ -1,12 +1,8 @@
 import {Component} from "react";
-import {makeGetCall, makePostCall} from "../common/common";
-import {currentUser} from "../authentication/authentication";
-import {getFirstRoundPlayer} from "../rounds/rounds";
-
-
-function getFirstGamePlayer() {
-    return makeGetCall("/game/get_first_player");
-}
+import {makeGetCall, makePostCall} from "../common/common.js";
+import {currentUser} from "../authentication/authentication.js";
+import {getRoundPlayers} from "../rounds/rounds.js";
+import {getGamePlayers} from "./game.js";
 
 function startRound() {
     return makePostCall("/game/start_new_round");
@@ -24,8 +20,8 @@ export class StartRound extends Component {
         isRoundStarted().then((roundStarted) => {
             this.setState({roundStarted: roundStarted});
             if (roundStarted) {
-                getFirstRoundPlayer().then((firstPlayer) => {
-                    if (currentUser.username === firstPlayer) {
+                getRoundPlayers().then((playersList) => {
+                    if (currentUser.username === playersList[0]) {
                         this.props.goToThemeSelectionHandler();
                     } else {
                         this.props.goToWaitThemeSelectionHandler();
@@ -40,7 +36,8 @@ export class StartRound extends Component {
     }
 
     startRoundHandler = () => {
-        getFirstGamePlayer().then((firstPlayer) => {
+        getGamePlayers().then((playersList) => {
+            let firstPlayer = playersList[0];
             if (currentUser.username === firstPlayer) {
                 startRound().then((startRoundSuccess) => {
                     if (startRoundSuccess.status) {

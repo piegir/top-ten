@@ -3,14 +3,14 @@ import {makeGetCall} from "../common/common.js";
 import React, {Component} from "react";
 import {GameProgress} from "../game/game_progress.js";
 import {Username} from "../authentication/authentication.js";
-import {Users} from "../users/users.js";
+import {getConnectedUsers, Users} from "../authentication/users.js";
 import {CurrentTheme, SelectTheme} from "./theme_selection.js";
 import {CurrentUserNumber, PlayerPropositions, MakeProposition} from "./proposition_making.js";
 import {PlayerNumberedPropositions, MakeHypothesis, CheckResults} from "./hypothesis_making.js";
 
 
-export function getFirstRoundPlayer() {
-    return makeGetCall("/rounds/get_first_player");
+export let getRoundPlayers = () => {
+    return makeGetCall("/rounds/get_players");
 }
 
 export class ThemeSelection extends Component {
@@ -25,7 +25,7 @@ export class ThemeSelection extends Component {
                         </div>
                     </div>
                     <GameProgress/>
-                    <Users/>
+                    <Users getUsersListHandler={getRoundPlayers}/>
                     <SelectTheme goToPropositionMakingHandler={this.props.goToPropositionMakingHandler}/>
                 </div>
             </div>
@@ -48,7 +48,7 @@ export class WaitThemeSelection extends Component {
                         <GameProgress/>
                         <CurrentUserNumber/>
                     </div>
-                    <Users/>
+                    <Users getUsersListHandler={getRoundPlayers}/>
                     <div className="UserActionBox"/>
                 </div>
             </div>

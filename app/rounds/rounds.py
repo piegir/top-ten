@@ -20,16 +20,16 @@ def round_valid() -> bool:
     )
 
 
-@router.get("/get_first_player")
-def get_first_player(
-        current_username: Annotated[str, Depends(oauth2_scheme)]) -> str:
+@router.get("/get_players")
+def get_players(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> list[str]:
     """
-    API call to get the username of the first (main) player of the round.
+    API call to get the username of all players of the round.
 
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
-    :return: The username of the first player of the round (the main player).
+    :return: The list of players in the round (in order).
     """
-    return game.current_game.rounds[-1].players_list[0]
+    return game.current_game.rounds[-1].players_list
 
 
 @router.get("/get_card")

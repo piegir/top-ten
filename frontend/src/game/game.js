@@ -1,10 +1,16 @@
 import './game.css';
 import {Component} from "react";
-import {Users} from "../users/users";
-import {Username} from "../authentication/authentication";
+import {getConnectedUsers, Users} from "../authentication/users.js";
+import {Username} from "../authentication/authentication.js";
 import {GameSetup} from "./game_start.js"
 import {GameProgress} from "./game_progress.js"
 import {StartRound} from "./round_start.js"
+import {makeGetCall} from "../common/common.js";
+
+
+export let getGamePlayers = () => {
+    return makeGetCall("/game/get_players");
+}
 
 
 export class GamePreparation extends Component {
@@ -18,7 +24,7 @@ export class GamePreparation extends Component {
                             Top Ten
                         </div>
                     </div>
-                    <Users/>
+                    <Users getUsersListHandler={getConnectedUsers}/>
                     <GameSetup goToRoundStartingHandler={this.props.goToRoundStartingHandler}/>
                 </div>
             </div>
@@ -39,7 +45,7 @@ export class RoundStarting extends Component {
                         </div>
                     </div>
                     <GameProgress/>
-                    <Users/>
+                    <Users getUsersListHandler={getGamePlayers}/>
                     <StartRound goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
                                 goToWaitThemeSelectionHandler={this.props.goToWaitThemeSelectionHandler}/>
                 </div>
