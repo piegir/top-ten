@@ -1,6 +1,6 @@
 import './App.css';
 import {Component} from "react";
-import {currentUser, LoginSignup, Username} from "./authentication/authentication.js";
+import {currentUser, userLogin, userLogout, Login, Username} from "./authentication/authentication.js";
 import {Users} from "./users/users.js"
 import {GameSetup, StartRound, roundStarted, GameProgress} from "./game/game.js"
 import {
@@ -13,6 +13,7 @@ import {
     PlayerNumberedPropositions,
     CheckResults
 } from "./rounds/rounds"
+import {wait} from "./common/common.js";
 
 
 class AskCredentials extends Component {
@@ -24,7 +25,7 @@ class AskCredentials extends Component {
                         Top Ten
                     </div>
                 </div>
-                <LoginSignup loginHandler={this.props.loginHandler} signupHandler={this.props.signupHandler}/>
+                <Login loginHandler={this.props.loginHandler}/>
             </div>
 
         );
@@ -67,6 +68,7 @@ class RoundStarting extends Component {
                     <StartRound roundStartedHandler={this.props.roundStartedHandler}/>
                 </div>
             </div>
+
         );
     }
 }
@@ -87,6 +89,7 @@ class ThemeSelection extends Component {
                     <SelectTheme themeSelectedHandler={this.props.themeSelectedHandler}/>
                 </div>
             </div>
+
         );
     }
 }
@@ -103,6 +106,7 @@ class WaitThemeSelection extends Component {
                         </div>
                     </div>
                     <GameProgress/>
+                    <CurrentUserNumber/>
                     <Users/>
                     <div className="UserActionBox"/>
                 </div>
@@ -125,12 +129,12 @@ class PropositionMaking extends Component {
                     <div className="MiddleBox">
                         <GameProgress/>
                         <CurrentTheme/>
+                        <CurrentUserNumber/>
                     </div>
                     <PlayerPropositions/>
                     <MakeProposition propositionMadeHandler={this.props.propositionMadeHandler}/>
                 </div>
             </div>
-
         );
     }
 }
@@ -149,6 +153,7 @@ class WaitPropositionMaking extends Component {
                     <div className="MiddleBox">
                         <GameProgress/>
                         <CurrentTheme/>
+                        <CurrentUserNumber/>
                     </div>
                     <PlayerPropositions/>
                     <div className="UserActionBox"/>
@@ -172,6 +177,7 @@ class HypothesisMaking extends Component {
                     <div className="MiddleBox">
                         <GameProgress/>
                         <CurrentTheme/>
+                        <CurrentUserNumber/>
                     </div>
                     <PlayerPropositions/>
                     <MakeHypothesis hypothesisMadeHandler={this.props.hypothesisMadeHandler}/>
@@ -195,6 +201,7 @@ class ResultsChecking extends Component {
                     <div className="MiddleBox">
                         <GameProgress/>
                         <CurrentTheme/>
+                        <CurrentUserNumber/>
                     </div>
                     <PlayerNumberedPropositions/>
                     <CheckResults roundFinishedHandler={this.props.roundFinishedHandler}/>
@@ -231,25 +238,44 @@ class App extends Component {
             return ''; // Legacy method for cross browser support
         };
 
+        window.onpagehide = (event) => {
+            userLogout().then();
+            // Wait 1s to make sure the user was logged out.
+            wait(1000);
+        };
+
     }
     state = {view: views.AskCredentials};
 
     /// Logic Handlers
-    logoutHandler = () => {
-        if (window.confirm("Logging out will make you leave the game you are part of. Are you sure?")) {
-            currentUser.username = "";
-            this.setState({view: views.AskCredentials});
-        }
-    };
-
     loginHandler = (loginInfo) => {
         currentUser.username = loginInfo.username;
-        this.setState({view: views.GamePreparation});
+        userLogin()
+            .then((loginSuccess) => {
+                if (loginSuccess.status) {
+                    alert(loginSuccess.message);
+                    this.setState({view: views.GamePreparation});
+                }
+                else {
+                    alert(loginSuccess.message);
+                }
+            });
     };
 
-    signupHandler = (signupInfo) => {
-        currentUser.username = signupInfo.username;
-        this.setState({view: views.GamePreparation});
+    logoutHandler = () => {
+        if (window.confirm("Logging out will make you leave the game you are part of. Are you sure?")) {
+            userLogout()
+                .then((logoutSuccess) => {
+                    if (logoutSuccess.status) {
+                        alert(logoutSuccess.message);
+                        currentUser.username = "";
+                        this.setState({view: views.AskCredentials});
+                    }
+                    else {
+                        alert(logoutSuccess.message);
+                    }
+                });
+        }
     };
 
     gameStartedHandler = () => {
@@ -301,7 +327,7 @@ class App extends Component {
         switch (this.state.view) {
             case views.AskCredentials:
                 return (
-                    <AskCredentials loginHandler={this.loginHandler} signupHandler={this.signupHandler}/>
+                    <AskCredentials loginHandler={this.loginHandler}/>
                 )
             case views.GamePreparation:
                 return (
@@ -337,7 +363,7 @@ class App extends Component {
                 )
             default:
                 return (
-                    <AskCredentials loginHandler={this.loginHandler} signupHandler={this.signupHandler}/>
+                    <AskCredentials loginHandler={this.loginHandler}/>
                 )
         }
     }

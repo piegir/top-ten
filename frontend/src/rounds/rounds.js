@@ -16,7 +16,7 @@ let playersList = [
 ]
 let themes = [
     {
-        theme: "A person who is always but really always tired",
+        theme: "A person",
         top1: "Good",
         top10: "Bad",
     },
@@ -33,7 +33,7 @@ let themes = [
 ];
 let currentTheme = themes[0];
 let playerPropositions = {
-    "Player1": "My Neighbor is bds dsgafe afbgsbakjdca fdgrshgaez dsfghgtsasrg ghdrxadefrgs",
+    "Player1": "My Neighbor",
     "Player2": "Hitler",
     "Player3": "Martin Luther King",
     "Player4": "Donald Trump",

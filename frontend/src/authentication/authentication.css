@@ -13,7 +13,7 @@
     white-space: nowrap;
 }
 
-.LoginSignupBox {
+.LoginBox {
     position: fixed;
     top: 40%;
     left: 50%;
@@ -22,10 +22,6 @@
     border-style: solid;
     padding: 50px;
     border-radius: 15px;
-}
-
-.LoginSignupTabButtons {
-    text-align: center;
 }
 
 .LoginUsername {

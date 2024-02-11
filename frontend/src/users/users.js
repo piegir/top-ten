@@ -2,7 +2,7 @@ import './users.css';
 
 
 let usersList = [
-    "Player1Player1Player1Player1Player1Player1",
+    "Player1",
     "Player2",
     "Player3",
     "Player4"
