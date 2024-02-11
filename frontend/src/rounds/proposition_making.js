@@ -1,5 +1,6 @@
 import {currentUser} from "../authentication/authentication";
 import React, {Component} from "react";
+import {makeGetCall} from "../common/common";
 
 
 export let playersList = [
@@ -21,15 +22,31 @@ export let userNumbers = {
     "Player4": 8,
 };
 
-export function CurrentUserNumber() {
-    return (
-        <div className="CurrentUserNumber">
-            <p>
-                Your Top Number:<br/>
-                {userNumbers[currentUser.username]}
-            </p>
-        </div>
-    )
+let getUserNumber = () => {
+    return makeGetCall("/rounds/get_number");
+}
+
+export class CurrentUserNumber extends Component {
+
+    constructor(props) {
+        super(props);
+        getUserNumber().then((topNumber) => {
+            this.setState({topNumber: topNumber});
+        });
+    }
+
+    state = {topNumber: null};
+
+    render () {
+        return (
+            <div className="CurrentUserNumber">
+                <p>
+                    Your Top Number:<br/>
+                    {this.state.topNumber}
+                </p>
+            </div>
+        )
+    }
 }
 
 export function PlayerPropositions() {

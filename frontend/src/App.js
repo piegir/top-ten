@@ -1,10 +1,9 @@
 import './App.css';
 import {Component} from "react";
-import {currentUser, userLogin, userLogout, AskCredentials} from "./authentication/authentication.js";
-import {GamePreparation, RoundStarting} from "./game/game.js"
+import {currentUser, userLogout, AskCredentials} from "./authentication/authentication.js";
+import {GamePreparation} from "./game/game.js"
 import {
     ThemeSelection,
-    WaitThemeSelection,
     PropositionMaking,
     WaitPropositionMaking,
     HypothesisMaking,
@@ -102,24 +101,13 @@ class App extends Component {
                 )
             case views.GamePreparation:
                 return (
-                    <GamePreparation goToRoundStartingHandler={this.goToRoundStartingHandler}
+                    <GamePreparation goToThemeSelectionHandler={this.goToThemeSelectionHandler}
                                      goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
-                )
-            case views.RoundStarting:
-                return (
-                    <RoundStarting goToThemeSelectionHandler={this.goToThemeSelectionHandler}
-                                   goToWaitThemeSelectionHandler={this.goToWaitThemeSelectionHandler}
-                                   goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
                 )
             case views.ThemeSelection:
                 return (
                     <ThemeSelection goToPropositionMakingHandler={this.goToPropositionMakingHandler}
                                     goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
-                )
-            case views.WaitThemeSelection:
-                return (
-                    <WaitThemeSelection goToPropositionMakingHandler={this.goToPropositionMakingHandler}
-                                        goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
                 )
             case views.PropositionMaking:
                 return (
@@ -143,7 +131,12 @@ class App extends Component {
                 )
             default:
                 return (
-                    <AskCredentials goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
+                    <div>
+                    {currentUser !== null ?
+                        <GamePreparation goToThemeSelectionHandler={this.goToThemeSelectionHandler}
+                                         goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>:
+                        <AskCredentials goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>}
+                    </div>
                 )
         }
     }

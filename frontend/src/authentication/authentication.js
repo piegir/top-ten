@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {makeGetCall, makePostCall} from "../common/common.js";
 
 export let currentUser = {
-    username: "Player1",
+    username: null,
 };
 
 export function userLogin() {

@@ -37,7 +37,14 @@ export function getGameOptions() {
 
 function startGame(gameOptions) {
     return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
-        return makePostCall("/game/start", gameConfig);
+        return makePostCall("/game/start", gameConfig).then((startGameSuccess) => {
+            if (startGameSuccess.status) {
+                return makePostCall("/game/start_new_round");
+            } else {
+                alert(startGameSuccess.message);
+                return startGameSuccess;
+            }
+        });
     });
 }
 
@@ -74,7 +81,7 @@ export class GameSetup extends Component {
 
     /**
      * Repeatedly check for multiple things regarding the game:
-     * - Checks if the game has already been started, if yes, switch to round starting view
+     * - Checks if the game has already been started, if yes, switch to in-game view
      * - Checks if the current user is the first game user, i.e. if he can edit the game options
      * - Does the live visual update of options for other users
      * @type {number}
@@ -82,7 +89,7 @@ export class GameSetup extends Component {
     gameCheckingId = setInterval(() => {
         isGameStarted().then((gameStarted) => {
             if (gameStarted) {
-                this.props.goToRoundStartingHandler();
+                this.props.goToThemeSelectionHandler();
                 return;
             }
             getConnectedUsers().then((playersList) => {
@@ -165,12 +172,11 @@ export class GameSetup extends Component {
     }
 
     startGameHandler = () => {
-        startGame(this.state.gameOptions).then((startGameSuccess) => {
-            if (startGameSuccess.status) {
-                alert(startGameSuccess.message);
-                this.props.goToRoundStartingHandler();
+        startGame(this.state.gameOptions).then((startSuccess) => {
+            if (startSuccess.status) {
+                this.props.goToThemeSelectionHandler();
             } else {
-                alert(startGameSuccess.message);
+                alert(startSuccess.message);
             }
         });
     }

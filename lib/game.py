@@ -9,7 +9,7 @@ class Game:
                  max_nb_rounds: int,
                  starting_player_index: int = 0,
                  nb_themes_per_card: int = 3):
-        if len(players_list) > 10 or len(players_list) < 4:
+        if len(players_list) > 10 or len(players_list) < 2:
             raise ValueError(
                 f"Incorrect number of players {len(players_list)}. You need to be between 4 and 10 players."
             )

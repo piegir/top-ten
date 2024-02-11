@@ -2,8 +2,8 @@ import './rounds.css';
 import {makeGetCall} from "../common/common.js";
 import React, {Component} from "react";
 import {GameProgress} from "../game/game_progress.js";
-import {Username} from "../authentication/authentication.js";
-import {Users} from "../authentication/users.js";
+import {currentUser, Username} from "../authentication/authentication.js";
+import {getConnectedUsers, Users} from "../authentication/users.js";
 import {CurrentTheme, SelectTheme} from "./theme_selection.js";
 import {CurrentUserNumber, PlayerPropositions, MakeProposition} from "./proposition_making.js";
 import {PlayerNumberedPropositions, MakeHypothesis, CheckResults} from "./hypothesis_making.js";
@@ -14,26 +14,22 @@ export let getRoundPlayers = () => {
 }
 
 export class ThemeSelection extends Component {
-    render() {
-        return (
-            <div className="App">
-                <div className="Grid">
-                    <div className="HeadBox">
-                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
-                        <div className="Title">
-                            Top Ten
-                        </div>
-                    </div>
-                    <GameProgress/>
-                    <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true}/>
-                    <SelectTheme goToPropositionMakingHandler={this.props.goToPropositionMakingHandler}/>
-                </div>
-            </div>
-        );
-    }
-}
 
-export class WaitThemeSelection extends Component {
+    constructor(props) {
+        super(props);
+        getRoundPlayers().then((playersList) => {
+            let isFirstPlayer = currentUser.username === playersList[0];
+            this.setState({isFirstPlayer: isFirstPlayer});
+            if (!isFirstPlayer) {
+                this.props.goToPropositionMakingHandler();
+            }
+        });
+    }
+
+    state = {
+        isFirstPlayer: false,
+    }
+
     render() {
         return (
             <div className="App">
@@ -46,10 +42,14 @@ export class WaitThemeSelection extends Component {
                     </div>
                     <div className="MiddleBox">
                         <GameProgress/>
-                        <CurrentUserNumber/>
+                        {this.state.isFirstPlayer ?
+                            null :
+                            <CurrentUserNumber/>}
                     </div>
                     <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true}/>
-                    <div className="UserActionBox"/>
+                    {this.state.isFirstPlayer ?
+                        <SelectTheme goToPropositionMakingHandler={this.props.goToPropositionMakingHandler}/> :
+                        <div className="UserActionBox"/>}
                 </div>
             </div>
         );
