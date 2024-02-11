@@ -4,17 +4,41 @@ import {getConnectedUsers} from "../authentication/users";
 import {currentUser} from "../authentication/authentication";
 
 
-function startGame(gameOptions) {
+function createGameConfigFromOptions(gameOptions) {
     return getConnectedUsers().then((playersList) => {
-        let gameConfig = {
+        return {
             "players_list": playersList,
             "max_nb_rounds": gameOptions["Number of rounds"],
             "starting_player_index": gameOptions["Starting Player Index"],
             "nb_themes_per_card": gameOptions["Number of themes per card"],
-        }
-        alert(JSON.stringify(gameConfig));
+        };
+    });
+}
+
+function getGameOptionsFromConfig(gameConfig) {
+    return {
+        "Number of rounds": gameConfig["max_nb_rounds"],
+        "Starting Player Index": gameConfig["starting_player_index"],
+        "Number of themes per card": gameConfig["nb_themes_per_card"],
+    };
+}
+
+function setGameConfig(gameOptions) {
+    return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
+        return makePostCall("/game/set_config", gameConfig);
+    });
+}
+
+export function getGameOptions() {
+    return makeGetCall("/game/get_config").then((gameConfig) => {
+        return getGameOptionsFromConfig(gameConfig);
+    });
+}
+
+function startGame(gameOptions) {
+    return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
         return makePostCall("/game/start", gameConfig);
-    })
+    });
 }
 
 function isGameStarted() {
@@ -23,6 +47,19 @@ function isGameStarted() {
 
 
 export class GameSetup extends Component {
+    constructor(props) {
+        super(props);
+        setGameConfig(this.state.gameOptions)
+            .then(() => {
+                this.setState({
+                    gameOptions: this.state.gameOptions,
+                    gameStarted: this.state.gameStarted,
+                    isFirstPlayer: this.state.isFirstPlayer,
+                    areOptionsSet: true,
+                });
+            }
+        );
+    }
 
     state = {
         gameOptions: {
@@ -31,22 +68,55 @@ export class GameSetup extends Component {
             "Starting Player Index": 0,
         },
         gameStarted: false,
+        isFirstPlayer: false,
+        areOptionsSet: false,
     };
 
-    gameStartedCheckingId = setInterval(() => {
+    /**
+     * Repeatedly check for multiple things regarding the game:
+     * - Checks if the game has already been started, if yes, switch to round starting view
+     * - Checks if the current user is the first game user, i.e. if he can edit the game options
+     * - Does the live visual update of options for other users
+     * @type {number}
+     */
+    gameCheckingId = setInterval(() => {
         isGameStarted().then((gameStarted) => {
-            this.setState({
-                gameOptions: this.state.gameOptions,
-                gameStarted: gameStarted,
-            });
             if (gameStarted) {
                 this.props.goToRoundStartingHandler();
+                return;
             }
+            getConnectedUsers().then((playersList) => {
+                let isFirstPlayer = currentUser.username === playersList[0];
+                if (isFirstPlayer) {
+                    this.setState({
+                        gameOptions: this.state.gameOptions,
+                        gameStarted: gameStarted,
+                        isFirstPlayer: isFirstPlayer,
+                        areOptionsSet: this.state.areOptionsSet,
+                    });
+                }
+                else if (this.state.areOptionsSet) {
+                    getGameOptions().then((gameOptions) => {
+                        this.setState({
+                            gameOptions: gameOptions,
+                            gameStarted: gameStarted,
+                            isFirstPlayer: isFirstPlayer,
+                            areOptionsSet: this.state.areOptionsSet,
+                        });
+                    });
+                }
+            });
         })
     }, 1000, []);
 
     componentWillUnmount() {
-        clearInterval(this.gameStartedCheckingId);
+        clearInterval(this.gameCheckingId);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.isFirstPlayer && this.state.gameOptions !== prevState.gameOptions) {
+            setGameConfig(this.state.gameOptions).then();
+        }
     }
 
     liveUpdateNumberOfRounds = (event) => {
@@ -55,7 +125,10 @@ export class GameSetup extends Component {
                 "Number of rounds": event.target.value,
                 "Number of themes per card": this.state.gameOptions["Number of themes per card"],
                 "Starting Player Index": this.state.gameOptions["Starting Player Index"],
-            }
+            },
+            gameStarted: this.state.gameStarted,
+            isFirstPlayer: this.state.isFirstPlayer,
+            areOptionsSet: this.state.areOptionsSet,
         });
     }
 
@@ -65,7 +138,10 @@ export class GameSetup extends Component {
                 "Number of rounds": this.state.gameOptions["Number of rounds"],
                 "Number of themes per card": event.target.value,
                 "Starting Player Index": this.state.gameOptions["Starting Player Index"],
-            }
+            },
+            gameStarted: this.state.gameStarted,
+            isFirstPlayer: this.state.isFirstPlayer,
+            areOptionsSet: this.state.areOptionsSet,
         });
     }
 
@@ -75,7 +151,10 @@ export class GameSetup extends Component {
                 "Number of rounds": this.state.gameOptions["Number of rounds"],
                 "Number of themes per card": this.state.gameOptions["Number of themes per card"],
                 "Starting Player Index": event.target.value,
-            }
+            },
+            gameStarted: this.state.gameStarted,
+            isFirstPlayer: this.state.isFirstPlayer,
+            areOptionsSet: this.state.areOptionsSet,
         });
     }
 
@@ -86,20 +165,12 @@ export class GameSetup extends Component {
     }
 
     startGameHandler = () => {
-        getConnectedUsers().then((usersList) => {
-            let firstUser = usersList[0];
-            if (currentUser.username === firstUser) {
-                startGame(this.state.gameOptions).then((startGameSuccess) => {
-                    if (startGameSuccess.status) {
-                        alert(startGameSuccess.message);
-                        this.props.goToRoundStartingHandler();
-                    } else {
-                        alert(startGameSuccess.message);
-                    }
-                });
-            }
-            else {
-                alert(`Only the first user ${firstUser} can start the game.`);
+        startGame(this.state.gameOptions).then((startGameSuccess) => {
+            if (startGameSuccess.status) {
+                alert(startGameSuccess.message);
+                this.props.goToRoundStartingHandler();
+            } else {
+                alert(startGameSuccess.message);
             }
         });
     }
@@ -118,23 +189,23 @@ export class GameSetup extends Component {
                                     {optionName}:
                                 </div>
                                 <div className="UserActionInputField">
-                                    <input
+                                    {this.state.isFirstPlayer ? <input
                                         type="text"
                                         value={optionValue}
                                         className="NumberInput"
                                         onChange={this.optionsCallbacks[optionName]}
-                                    />
+                                    /> : optionValue}
                                 </div>
                             </div>
                         )
                     })}
                 </div>
-                <div className="UserActionButtonBox">
+                {this.state.isFirstPlayer ? <div className="UserActionButtonBox">
                     <button onClick={this.startGameHandler}
                             className="UserActionButton">
                         Start Game
                     </button>
-                </div>
+                </div> : null}
             </div>
         );
     }

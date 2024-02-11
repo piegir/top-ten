@@ -28,6 +28,9 @@ class GameConfig(BaseModel):
         description="Number of themes provided per card.", default=3)
 
 
+temp_game_config: None | GameConfig = None
+
+
 def game_created():
     """
     Check if game was created.
@@ -55,6 +58,33 @@ def player_in_game(player: str):
     :return: True if the specified player is part of the game, False otherwise.
     """
     return player in current_game.players_list
+
+
+@router.post("/set_config")
+def set_game_config(game_config: GameConfig,
+                    current_username: Annotated[str,
+                                                Depends(oauth2_scheme)]):
+    """
+    API call to temporarily store the game config (for live update between users).
+
+    :param game_config: The temporary game configuration
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    """
+    global temp_game_config
+    temp_game_config = game_config
+
+
+@router.get("/get_config")
+def get_game_config(
+        current_username: Annotated[str,
+                                    Depends(oauth2_scheme)]) -> GameConfig:
+    """
+    API call to access the temporarily stored game config (for live update between users).
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The temporary game configuration.
+    """
+    return temp_game_config
 
 
 @router.post("/start")
@@ -159,6 +189,28 @@ def is_round_in_progress(
     :return: True if a round is progress, False otherwise.
     """
     return game_created() and current_game.is_round_in_progress()
+
+
+@router.get("/get_rounds_history")
+def get_rounds_history(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> list[int]:
+    """
+    API call to obtain the history of success of the different rounds of the game.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The list of the status success of each round.
+    0 if the round is still in progress, 1 if the round was won, 2 if the round was lost.
+    """
+    rounds_history = []
+    for this_round in current_game.rounds:
+        if not this_round.is_complete():
+            rounds_history.append(0)
+        else:
+            if this_round.success:
+                rounds_history.append(1)
+            else:
+                rounds_history.append(2)
+    return rounds_history
 
 
 @router.get("/is_game_complete")

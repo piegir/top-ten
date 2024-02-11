@@ -42,7 +42,6 @@ function makeRestApiCall(endpoint, endpointType, inputData = null) {
         default:
             throw new SyntaxError("Wrong endpoint type provided.");
     }
-    // alert(JSON.stringify(requestOptions));
 
     return fetch(`http://${restApiIp}:${restApiPort}${endpoint}`, requestOptions)
         .then((response) => response.json())
