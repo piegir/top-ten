@@ -1,153 +1,102 @@
-import argon2
-import json
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from pydantic import BaseModel, Field, SecretStr
 from typing import Annotated
 
 from app.utils import ActionStatus
 
 router = APIRouter(prefix="/authentication", tags=["Authentication"])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="authentication/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="authentication/oauth2_login")
 
-users_database_path = "app/authentication/users.json"
-
-with open(users_database_path, "r") as input_file:
-    users_database = json.load(input_file)
-
-connected_users = set()
+connected_users: set[str] = set()
 
 
-class User(BaseModel):
-    username: str = Field(
-        description="The username that will be used for authentication.",
-        example="johndoe")
-    full_name: str | None = Field(description="User's full name.",
-                                  default=None)
-    hashed_password: str = Field(
-        description="The user password as encoded in the database.")
-
-
-def hash_password(password: str) -> str:
-    """
-    Encrypt password using argon2 algorithm.
-
-    :param password: Raw password
-    :return: Encrypted password
-    """
-    return argon2.hash_password(password.encode('utf-8')).decode('utf-8')
-
-
-def verify_password(hashed_password: str, password: str) -> bool:
-    """
-    Verify password using argon2 algorithm.
-
-    :param hashed_password: Encrypted password
-    :param password: Raw password
-    :return: True if password matches the hashed password, False otherwise.
-    """
-    return argon2.verify_password(hashed_password.encode('utf-8'),
-                                  password.encode('utf-8'))
-
-
-def check_user_connected(username: str) -> bool:
+def user_connected(username: str) -> bool:
     return username in connected_users
 
 
-def get_user(username: str) -> User:
+def add_user(username: str) -> ActionStatus:
     """
-    Access the user with the given username.
+    Add user to the list of connected users, first checks if the user already exists.
 
-    :param username: The username
-    :return: The corresponding user.
+    :param username: The user's username
+    :return: The status of adding the user.
     """
-    if username not in users_database:
-        raise HTTPException(
-            status_code=400,
-            detail=
-            f"User {username} doesn't exist. Create a user with /authentication/signup."
-        )
-    user_dict = users_database[username]
-    return User(**user_dict)
+    if user_connected(username):
+        return ActionStatus(status=False,
+                            message=f"Username '{username}' already taken.")
+    connected_users.add(username)
+    return ActionStatus(status=True, message=f"Connected as {username}.")
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
+def remove_user(username: str) -> ActionStatus:
     """
-    Get the current user via its token.
+    Remove user from the list of connected users, first checks if the user is actually connected.
 
-    :param token: The authentication token that contains the username
-    :return: The corresponding current user.
+    :param username: The user's username
+    :return: The status of adding the user.
     """
-    return get_user(token)
+    if not user_connected(username):
+        return ActionStatus(status=False, message=f"{username} not connected.")
+    connected_users.remove(username)
+    return ActionStatus(status=True,
+                        message=f"{username} properly disconnected.")
 
 
-@router.post("/login", include_in_schema=False)
-def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> dict:
+@router.post("/oauth2_login", include_in_schema=False)
+def oauth2_login(
+        form_data: Annotated[OAuth2PasswordRequestForm,
+                             Depends()]) -> dict:
     """
     Allow user login via OAuth2.
 
-    :param form_data: The OAuth2 form that requests username and password for user login
+    :param form_data: The OAuth2 form that requests username and password (unused) for user login
     :return: A JSON object containing the 'access_token' (here the username) and the 'token_type' (here 'bearer').
     """
-    user = get_user(form_data.username)
-    if not verify_password(user.hashed_password, form_data.password):
-        raise HTTPException(status_code=400,
-                            detail="Incorrect username or password")
-    connected_users.add(user.username)
-    return {"access_token": user.username, "token_type": "bearer"}
+    add_user(form_data.username)
+    return {"access_token": form_data.username, "token_type": "bearer"}
 
 
-@router.post("/signup")
-def signup(username: str,
-           password: SecretStr,
-           repeat_password: SecretStr,
-           full_name: str | None = None) -> ActionStatus:
+@router.post("/login")
+def login(username: Annotated[str, Depends(oauth2_scheme)]) -> ActionStatus:
     """
-    API call to allow new user to be created (added to the user database).
+    API call to allow new user to login.
 
-    :param username: Asks the user for a username
-    :param password: Asks the user to provide a password
-    :param repeat_password: Asks the user to repeat the password
-    :param full_name: Asks the user for their full name (Optional)
-    :return: The status success of signing up.
+    :param username: The username of the user to login (automatically detected)
+    :return: The status success of the login.
     """
-    if username in users_database:
-        return ActionStatus(status=False,
-                            message=f"Username '{username}' already taken.")
-    if password != repeat_password:
-        return ActionStatus(
-            status=False, message="Make sure password entries are identical.")
-    users_database[username] = {
-        "username": username,
-        "full_name": full_name,
-        "hashed_password": hash_password(password.get_secret_value()),
-    }
-    with open(users_database_path, "w") as output_file:
-        json.dump(users_database, output_file, indent=2)
-    return ActionStatus(status=True,
-                        message=f"New user '{username}' registered.")
+    return add_user(username)
 
 
-@router.get("/get_my_info")
-def get_my_info(
-        current_user: Annotated[User, Depends(get_current_user)]) -> User:
+@router.post("/logout")
+def logout(username: Annotated[str, Depends(oauth2_scheme)]) -> ActionStatus:
     """
-    API call to access currently logged-in user info.
+    API call to log out user.
 
-    :param current_user: The currently logged-in user (automatically detected)
-    :return: The currently logged-in user
+    :param username: The username of the user to log out (automatically detected)
+    :return: The status success of the logout.
     """
-    return current_user
+    return remove_user(username)
+
+
+@router.get("/get_username")
+def get_username(username: Annotated[str, Depends(oauth2_scheme)]) -> str:
+    """
+    API call to access currently logged-in user's username.
+
+    :param username: The currently logged-in user's username (automatically detected)
+    :return: The currently logged-in user's username
+    """
+    return username
 
 
 @router.get("/get_connected_users")
 def get_connected_users(
-        token: Annotated[str, Depends(oauth2_scheme)]) -> list[str]:
+        username: Annotated[str, Depends(oauth2_scheme)]) -> list[str]:
     """
     API call to get the list of all users connected to the server.
 
-    :param token: Automatically check that the user requesting this is logged-in (value unused)
-    :return: the list of all connected users.
+    :param username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The list of all connected users.
     """
     return list(connected_users)
