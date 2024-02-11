@@ -28,42 +28,33 @@ class GameConfig(BaseModel):
         description="Number of themes provided per card.", default=3)
 
 
-def check_game_created(action_description: str):
+def game_created():
     """
     Check if game was created.
 
-    :param action_description: The description of the action desired to be performed on the round.
+    :return: True if game was created, False otherwise.
     """
-    if current_game is None:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Couldn't {action_description}, game wasn't started.")
+    return current_game is not None
 
 
-def check_all_players_connected(players_list: list[str]):
+def all_players_connected(players_list: list[str]):
     """
     Check that all players are connected to the server.
 
     :param players_list: The list of players usernames
+    :return: True if all players mentioned are connected, False otherwise.
     """
-    if not all(user_connected(username) for username in players_list):
-        raise HTTPException(status_code=400,
-                            detail="Some selected players are not connected.")
+    return all(user_connected(username) for username in players_list)
 
 
-def check_player_in_game(player: str, action_description: str):
+def player_in_game(player: str):
     """
     Check if player is part of the game.
 
     :param player: The username of the player to be checked
-    :param action_description: The description of the action desired to be performed by the player.
+    :return: True if the specified player is part of the game, False otherwise.
     """
-    if player not in current_game.players_list:
-        raise HTTPException(
-            status_code=400,
-            detail=
-            f"Couldn't {action_description}, player '{player}' not part of the game."
-        )
+    return player in current_game.players_list
 
 
 @router.post("/start")
@@ -79,25 +70,52 @@ def start_game(
     :return: The status of starting the game.
     """
     global current_game
-    check_all_players_connected(game_config.players_list)
+
     if current_username not in game_config.players_list:
         return ActionStatus(
             status=False,
             message="Game couldn't be started. "
-            f"Requesting player '{current_username}' not part of the game.")
+            f"Requesting player '{current_username}' must be part of the players list."
+        )
+
+    if not all_players_connected(game_config.players_list):
+        return ActionStatus(status=False,
+                            message="Game couldn't be started. "
+                            f"Some players are not connected.")
 
     try:
         current_game = Game(game_config.players_list,
                             game_config.max_nb_rounds,
                             game_config.starting_player_index,
                             game_config.nb_themes_per_card)
-        return ActionStatus(
-            status=True,
-            message="Game was properly started. "
-            "You can now start the first round (/game/start_new_round)")
+        return ActionStatus(status=True, message="Game was properly started.")
     except Exception as error:
         return ActionStatus(status=False,
                             message=f"Game couldn't be started. {error}")
+
+
+@router.get("/is_started")
+def is_started(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
+    """
+    API call to check if a game is started.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: True if a game is started, False otherwise.
+    """
+    return game_created()
+
+
+@router.get("/get_first_player")
+def get_first_player(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> str:
+    """
+    API call to get the username of the first player of the game.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The username of the first player of the game (in the players list).
+    """
+    return current_game.players_list[current_game.starting_player_index]
 
 
 @router.post("/start_new_round")
@@ -111,18 +129,21 @@ def start_new_round(
     :return: The status of starting the round.
     """
     description = "start new round"
-    check_game_created(description)
-    check_player_in_game(current_username, description)
+    if not game_created():
+        return ActionStatus(
+            status=False,
+            message=f"Couldn't {description}, game wasn't started.")
+    if not player_in_game(current_username):
+        return ActionStatus(
+            status=False,
+            message=
+            f"Couldn't {description}, requesting player '{current_username}' must be part of the game."
+        )
 
     try:
         current_game.start_new_round()
-        first_player = current_game.rounds[-1].players_list[
-            current_game.rounds[-1].playing_player_index]
-        return ActionStatus(
-            status=True,
-            message=f"Round was properly started. "
-            f"{first_player} should pick a theme from the provided card (/rounds/get_card)."
-        )
+        return ActionStatus(status=True,
+                            message=f"Round was properly started.")
     except Exception as error:
         return ActionStatus(status=False,
                             message=f"Round couldn't be started. {error}")
@@ -134,14 +155,10 @@ def is_round_in_progress(
     """
     API call to check if a round is currently in progress in the game.
 
-    :param current_username: Username of the current user performing the request (automatically obtained)
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: True if a round is progress, False otherwise.
     """
-    description = "check round in progress"
-    check_game_created(description)
-    check_player_in_game(current_username, description)
-
-    return current_game.is_round_in_progress()
+    return game_created() and current_game.is_round_in_progress()
 
 
 @router.get("/is_game_complete")
@@ -150,14 +167,10 @@ def is_game_complete(
     """
     API call to check if the game is complete.
 
-    :param current_username: Username of the current user performing the request (automatically obtained)
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: True if the game is complete, False otherwise.
     """
-    description = "start new round"
-    check_game_created(description)
-    check_player_in_game(current_username, description)
-
-    return current_game.is_game_complete()
+    return game_created() and current_game.is_game_complete()
 
 
 @router.get("/is_game_won")
@@ -166,11 +179,8 @@ def is_game_won(
     """
     API call to check if the game is won.
 
-    :param current_username: Username of the current user performing the request (automatically obtained)
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: True if the game is won, False otherwise.
     """
-    description = "check for game win"
-    check_game_created(description)
-    check_player_in_game(current_username, description)
 
-    return current_game.is_game_won()
+    return game_created() and current_game.is_game_won()
