@@ -14,23 +14,7 @@ export function userLogout() {
     return makePostCall("/authentication/logout");
 }
 
-export class Username extends Component {
-    render () {
-        return (
-            <div className="Username">
-                <p>
-                    Username:<br/>
-                    {currentUser.username}
-                </p>
-                <button onClick={this.props.logOutHandler}>
-                    Logout
-                </button>
-            </div>
-        )
-    }
-}
-
-export class Login extends Component {
+class Login extends Component {
     state = {username: ""};
 
     liveUpdateUsername = (event) => {
@@ -59,6 +43,40 @@ export class Login extends Component {
                     </button>
                 </div>
             </div>
+        );
+    }
+}
+
+
+export class Username extends Component {
+    render () {
+        return (
+            <div className="Username">
+                <p>
+                    Username:<br/>
+                    {currentUser.username}
+                </p>
+                <button onClick={this.props.logOutHandler}>
+                    Logout
+                </button>
+            </div>
+        )
+    }
+}
+
+
+export class AskCredentials extends Component {
+    render() {
+        return (
+            <div className="App">
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                </div>
+                <Login loginHandler={this.props.loginHandler}/>
+            </div>
+
         );
     }
 }

@@ -1,7 +1,9 @@
 import './rounds.css';
 import React, {Component} from "react";
-import {currentUser} from "../authentication/authentication.js"
-import {makeGetCall} from "../common/common";
+import {currentUser, Username} from "../authentication/authentication.js"
+import {Users} from "../users/users.js"
+import {makeGetCall} from "../common/common.js";
+import {GameProgress} from "../game/game.js"
 
 let userNumbers = {
     "Player1": 5,
@@ -48,7 +50,7 @@ export function getFirstRoundPlayer() {
 }
 
 
-export function CurrentUserNumber() {
+function CurrentUserNumber() {
     return (
         <div className="CurrentUserNumber">
             <p>
@@ -59,7 +61,7 @@ export function CurrentUserNumber() {
     )
 }
 
-export function PlayerPropositions() {
+function PlayerPropositions() {
     return (
         <div className="PlayersBox">
             <div className="BoxTitle">
@@ -91,7 +93,7 @@ export function PlayerPropositions() {
     );
 }
 
-export function CurrentTheme() {
+function CurrentTheme() {
     return (
         <div className="CurrentTheme">
             <table>
@@ -122,7 +124,7 @@ export function CurrentTheme() {
     );
 }
 
-export function PlayerNumberedPropositions() {
+function PlayerNumberedPropositions() {
     let sortedPlayersList = [...playersList];
     sortedPlayersList.sort((a, b) => {
         return userNumbers[a] > userNumbers[b] ? 1 : -1;
@@ -164,7 +166,7 @@ export function PlayerNumberedPropositions() {
     );
 }
 
-export class SelectTheme extends Component {
+class SelectTheme extends Component {
     render() {
         return (
             <div className="UserActionBox">
@@ -209,7 +211,7 @@ export class SelectTheme extends Component {
     }
 }
 
-export class MakeProposition extends Component {
+class MakeProposition extends Component {
     render() {
         return (
             <div className="UserActionBox">
@@ -234,7 +236,7 @@ export class MakeProposition extends Component {
     }
 }
 
-export class MakeHypothesis extends Component {
+class MakeHypothesis extends Component {
 
     state = {data: [
         {
@@ -326,7 +328,7 @@ export class MakeHypothesis extends Component {
     }
 }
 
-export class CheckResults extends Component {
+class CheckResults extends Component {
     render() {
         return (
             <div className="UserActionBox">
@@ -363,6 +365,129 @@ export class CheckResults extends Component {
                     </button>
                 </div>
             </div>
+        );
+    }
+}
+
+export class ThemeSelection extends Component {
+    render() {
+        return (
+            <div className="App">
+                <GameProgress/>
+                <Username logOutHandler={this.props.logOutHandler}/>
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                    <Users/>
+                    <SelectTheme themeSelectedHandler={this.props.themeSelectedHandler}/>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+export class WaitThemeSelection extends Component {
+    render() {
+        return (
+            <div className="App">
+                <GameProgress/>
+                <Username logOutHandler={this.props.logOutHandler}/>
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                    <CurrentUserNumber/>
+                    <Users/>
+                    <div className="UserActionBox"/>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+export class PropositionMaking extends Component {
+    render() {
+        return (
+            <div className="App">
+                <GameProgress/>
+                <Username logOutHandler={this.props.logOutHandler}/>
+                <CurrentUserNumber/>
+                <CurrentTheme/>
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                    <PlayerPropositions/>
+                    <MakeProposition propositionMadeHandler={this.props.propositionMadeHandler}/>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+export class WaitPropositionMaking extends Component {
+    render() {
+        return (
+            <div className="App">
+                <GameProgress/>
+                <Username logOutHandler={this.props.logOutHandler}/>
+                <CurrentUserNumber/>
+                <CurrentTheme/>
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                    <PlayerPropositions/>
+                    <div className="UserActionBox"/>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+export class HypothesisMaking extends Component {
+    render() {
+        return (
+            <div className="App">
+                <GameProgress/>
+                <Username logOutHandler={this.props.logOutHandler}/>
+                <CurrentUserNumber/>
+                <CurrentTheme/>
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                    <PlayerPropositions/>
+                    <MakeHypothesis hypothesisMadeHandler={this.props.hypothesisMadeHandler}/>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+export class ResultsChecking extends Component {
+    render() {
+        return (
+            <div className="App">
+                <GameProgress/>
+                <Username logOutHandler={this.props.logOutHandler}/>
+                <CurrentUserNumber/>
+                <CurrentTheme/>
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                    <PlayerNumberedPropositions/>
+                    <CheckResults roundFinishedHandler={this.props.roundFinishedHandler}/>
+                </div>
+            </div>
+
         );
     }
 }

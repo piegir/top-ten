@@ -1,8 +1,8 @@
 import './game.css';
 import {Component} from "react";
 import {makeGetCall, makePostCall, wait} from "../common/common";
-import {getConnectedUsers} from "../users/users";
-import {currentUser} from "../authentication/authentication";
+import {getConnectedUsers, Users} from "../users/users";
+import {currentUser, Username} from "../authentication/authentication";
 import {getFirstRoundPlayer} from "../rounds/rounds";
 
 let roundHistory = [
@@ -45,7 +45,7 @@ function isRoundStarted() {
 }
 
 
-export class GameSetup extends Component {
+class GameSetup extends Component {
 
     state = {
         gameOptions: {
@@ -141,7 +141,7 @@ export class GameSetup extends Component {
     }
 }
 
-export class StartRound extends Component {
+class StartRound extends Component {
 
     state = {roundStarted: false};
 
@@ -252,5 +252,43 @@ export function GameProgress() {
             </table>
         </div>
     )
+}
 
+
+export class GamePreparation extends Component {
+    render() {
+        return (
+            <div className="App">
+                <Username logOutHandler={this.props.logOutHandler}/>
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                    <Users/>
+                    <GameSetup gameStartedHandler={this.props.gameStartedHandler}/>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+export class RoundStarting extends Component {
+    render() {
+        return (
+            <div className="App">
+                <GameProgress/>
+                <Username logOutHandler={this.props.logOutHandler}/>
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                    <Users/>
+                    <StartRound goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
+                                goToWaitThemeSelectionHandler={this.props.goToWaitThemeSelectionHandler}/>
+                </div>
+            </div>
+
+        );
+    }
 }
