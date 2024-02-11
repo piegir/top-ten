@@ -11,10 +11,12 @@ export class GamePreparation extends Component {
     render() {
         return (
             <div className="App">
-                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
                     </div>
                     <Users/>
                     <GameSetup goToRoundStartingHandler={this.props.goToRoundStartingHandler}/>
@@ -29,18 +31,19 @@ export class RoundStarting extends Component {
     render() {
         return (
             <div className="App">
-                <GameProgress/>
-                <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 <div className="Grid">
-                    <div className="Title">
-                        Top Ten
+                    <div className="HeadBox">
+                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
                     </div>
+                    <GameProgress/>
                     <Users/>
                     <StartRound goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
                                 goToWaitThemeSelectionHandler={this.props.goToWaitThemeSelectionHandler}/>
                 </div>
             </div>
-
         );
     }
 }

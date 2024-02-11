@@ -69,11 +69,11 @@ export class MakeProposition extends Component {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
-                    Make Proposition
+                    Make your proposition
                 </div>
                 <div className="UserActionInput">
                     <div className="UserActionInputOption">
-                        Your Proposition:
+                        Your proposition:
                     </div>
                     <div className="UserActionInputField">
                         <textarea name="Text1" cols="40" rows="5"></textarea>

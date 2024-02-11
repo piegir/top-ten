@@ -51,7 +51,7 @@ export class SelectTheme extends Component {
                                     {themeObject.top10}
                                 </td>
                                 <td>
-                                    <button onClick={this.props.goToPropositionMakingHandler}>
+                                    <button className="LogoutButton" onClick={this.props.goToPropositionMakingHandler}>
                                         Select theme {themeIndex + 1}
                                     </button>
                                 </td>
@@ -67,8 +67,8 @@ export class SelectTheme extends Component {
 
 export function CurrentTheme() {
     return (
-        <div className="CurrentTheme">
-            <table>
+        <div>
+            <table className="CurrentTheme">
                 <tr>
                     <th>
                         Theme

@@ -19,7 +19,7 @@ export function PlayerNumberedPropositions() {
                         Players
                     </th>
                     <th>
-                        Numbers
+                        Top
                     </th>
                     <th>
                         Propositions
@@ -31,7 +31,7 @@ export function PlayerNumberedPropositions() {
                             <td>
                                 {playerName}
                             </td>
-                            <td>
+                            <td style={{textAlign:"center"}}>
                                 {userNumbers[playerName]}
                             </td>
                             <td>
@@ -85,7 +85,7 @@ export class MakeHypothesis extends Component {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
-                    Make Hypothesis
+                    Make your hypothesis
                 </div>
                 <table className="PlayerPropositionsTable">
                     <tr>
