@@ -28,7 +28,6 @@ class Login extends Component {
         userLogin()
             .then((loginSuccess) => {
                 if (loginSuccess.status) {
-                    alert(loginSuccess.message);
                     this.props.goToGamePreparationHandler();
                 } else {
                     alert(loginSuccess.message);
@@ -68,7 +67,6 @@ export class Username extends Component {
             userLogout()
                 .then((logoutSuccess) => {
                     if (logoutSuccess.status) {
-                        alert(logoutSuccess.message);
                         currentUser.username = "";
                         this.props.goToAskCredentialsHandler();
                     } else {
