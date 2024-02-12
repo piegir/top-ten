@@ -2,12 +2,12 @@
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    word-break: break-all;
+    word-break: break-word;
     border-color: var(--subtitle-color);
 }
 
 .ThemesTable td:first-child {
-    width:55%;
+    width:50%;
     border-left: solid 2px var(--subtitle-color);
 }
 
@@ -40,6 +40,8 @@
 
 .ThemesTable tr:last-child td:last-child {
     border-bottom-right-radius: 5px;
+    width:15%;
+    border-left: solid 2px var(--subtitle-color);
 }
 
 .ThemesTable tr:last-child td {
@@ -55,10 +57,15 @@
 }
 
 .CurrentUserNumber {
-    position: fixed;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    margin: auto;
+    /*position: fixed;
     top: 13%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);*/
     text-align: center;
 }
 
@@ -97,19 +104,19 @@
 }
 
 .CurrentTheme th:first-child {
-  border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
 }
 
 .CurrentTheme th:last-child {
-  border-top-right-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .CurrentTheme tr:last-child td:first-child {
-  border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .CurrentTheme tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .PlayerPropositionsTable {
@@ -146,6 +153,10 @@
 
 .PlayerPropositionsTable td:first-child {
     border-left: solid 2px var(--subtitle-color);
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: "";
+    white-space: nowrap;
 }
 
 .PlayerPropositionsTable th:first-child {
@@ -159,7 +170,7 @@
 .PlayerPropositionsTable td:last-child {
     max-width: 100%;
     border-right: solid 2px var(--subtitle-color);
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .PlayerPropositionsTable th:last-child {
@@ -229,4 +240,24 @@ textarea {
   border-radius: 5px;
   border: 1px solid var(--title-color);
   box-shadow: 1px 1px 1px #999;
+}
+
+.PlayerColumn {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: "";
+    white-space: nowrap;
+}
+
+.ButtonsInTable {
+    width: 13%;
+}
+
+.Result {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 3;
+    margin: auto;
+    font-size: 2vw;
 }

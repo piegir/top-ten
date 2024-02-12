@@ -68,6 +68,8 @@ body {
     border-radius: 10px;
     padding: 15px;
     background-color: var(--box-color);
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .UserActionBox {
@@ -81,12 +83,14 @@ body {
     border-radius: 10px;
     padding: 15px;
     background-color: var(--box-color);
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .MiddleBox {
-    display: grid;
     grid-column-start: 1;
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 2;
+    display: grid;
 }

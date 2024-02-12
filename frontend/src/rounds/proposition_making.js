@@ -29,7 +29,7 @@ export class CurrentUserNumber extends Component {
             <div className="CurrentUserNumber">
                 <p>
                     Your Top Number:<br/>
-                    {this.state.topNumber}
+                    <span style={{fontSize: "2vw"}}>{this.state.topNumber}</span>
                 </p>
             </div>
         )
