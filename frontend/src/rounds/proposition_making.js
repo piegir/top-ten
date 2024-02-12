@@ -1,26 +1,5 @@
-import {currentUser} from "../authentication/authentication";
 import React, {Component} from "react";
 import {makeGetCall, makePostCall} from "../common/common";
-
-
-export let playersList = [
-    "Player1",
-    "Player2",
-    "Player3",
-    "Player4"
-]
-export let playerPropositions = {
-    "Player1": "My Neighbor",
-    "Player2": "Hitler",
-    "Player3": "Martin Luther King",
-    "Player4": "Donald Trump",
-};
-export let userNumbers = {
-    "Player1": 5,
-    "Player2": 10,
-    "Player3": 2,
-    "Player4": 8,
-};
 
 function getUserNumber() {
     return makeGetCall("/rounds/get_number");
@@ -58,6 +37,15 @@ export class CurrentUserNumber extends Component {
 }
 
 export class PlayerPropositions extends Component {
+
+    constructor(props) {
+        super(props);
+        if (this.props.checkOnlyOnce) {
+            setTimeout(() => {
+                clearInterval(this.isPlayerTurnCheckingId);
+            }, 2000);
+        }
+    }
 
     state = {playerPropositions: []};
 

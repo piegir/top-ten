@@ -5,9 +5,9 @@ import {GamePreparation} from "./game/game.js"
 import {
     ThemeSelection,
     PropositionMaking,
-    HypothesisMaking,
-    ResultsChecking
-} from "./rounds/rounds"
+    HypothesisMaking
+} from "./rounds/rounds.js"
+import {RoundResultChecking, GameResultChecking} from "./results/results.js"
 import {wait} from "./common/common.js";
 
 let views = {
@@ -16,7 +16,8 @@ let views = {
     ThemeSelection: 2,
     PropositionMaking: 3,
     HypothesisMaking: 4,
-    ResultsChecking: 5,
+    RoundResultChecking: 5,
+    GameResultChecking: 6,
 }
 
 class App extends Component {
@@ -64,8 +65,12 @@ class App extends Component {
         this.setState({view: views.HypothesisMaking});
     };
 
-    goToResultsCheckingHandler = () => {
-        this.setState({view: views.ResultsChecking});
+    goToRoundResultsCheckingHandler = () => {
+        this.setState({view: views.RoundResultChecking});
+    };
+
+    goToGameResultsCheckingHandler = () => {
+        this.setState({view: views.GameResultChecking});
     };
 
     render() {
@@ -91,13 +96,19 @@ class App extends Component {
                 )
             case views.HypothesisMaking:
                 return (
-                    <HypothesisMaking goToResultsCheckingHandler={this.goToResultsCheckingHandler}
+                    <HypothesisMaking goToRoundResultsCheckingHandler={this.goToRoundResultsCheckingHandler}
                                       goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
                 )
-            case views.ResultsChecking:
+            case views.RoundResultChecking:
                 return (
-                    <ResultsChecking goToThemeSelectionHandler={this.goToThemeSelectionHandler}
-                                     goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
+                    <RoundResultChecking goToThemeSelectionHandler={this.goToThemeSelectionHandler}
+                                         goToGameResultsCheckingHandler={this.goToGameResultsCheckingHandler}
+                                         goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
+                )
+            case views.GameResultChecking:
+                return (
+                    <GameResultChecking goToGamePreparationHandler={this.goToGamePreparationHandler}
+                                        goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
                 )
             default:
                 return (

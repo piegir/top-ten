@@ -52,6 +52,10 @@ function isGameStarted() {
     return makeGetCall("/game/is_started");
 }
 
+function isGameComplete() {
+    return makeGetCall("/game/is_game_complete");
+}
+
 
 export class GameSetup extends Component {
     constructor(props) {
@@ -81,37 +85,37 @@ export class GameSetup extends Component {
 
     /**
      * Repeatedly check for multiple things regarding the game:
-     * - Checks if the game has already been started, if yes, switch to in-game view
+     * - Checks if the game has already been started (but not completed), if yes, switch to in-game view
      * - Checks if the current user is the first game user, i.e. if he can edit the game options
      * - Does the live visual update of options for other users
-     * @type {number}
      */
     gameCheckingId = setInterval(() => {
         isGameStarted().then((gameStarted) => {
-            if (gameStarted) {
-                this.props.goToThemeSelectionHandler();
-                return;
-            }
-            getConnectedUsers().then((playersList) => {
-                let isFirstPlayer = currentUser.username === playersList[0];
-                if (isFirstPlayer) {
-                    this.setState({
-                        gameOptions: this.state.gameOptions,
-                        gameStarted: gameStarted,
-                        isFirstPlayer: isFirstPlayer,
-                        areOptionsSet: this.state.areOptionsSet,
-                    });
+            isGameComplete().then((gameComplete) => {
+                if (gameStarted && !gameComplete) {
+                    this.props.goToThemeSelectionHandler();
+                    return;
                 }
-                else if (this.state.areOptionsSet) {
-                    getGameOptions().then((gameOptions) => {
+                getConnectedUsers().then((playersList) => {
+                    let isFirstPlayer = currentUser.username === playersList[0];
+                    if (isFirstPlayer) {
                         this.setState({
-                            gameOptions: gameOptions,
+                            gameOptions: this.state.gameOptions,
                             gameStarted: gameStarted,
                             isFirstPlayer: isFirstPlayer,
                             areOptionsSet: this.state.areOptionsSet,
                         });
-                    });
-                }
+                    } else if (this.state.areOptionsSet) {
+                        getGameOptions().then((gameOptions) => {
+                            this.setState({
+                                gameOptions: gameOptions,
+                                gameStarted: gameStarted,
+                                isFirstPlayer: isFirstPlayer,
+                                areOptionsSet: this.state.areOptionsSet,
+                            });
+                        });
+                    }
+                });
             });
         })
     }, 1000, []);

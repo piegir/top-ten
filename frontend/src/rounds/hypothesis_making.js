@@ -1,10 +1,8 @@
 import React, {Component} from "react";
-import {playersList, userNumbers, playerPropositions, getPlayerPropositions} from "./proposition_making.js"
+import {getPlayerPropositions} from "./proposition_making.js"
 import {getRoundPlayers} from "./rounds";
 import {currentUser} from "../authentication/authentication";
 import {makeGetCall, makePostCall} from "../common/common";
-
-let oldHypothesis = [];
 
 function makeHypothesis(hypothesis) {
     return makePostCall("/rounds/make_hypothesis", hypothesis);
@@ -12,10 +10,6 @@ function makeHypothesis(hypothesis) {
 
 function checkRoundComplete() {
     return makeGetCall("/rounds/check_round_complete");
-}
-
-function checkRoundResult() {
-    return makeGetCall("/rounds/check_round_result");
 }
 
 export class MakeHypothesis extends Component {
@@ -38,7 +32,7 @@ export class MakeHypothesis extends Component {
     hypothesisMadeCheckingId = setInterval(() => {
         checkRoundComplete().then((complete) => {
             if (complete) {
-                this.props.goToResultsCheckingHandler();
+                this.props.goToRoundResultsCheckingHandler();
             }
         })
     }, 1000, []);
@@ -63,7 +57,7 @@ export class MakeHypothesis extends Component {
     makeHypothesisHandler = () => {
         makeHypothesis(this.state.hypothesis).then((success) => {
             if (success.status) {
-                this.props.goToResultsCheckingHandler();
+                this.props.goToRoundResultsCheckingHandler();
             } else {
                 alert(success.message);
             }
@@ -121,89 +115,6 @@ export class MakeHypothesis extends Component {
                             Submit
                         </button>
                     </div> : null}
-            </div>
-        );
-    }
-}
-
-export function PlayerNumberedPropositions() {
-    let sortedPlayersList = [...playersList];
-    sortedPlayersList.sort((a, b) => {
-        return userNumbers[a] > userNumbers[b] ? 1 : -1;
-    })
-    return (
-        <div className="PlayersBox">
-            <div className="BoxTitle">
-                Reality
-            </div>
-            <table className="PlayerPropositionsTable">
-                <tr>
-                    <th>
-                        Players
-                    </th>
-                    <th>
-                        Top
-                    </th>
-                    <th>
-                        Propositions
-                    </th>
-                </tr>
-                {sortedPlayersList.map((playerName) => {
-                    return (
-                        <tr>
-                            <td>
-                                {playerName}
-                            </td>
-                            <td style={{textAlign: "center"}}>
-                                {userNumbers[playerName]}
-                            </td>
-                            <td>
-                                {playerPropositions[playerName]}
-                            </td>
-                        </tr>
-                    )
-                })}
-            </table>
-        </div>
-    );
-}
-
-export class CheckResults extends Component {
-    render() {
-        return (
-            <div className="UserActionBox">
-                <div className="BoxTitle">
-                    Hypothesis
-                </div>
-                <div>
-                    <table className="PlayerPropositionsTable">
-                        <tr>
-                            <th>
-                                Players
-                            </th>
-                            <th>
-                                Propositions
-                            </th>
-                        </tr>
-                        {oldHypothesis.map((proposition) => {
-                            return (
-                                <tr>
-                                    <td>
-                                        {proposition.player}
-                                    </td>
-                                    <td>
-                                        {proposition.proposition}
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </table>
-                </div>
-                <div className="UserActionButtonBox">
-                    <button onClick={this.props.goToThemeSelectionHandler} className="UserActionButton">
-                        Start a new round
-                    </button>
-                </div>
             </div>
         );
     }

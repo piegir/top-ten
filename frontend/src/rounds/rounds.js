@@ -3,10 +3,10 @@ import {makeGetCall} from "../common/common.js";
 import React, {Component} from "react";
 import {GameProgress} from "../game/game_progress.js";
 import {currentUser, Username} from "../authentication/authentication.js";
-import {getConnectedUsers, Users} from "../authentication/users.js";
+import {Users} from "../authentication/users.js";
 import {CurrentTheme, SelectTheme} from "./theme_selection.js";
 import {CurrentUserNumber, PlayerPropositions, MakeProposition} from "./proposition_making.js";
-import {PlayerNumberedPropositions, MakeHypothesis, CheckResults} from "./hypothesis_making.js";
+import {MakeHypothesis} from "./hypothesis_making.js";
 
 
 export let getRoundPlayers = () => {
@@ -110,33 +110,9 @@ export class PropositionMaking extends Component {
                     </div>
                     <PlayerPropositions/>
                     {this.state.isPlayersTurn ?
-                        <MakeProposition/>:
+                        <MakeProposition/> :
                         null
                     }
-                </div>
-            </div>
-        );
-    }
-}
-
-export class WaitPropositionMaking extends Component {
-    render() {
-        return (
-            <div className="App">
-                <div className="Grid">
-                    <div className="HeadBox">
-                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
-                        <div className="Title">
-                            Top Ten
-                        </div>
-                    </div>
-                    <div className="MiddleBox">
-                        <GameProgress/>
-                        <CurrentUserNumber/>
-                        <CurrentTheme/>
-                    </div>
-                    <PlayerPropositions/>
-                    <div className="UserActionBox"/>
                 </div>
             </div>
         );
@@ -159,32 +135,8 @@ export class HypothesisMaking extends Component {
                         <CurrentUserNumber/>
                         <CurrentTheme/>
                     </div>
-                    <PlayerPropositions/>
-                    <MakeHypothesis goToResultsCheckingHandler={this.props.goToResultsCheckingHandler}/>
-                </div>
-            </div>
-        );
-    }
-}
-
-export class ResultsChecking extends Component {
-    render() {
-        return (
-            <div className="App">
-                <div className="Grid">
-                    <div className="HeadBox">
-                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
-                        <div className="Title">
-                            Top Ten
-                        </div>
-                    </div>
-                    <div className="MiddleBox">
-                        <GameProgress/>
-                        <CurrentUserNumber/>
-                        <CurrentTheme/>
-                    </div>
-                    <PlayerNumberedPropositions/>
-                    <CheckResults goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}/>
+                    <PlayerPropositions checkOnlyOnce={true}/>
+                    <MakeHypothesis goToRoundResultsCheckingHandler={this.props.goToRoundResultsCheckingHandler}/>
                 </div>
             </div>
         );
