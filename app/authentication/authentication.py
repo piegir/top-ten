@@ -100,3 +100,15 @@ def get_connected_users(
     :return: The list of all connected users.
     """
     return connected_users
+
+
+@router.get("/check_user_connected")
+def check_user_connected(
+        username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
+    """
+    API call to check that the user is still connected.
+
+    :param username: The currently logged-in user's username (automatically detected)
+    :return: True if the user is still logged-in, False otherwise.
+    """
+    return username in connected_users

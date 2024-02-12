@@ -62,6 +62,18 @@ class Login extends Component {
 
 export class Username extends Component {
 
+    checkUserStillConnected = setInterval(() => {
+        makeGetCall("/authentication/check_user_connected").then((connected) => {
+            if (!connected) {
+                this.props.goToAskCredentialsHandler();
+            }
+        })
+    }, 1000);
+
+    componentWillUnmount() {
+        clearInterval(this.checkUserStillConnected);
+    }
+
     logoutHandler = () => {
         if (window.confirm("Logging out will make you leave the game you are part of. Are you sure?")) {
             userLogout()

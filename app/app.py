@@ -54,3 +54,13 @@ def root() -> RedirectResponse:
     API call to get to the root page. Redirects to the auto-generated 'docs' page.
     """
     return RedirectResponse(url="docs")
+
+
+@top_ten_app.post("/reset")
+def reset():
+    """
+    API call to reset the app, clears game, rounds and disconnects all users.
+    """
+    game.current_game = None
+    rounds.temp_hypothesis = None
+    authentication.connected_users = []
