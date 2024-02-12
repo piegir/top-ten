@@ -10,6 +10,8 @@ from lib.theme import Theme
 
 router = APIRouter(prefix="/rounds", tags=["Round control"])
 
+temp_hypothesis: None | list[PlayerProposition] = None
+
 
 class RoundResult(BaseModel):
     success: bool = Field(description="Whether the round was won or not.",
@@ -242,6 +244,33 @@ def check_all_propositions_made(
     :return: True if all propositions have been made, False otherwise.
     """
     return game.current_game.rounds[-1].all_propositions_made()
+
+
+@router.post("/set_hypothesis")
+def set_temporary_hypothesis(
+        hypothesis: list[PlayerProposition],
+        current_username: Annotated[str, Depends(oauth2_scheme)]):
+    """
+    API call to temporarily store the hypothesis (for live update between users).
+
+    :param hypothesis: The list of player propositions as ordered for the temporary hypothesis
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    """
+    global temp_hypothesis
+    temp_hypothesis = hypothesis
+
+
+@router.get("/get_hypothesis")
+def get_temporary_hypothesis(
+    current_username: Annotated[str, Depends(oauth2_scheme)]
+) -> list[PlayerProposition]:
+    """
+    API call to access the temporarily stored hypothesis (for live update between users).
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The temporary hypothesis.
+    """
+    return temp_hypothesis
 
 
 @router.post("/make_hypothesis")

@@ -12,6 +12,14 @@ function checkRoundComplete() {
     return makeGetCall("/rounds/check_round_complete");
 }
 
+function setTemporaryHypothesis(hypothesis) {
+    return makePostCall("/rounds/set_hypothesis", hypothesis);
+}
+
+export function getTemporaryHypothesis() {
+    return makeGetCall("/rounds/get_hypothesis");
+}
+
 export class MakeHypothesis extends Component {
 
     constructor(props) {
@@ -19,7 +27,9 @@ export class MakeHypothesis extends Component {
         getPlayerPropositions().then((playerPropositions) => {
             getRoundPlayers().then((currentPlayers) => {
                 let isFirstPlayer = currentUser.username === currentPlayers[0];
-                this.setState({hypothesis: playerPropositions, isFirstPlayer: isFirstPlayer});
+                setTemporaryHypothesis(playerPropositions).then(() => {
+                    this.setState({hypothesis: playerPropositions, isFirstPlayer: isFirstPlayer});
+                });
             });
         });
     }
@@ -33,6 +43,12 @@ export class MakeHypothesis extends Component {
         checkRoundComplete().then((complete) => {
             if (complete) {
                 this.props.goToRoundResultsCheckingHandler();
+                return;
+            }
+            if (!this.state.isFirstPlayer) {
+                getTemporaryHypothesis().then((hypothesis) => {
+                    this.setState({hypothesis: hypothesis, isFirstPlayer: this.state.isFirstPlayer});
+                })
             }
         })
     }, 1000, []);
@@ -41,17 +57,18 @@ export class MakeHypothesis extends Component {
         clearInterval(this.hypothesisMadeCheckingId);
     }
 
-
     raise = (index) => {
         let newHypothesis = this.state.hypothesis;
         [newHypothesis[index - 1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index - 1]];
         this.setState({hypothesis: newHypothesis, isFirstPlayer: this.state.isFirstPlayer});
+        setTemporaryHypothesis(newHypothesis).then();
     };
 
     lower = (index) => {
         let newHypothesis = this.state.hypothesis;
         [newHypothesis[index + 1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index + 1]];
         this.setState({hypothesis: newHypothesis, isFirstPlayer: this.state.isFirstPlayer});
+        setTemporaryHypothesis(newHypothesis).then();
     };
 
     makeHypothesisHandler = () => {
