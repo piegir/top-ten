@@ -131,3 +131,15 @@ export class MakeProposition extends Component {
         );
     }
 }
+
+export class WaitPropositionMade extends Component {
+    render() {
+        return (
+            <div className="UserActionBox">
+                <div className="BoxTitle">
+                    Waiting for {this.props.currentPlayer} to make a proposition...
+                </div>
+            </div>
+        );
+    }
+}

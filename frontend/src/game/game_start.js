@@ -62,14 +62,14 @@ export class GameSetup extends Component {
         super(props);
         setGameConfig(this.state.gameOptions)
             .then(() => {
-                this.setState({
-                    gameOptions: this.state.gameOptions,
-                    gameStarted: this.state.gameStarted,
-                    isFirstPlayer: this.state.isFirstPlayer,
-                    areOptionsSet: true,
-                });
-            }
-        );
+                    this.setState({
+                        gameOptions: this.state.gameOptions,
+                        gameStarted: this.state.gameStarted,
+                        firstPlayer: this.state.firstPlayer,
+                        areOptionsSet: true,
+                    });
+                }
+            );
     }
 
     state = {
@@ -79,7 +79,7 @@ export class GameSetup extends Component {
             "Starting Player Index": 0,
         },
         gameStarted: false,
-        isFirstPlayer: false,
+        firstPlayer: null,
         areOptionsSet: false,
     };
 
@@ -97,12 +97,12 @@ export class GameSetup extends Component {
                     return;
                 }
                 getConnectedUsers().then((playersList) => {
-                    let isFirstPlayer = currentUser.username === playersList[0];
-                    if (isFirstPlayer) {
+                    let firstPlayer = playersList[0];
+                    if (firstPlayer === currentUser.username) {
                         this.setState({
                             gameOptions: this.state.gameOptions,
                             gameStarted: gameStarted,
-                            isFirstPlayer: isFirstPlayer,
+                            firstPlayer: firstPlayer,
                             areOptionsSet: this.state.areOptionsSet,
                         });
                     } else if (this.state.areOptionsSet) {
@@ -110,7 +110,7 @@ export class GameSetup extends Component {
                             this.setState({
                                 gameOptions: gameOptions,
                                 gameStarted: gameStarted,
-                                isFirstPlayer: isFirstPlayer,
+                                firstPlayer: firstPlayer,
                                 areOptionsSet: this.state.areOptionsSet,
                             });
                         });
@@ -125,7 +125,7 @@ export class GameSetup extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.isFirstPlayer && this.state.gameOptions !== prevState.gameOptions) {
+        if ((this.state.firstPlayer === currentUser.username) && this.state.gameOptions !== prevState.gameOptions) {
             setGameConfig(this.state.gameOptions).then();
         }
     }
@@ -138,7 +138,7 @@ export class GameSetup extends Component {
                 "Starting Player Index": this.state.gameOptions["Starting Player Index"],
             },
             gameStarted: this.state.gameStarted,
-            isFirstPlayer: this.state.isFirstPlayer,
+            firstPlayer: this.state.firstPlayer,
             areOptionsSet: this.state.areOptionsSet,
         });
     }
@@ -151,7 +151,7 @@ export class GameSetup extends Component {
                 "Starting Player Index": this.state.gameOptions["Starting Player Index"],
             },
             gameStarted: this.state.gameStarted,
-            isFirstPlayer: this.state.isFirstPlayer,
+            firstPlayer: this.state.firstPlayer,
             areOptionsSet: this.state.areOptionsSet,
         });
     }
@@ -164,7 +164,7 @@ export class GameSetup extends Component {
                 "Starting Player Index": event.target.value,
             },
             gameStarted: this.state.gameStarted,
-            isFirstPlayer: this.state.isFirstPlayer,
+            firstPlayer: this.state.firstPlayer,
             areOptionsSet: this.state.areOptionsSet,
         });
     }
@@ -189,7 +189,9 @@ export class GameSetup extends Component {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
-                    Game Preparation
+                    {this.state.firstPlayer === currentUser.username ?
+                        <>Game Preparation</> :
+                        <>{this.state.firstPlayer} is preparing the game...</>}
                 </div>
                 <div>
                     {Object.keys(this.optionsCallbacks).map((optionName) => {
@@ -199,7 +201,7 @@ export class GameSetup extends Component {
                                     {optionName}:
                                 </div>
                                 <div className="UserActionInputField">
-                                    {this.state.isFirstPlayer ? <input
+                                    {this.state.firstPlayer === currentUser.username ? <input
                                         type="text"
                                         value={this.state.gameOptions[optionName]}
                                         className="NumberInput"
@@ -210,7 +212,7 @@ export class GameSetup extends Component {
                         )
                     })}
                 </div>
-                {this.state.isFirstPlayer ? <div className="UserActionButtonBox">
+                {this.state.firstPlayer === currentUser.username ? <div className="UserActionButtonBox">
                     <button onClick={this.startGameHandler}
                             className="UserActionButton">
                         Start Game
