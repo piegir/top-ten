@@ -11,7 +11,7 @@ if __name__ == '__main__':
                         "--port",
                         help="Port on which to find the application.",
                         type=int,
-                        default=8080)
+                        default=80)
 
     args = parser.parse_args()
     uvicorn.run(app=top_ten_app, host="0.0.0.0", port=args.port)

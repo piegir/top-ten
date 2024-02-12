@@ -9,8 +9,7 @@ export function wait(delayMilliSeconds) {
     }
 }
 
-let restApiIp = "192.168.1.8";
-let restApiPort = "8080";
+let restApiIp = "https://top-ten-rest-api.onrender.com/";
 
 let endpointTypes = {
     GET: 0,
@@ -43,7 +42,7 @@ function makeRestApiCall(endpoint, endpointType, inputData = null) {
             throw new SyntaxError("Wrong endpoint type provided.");
     }
 
-    return fetch(`http://${restApiIp}:${restApiPort}${endpoint}`, requestOptions)
+    return fetch(`${restApiIp}${endpoint}`, requestOptions)
         .then((response) => response.json())
         .catch((error) => alert(error));
 }

@@ -27,8 +27,7 @@ tags_metadata = [
 ]
 
 origins = [
-    "http://localhost:3000",
-    "http://192.168.1.8:3000",
+    "https://top-ten-game.netlify.app",
 ]
 
 top_ten_app = FastAPI(title="Top Ten API",
