@@ -9,7 +9,7 @@ function setTheme(theme) {
     return makePostCall("/rounds/set_theme", theme);
 }
 
-function getTheme() {
+export function getTheme() {
     return makeGetCall("/rounds/get_theme");
 }
 
@@ -80,6 +80,18 @@ export class SelectTheme extends Component {
     }
 }
 
+export class WaitThemeSelected extends Component {
+    render() {
+        return (
+            <div className="UserActionBox">
+                <div className="BoxTitle">
+                    Waiting for {this.props.firstPlayer} to set the theme...
+                </div>
+            </div>
+        );
+    }
+}
+
 
 export class CurrentTheme extends Component {
 
@@ -95,36 +107,35 @@ export class CurrentTheme extends Component {
 
     state = {theme: null};
 
-    render () {
+    render() {
         return (
             <div>
-                {this.state.theme === null ?
-                    <div>Waiting for theme to be set...</div>
-                        :
+                {this.state.theme !== null ?
                     <table className="CurrentTheme">
-                    <tr>
-                        <th>
-                            Theme
-                        </th>
-                        <th>
-                            Top1
-                        </th>
-                        <th>
-                            Top10
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                            {this.state.theme.title}
-                        </td>
-                        <td>
-                            {this.state.theme.top1}
-                        </td>
-                        <td>
-                            {this.state.theme.top10}
-                        </td>
-                    </tr>
-                </table>}
+                        <tr>
+                            <th>
+                                Theme
+                            </th>
+                            <th>
+                                Top1
+                            </th>
+                            <th>
+                                Top10
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                {this.state.theme.title}
+                            </td>
+                            <td>
+                                {this.state.theme.top1}
+                            </td>
+                            <td>
+                                {this.state.theme.top10}
+                            </td>
+                        </tr>
+                    </table> :
+                    null}
             </div>
         );
     }

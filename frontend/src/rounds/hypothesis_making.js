@@ -26,9 +26,8 @@ export class MakeHypothesis extends Component {
         super(props);
         getPlayerPropositions().then((playerPropositions) => {
             getRoundPlayers().then((currentPlayers) => {
-                let isFirstPlayer = currentUser.username === currentPlayers[0];
                 setTemporaryHypothesis(playerPropositions).then(() => {
-                    this.setState({hypothesis: playerPropositions, isFirstPlayer: isFirstPlayer});
+                    this.setState({hypothesis: playerPropositions, firstPlayer: currentPlayers[0]});
                 });
             });
         });
@@ -36,7 +35,7 @@ export class MakeHypothesis extends Component {
 
     state = {
         hypothesis: [{player: null, proposition: null,},],
-        isFirstPlayer: false,
+        firstPlayer: null,
     };
 
     hypothesisMadeCheckingId = setInterval(() => {
@@ -45,9 +44,9 @@ export class MakeHypothesis extends Component {
                 this.props.goToRoundResultsCheckingHandler();
                 return;
             }
-            if (!this.state.isFirstPlayer) {
+            if (this.state.firstPlayer !== currentUser.username) {
                 getTemporaryHypothesis().then((hypothesis) => {
-                    this.setState({hypothesis: hypothesis, isFirstPlayer: this.state.isFirstPlayer});
+                    this.setState({hypothesis: hypothesis, firstPlayer: this.state.firstPlayer});
                 })
             }
         })
@@ -60,14 +59,14 @@ export class MakeHypothesis extends Component {
     raise = (index) => {
         let newHypothesis = this.state.hypothesis;
         [newHypothesis[index - 1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index - 1]];
-        this.setState({hypothesis: newHypothesis, isFirstPlayer: this.state.isFirstPlayer});
+        this.setState({hypothesis: newHypothesis, firstPlayer: this.state.firstPlayer});
         setTemporaryHypothesis(newHypothesis).then();
     };
 
     lower = (index) => {
         let newHypothesis = this.state.hypothesis;
         [newHypothesis[index + 1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index + 1]];
-        this.setState({hypothesis: newHypothesis, isFirstPlayer: this.state.isFirstPlayer});
+        this.setState({hypothesis: newHypothesis, firstPlayer: this.state.firstPlayer});
         setTemporaryHypothesis(newHypothesis).then();
     };
 
@@ -86,11 +85,13 @@ export class MakeHypothesis extends Component {
         return (
             <div className="UserActionBox">
                 <div className="BoxTitle">
-                    Make your hypothesis
+                    {this.state.firstPlayer === currentUser.username ?
+                        <>Make your hypothesis</> :
+                        <>{this.state.firstPlayer} is making a hypothesis...</>}
                 </div>
                 <table className="PlayerPropositionsTable">
                     <tr>
-                        {this.state.isFirstPlayer ? <th></th> : null}
+                        {this.state.firstPlayer === currentUser.username ? <th></th> : null}
                         <th>
                             Players
                         </th>
@@ -101,7 +102,7 @@ export class MakeHypothesis extends Component {
                     {this.state.hypothesis.map((proposition, index) => {
                         return (
                             <tr>
-                                {this.state.isFirstPlayer ?
+                                {this.state.firstPlayer === currentUser.username ?
                                     <td>
                                         <div className="UpDownButtons">
                                             {index > 0 ? <button onClick={() => {
@@ -126,7 +127,7 @@ export class MakeHypothesis extends Component {
                         )
                     })}
                 </table>
-                {this.state.isFirstPlayer ?
+                {this.state.firstPlayer === currentUser.username ?
                     <div className="UserActionButtonBox">
                         <button onClick={this.makeHypothesisHandler} className="UserActionButton">
                             Submit
