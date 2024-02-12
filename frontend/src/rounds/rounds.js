@@ -17,6 +17,10 @@ function getCurrentPlayer() {
     return makeGetCall("/rounds/get_current_player");
 }
 
+function checkAllPropositionsMade() {
+    return makeGetCall("/rounds/check_all_propositions_made");
+}
+
 export class ThemeSelection extends Component {
 
     constructor(props) {
@@ -62,16 +66,31 @@ export class ThemeSelection extends Component {
 
 export class PropositionMaking extends Component {
 
-    state = {isPlayersTurn: false};
+    state = {
+        isPlayersTurn: false,
+        allPropositionsMade: false,
+    };
 
-    isPlayerTurnCheckingId = setInterval(() => {
+    turnStatusCheckingId = setInterval(() => {
+        checkAllPropositionsMade().then((allPropositionsMade) => {
+            this.setState({
+                isPlayersTurn: this.state.isPlayersTurn,
+                allPropositionsMade: allPropositionsMade,
+            });
+            if (allPropositionsMade) {
+                this.props.goToHypothesisMakingHandler();
+            }
+        })
         getCurrentPlayer().then((currentPlayer) => {
-            this.setState({isPlayersTurn: currentPlayer === currentUser.username});
+            this.setState({
+                isPlayersTurn: currentPlayer === currentUser.username,
+                allPropositionsMade: this.state.allPropositionsMade,
+            });
         });
     }, 1000);
 
     componentWillUnmount() {
-        clearInterval(this.isPlayerTurnCheckingId);
+        clearInterval(this.turnStatusCheckingId);
     }
 
     render() {
@@ -91,7 +110,7 @@ export class PropositionMaking extends Component {
                     </div>
                     <PlayerPropositions/>
                     {this.state.isPlayersTurn ?
-                        <MakeProposition goToHypothesisMakingHandler={this.props.goToHypothesisMakingHandler}/>:
+                        <MakeProposition/>:
                         null
                     }
                 </div>

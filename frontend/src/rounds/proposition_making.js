@@ -114,10 +114,7 @@ export class MakeProposition extends Component {
 
     makePropositionHandler = () => {
         setPlayerProposition(this.state.proposition).then((success) => {
-            if (success.status) {
-                this.props.goToHypothesisMakingHandler();
-            }
-            else {
+            if (!success.status) {
                 alert(success.message);
             }
         });

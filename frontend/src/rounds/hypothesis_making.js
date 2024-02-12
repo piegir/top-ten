@@ -48,7 +48,7 @@ export function PlayerNumberedPropositions() {
 
 export class MakeHypothesis extends Component {
 
-    state = {data: [
+    state = {hypothesis: [
             {
                 player: "Player1",
                 proposition: "My Neighbor",
@@ -69,15 +69,15 @@ export class MakeHypothesis extends Component {
 
 
     raise = (index) => {
-        let newHypothesis = [...this.state.data];
+        let newHypothesis = [...this.state.hypothesis];
         [newHypothesis[index-1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index-1]];
-        this.setState({data: newHypothesis});
+        this.setState({hypothesis: newHypothesis});
     };
 
     lower = (index) => {
-        let newHypothesis = [...this.state.data];
+        let newHypothesis = [...this.state.hypothesis];
         [newHypothesis[index+1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index+1]];
-        this.setState({data: newHypothesis});
+        this.setState({hypothesis: newHypothesis});
     };
 
 
@@ -98,7 +98,7 @@ export class MakeHypothesis extends Component {
                             Propositions
                         </th>
                     </tr>
-                    {this.state.data.map((proposition, index) => {
+                    {this.state.hypothesis.map((proposition, index) => {
                         return (
                             <tr>
                                 <td>
@@ -108,7 +108,7 @@ export class MakeHypothesis extends Component {
                                         }} className="UpButton">
                                             ^
                                         </button> : null}
-                                        {index < this.state.data.length - 1 ?<button onClick={() => {
+                                        {index < this.state.hypothesis.length - 1 ?<button onClick={() => {
                                             this.lower(index)
                                         }} className="DownButton">
                                             v
@@ -127,7 +127,7 @@ export class MakeHypothesis extends Component {
                 </table>
                 <div className="UserActionButtonBox">
                     <button onClick={() => {
-                        hypothesis = this.state.data;
+                        hypothesis = this.state.hypothesis;
                         this.props.goToResultsCheckingHandler();
                     }} className="UserActionButton">
                         Submit

@@ -215,6 +215,18 @@ def get_player_propositions(
     return player_propositions
 
 
+@router.get("/check_all_propositions_made")
+def check_all_propositions_made(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
+    """
+    API call to check that all player propositions have been made.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: True if all propositions have been made, False otherwise.
+    """
+    return game.current_game.rounds[-1].all_propositions_made()
+
+
 @router.post("/make_hypothesis")
 def make_hypothesis(
         hypothesis_names: list[str],
