@@ -11,11 +11,11 @@ function checkGameComplete() {
 export class RoundResult extends Component {
     render() {
         return (
-            <div>
+            <div className="Result">
                 {this.props.success !== null ?
                     this.props.success ?
                         <div>Round Won!!!</div> :
-                        <div>Round Lost</div> :
+                        <div>Round Lost...</div> :
                     null}
             </div>
         );

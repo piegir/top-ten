@@ -103,7 +103,7 @@ export class MakeHypothesis extends Component {
                         return (
                             <tr>
                                 {this.state.firstPlayer === currentUser.username ?
-                                    <td>
+                                    <td className="ButtonsInTable">
                                         <div className="UpDownButtons">
                                             {index > 0 ? <button onClick={() => {
                                                 this.raise(index)
@@ -117,7 +117,7 @@ export class MakeHypothesis extends Component {
                                             </button> : null}
                                         </div>
                                     </td> : null}
-                                <td>
+                                <td className="PlayerColumn">
                                     {proposition.player}
                                 </td>
                                 <td>
