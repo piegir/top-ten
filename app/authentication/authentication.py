@@ -8,7 +8,7 @@ router = APIRouter(prefix="/authentication", tags=["Authentication"])
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="authentication/oauth2_login")
 
-connected_users: set[str] = set()
+connected_users: list[str] = []
 
 
 def user_connected(username: str) -> bool:
@@ -25,7 +25,7 @@ def add_user(username: str) -> ActionStatus:
     if user_connected(username):
         return ActionStatus(status=False,
                             message=f"Username '{username}' already taken.")
-    connected_users.add(username)
+    connected_users.append(username)
     return ActionStatus(status=True, message=f"Connected as {username}.")
 
 
@@ -99,4 +99,4 @@ def get_connected_users(
     :param username: Automatically check that the user requesting this is logged-in (value unused)
     :return: The list of all connected users.
     """
-    return list(connected_users)
+    return connected_users

@@ -1,9 +1,9 @@
 import './authentication.css';
 import React, {Component} from "react";
-import {makePostCall} from "../common/common.js";
+import {makeGetCall, makePostCall} from "../common/common.js";
 
 export let currentUser = {
-    username: "Player1",
+    username: null,
 };
 
 export function userLogin() {
@@ -14,25 +14,27 @@ export function userLogout() {
     return makePostCall("/authentication/logout");
 }
 
-export class Username extends Component {
-    render () {
-        return (
-            <div className="Username">
-                {currentUser.username}<br/>
-                <button className="LogoutButton" onClick={this.props.logOutHandler}>
-                    Logout
-                </button>
-            </div>
-        )
-    }
-}
-
-export class Login extends Component {
+class Login extends Component {
     state = {username: ""};
 
     liveUpdateUsername = (event) => {
         this.setState({username: event.target.value});
     }
+
+    loginHandler = () => {
+        // Store username as provided by the user
+        currentUser.username = this.state.username;
+        // Perform REST API login
+        userLogin()
+            .then((loginSuccess) => {
+                if (loginSuccess.status) {
+                    this.props.goToGamePreparationHandler();
+                } else {
+                    alert(loginSuccess.message);
+                }
+            });
+    }
+
 
     render() {
         return (
@@ -48,14 +50,57 @@ export class Login extends Component {
                     </div>
                 </div>
                 <div className="LoginButton">
-                    <button onClick={() => {
-                        this.props.loginHandler(this.state);
-                    }
-                    }>
+                    <button onClick={this.loginHandler}>
                         Confirm
                     </button>
                 </div>
             </div>
+        );
+    }
+}
+
+
+export class Username extends Component {
+
+    logoutHandler = () => {
+        if (window.confirm("Logging out will make you leave the game you are part of. Are you sure?")) {
+            userLogout()
+                .then((logoutSuccess) => {
+                    if (logoutSuccess.status) {
+                        currentUser.username = "";
+                        this.props.goToAskCredentialsHandler();
+                    } else {
+                        alert(logoutSuccess.message);
+                    }
+                });
+        }
+    }
+
+    render () {
+        return (
+            <div className="Username">
+                {currentUser.username}<br/>
+                <button className="LogoutButton" onClick={this.logoutHandler}>
+                    Logout
+                </button>
+            </div>
+        )
+    }
+}
+
+
+export class AskCredentials extends Component {
+    render() {
+        return (
+            <div className="App">
+                <div className="Grid">
+                    <div className="Title">
+                        Top Ten
+                    </div>
+                </div>
+                <Login goToGamePreparationHandler={this.props.goToGamePreparationHandler}/>
+            </div>
+
         );
     }
 }

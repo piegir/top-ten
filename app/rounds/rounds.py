@@ -1,60 +1,54 @@
 from fastapi import APIRouter, HTTPException, Depends
+from pydantic import BaseModel, Field
 from typing import Annotated
 
 from app.authentication.authentication import oauth2_scheme
 from app.utils import ActionStatus
 from app.game import game
-from lib.player_proposition import PlayerProposition
+from lib.player_proposition import Proposition, PlayerProposition, NumberedPlayerProposition
 from lib.theme import Theme
 
 router = APIRouter(prefix="/rounds", tags=["Round control"])
 
+temp_hypothesis: None | list[PlayerProposition] = None
 
-def check_round_valid(action_description: str):
+
+class RoundResult(BaseModel):
+    success: bool = Field(description="Whether the round was won or not.",
+                          example=False)
+    hypothesis: list[PlayerProposition] = Field(
+        description=
+        "The hypothesis of proposition ordering made by the player.",
+        example=[PlayerProposition(player="John Doe")])
+    reality: list[NumberedPlayerProposition] = Field(
+        description="The reality of proposition ordering (with numbers).",
+        example=[
+            NumberedPlayerProposition(
+                number=1,
+                player_proposition=PlayerProposition(player="John Doe"))
+        ])
+
+
+def round_valid() -> bool:
     """
     Check if there is a valid round ongoing.
 
-    :param action_description: The description of the action desired to be performed on the round.
+    :return: True if there is a valid round, False otherwise.
     """
-    if game.current_game is None:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Couldn't {action_description}, game wasn't started.")
-
-    if not game.current_game.is_round_in_progress():
-        raise HTTPException(
-            status_code=400,
-            detail=f"Couldn't {action_description}, no round in progress.")
+    return game.current_game is not None and game.current_game.is_round_in_progress(
+    )
 
 
-def check_player_in_game(player: str, action_description: str):
+@router.get("/get_players")
+def get_players(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> list[str]:
     """
-    Check if player is part of the game.
+    API call to get the username of all players of the round.
 
-    :param player: The username of the player to be checked
-    :param action_description: The description of the action desired to be performed by the player.
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The list of players in the round (in order).
     """
-    if player not in game.current_game.rounds[-1].players_list:
-        raise HTTPException(
-            status_code=400,
-            detail=
-            f"Couldn't {action_description}, player '{player}' not part of the game."
-        )
-
-
-def check_player_is_first(player: str, action_description: str):
-    """
-    Check if player is the first player of the game, i.e. if he's the player that can make the main interactions.
-
-    :param player: The username of the player to be checked
-    :param action_description: The description of the action desired to be performed by the player.
-    """
-    first_player = game.current_game.rounds[-1].players_list[0]
-    if player != first_player:
-        raise HTTPException(
-            status_code=400,
-            detail=
-            f"Only first player '{first_player}' can {action_description}.")
+    return game.current_game.rounds[-1].players_list
 
 
 @router.get("/get_card")
@@ -64,14 +58,9 @@ def get_card(
     """
     API call to get the card from the current round.
 
-    :param current_username: Username of the current user performing the request (automatically obtained)
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: The list of themes on the card
     """
-    description = "get a card"
-    check_round_valid(description)
-    check_player_in_game(current_username, description)
-    check_player_is_first(current_username, description)
-
     return game.current_game.rounds[-1].card
 
 
@@ -88,9 +77,26 @@ def set_theme(
     :return: The status of setting the theme.
     """
     description = "set the theme"
-    check_round_valid(description)
-    check_player_in_game(current_username, description)
-    check_player_is_first(current_username, description)
+    if game.current_game is None:
+        return ActionStatus(
+            status=False,
+            message=f"Couldn't {description}, game wasn't started.")
+
+    if not game.current_game.is_round_in_progress():
+        return ActionStatus(
+            status=False,
+            message=f"Couldn't {description}, no round in progress.")
+    if current_username not in game.current_game.rounds[-1].players_list:
+        return ActionStatus(
+            status=False,
+            message=
+            f"Couldn't {description}, player '{current_username}' not part of the game."
+        )
+    first_player = game.current_game.rounds[-1].players_list[0]
+    if current_username != first_player:
+        return ActionStatus(
+            status=False,
+            message=f"Only first player '{first_player}' can {description}.")
 
     game.current_game.rounds[-1].set_theme(theme)
     return ActionStatus(
@@ -107,13 +113,9 @@ def get_theme(
     """
     API call to get the theme from the current round.
 
-    :param current_username: Username of the current user performing the request (automatically obtained)
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: The list of themes on the card
     """
-    description = "get the theme"
-    check_round_valid(description)
-    check_player_in_game(current_username, description)
-
     return game.current_game.rounds[-1].theme
 
 
@@ -126,9 +128,6 @@ def get_number(
     :param current_username: Username of the current user performing the request (automatically obtained)
     :return: The player's number.
     """
-    description = "get player number"
-    check_round_valid(description)
-    check_player_in_game(current_username, description)
 
     player_to_number = {
         numbered_prop.player_proposition.player: numbered_prop.number
@@ -138,21 +137,47 @@ def get_number(
     return player_to_number[current_username]
 
 
+@router.get("/get_current_player")
+def get_current_player(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> str:
+    """
+    API call to get the current player whose turn it is.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The player's username.
+    """
+    return game.current_game.rounds[-1].players_list[
+        game.current_game.rounds[-1].playing_player_index]
+
+
 @router.post("/set_player_proposition")
 def set_player_proposition(
-        proposition: str,
+        proposition: Proposition,
         current_username: Annotated[str,
                                     Depends(oauth2_scheme)]) -> ActionStatus:
     """
     API call to set a player's proposition.
 
-    :param proposition: The content of the proposition made
+    :param proposition: The proposition made
     :param current_username: Username of the current user performing the request (automatically obtained)
     :return: The status of setting the player's proposition.
     """
     description = "set player proposition"
-    check_round_valid(description)
-    check_player_in_game(current_username, description)
+    if game.current_game is None:
+        return ActionStatus(
+            status=False,
+            message=f"Couldn't {description}, game wasn't started.")
+
+    if not game.current_game.is_round_in_progress():
+        return ActionStatus(
+            status=False,
+            message=f"Couldn't {description}, no round in progress.")
+    if current_username not in game.current_game.rounds[-1].players_list:
+        return ActionStatus(
+            status=False,
+            message=
+            f"Couldn't {description}, player '{current_username}' not part of the game."
+        )
     # Check that not all propositions have already been made
     if game.current_game.rounds[-1].all_propositions_made():
         starting_player = game.current_game.rounds[-1].players_list[0]
@@ -165,14 +190,14 @@ def set_player_proposition(
     # Try setting the player's proposition
     try:
         game.current_game.rounds[-1].set_player_proposition(
-            proposition, current_username)
+            proposition.proposition, current_username)
         # Check if all propositions have been made
         if game.current_game.rounds[-1].all_propositions_made():
             starting_player = game.current_game.rounds[-1].players_list[0]
             return ActionStatus(
                 status=True,
                 message=
-                f"{current_username}'s proposition '{proposition}' was properly set. "
+                f"{current_username}'s proposition '{proposition.proposition}' was properly set. "
                 f"All propositions have been made. "
                 f"{starting_player} should make a hypothesis (/rounds/make_hypothesis)"
             )
@@ -182,13 +207,13 @@ def set_player_proposition(
             return ActionStatus(
                 status=True,
                 message=
-                f"{current_username}'s proposition '{proposition}' was properly set. "
+                f"{current_username}'s proposition '{proposition.proposition}' was properly set. "
                 f"It is now {current_player}'s turn to make a proposition")
     except Exception as error:
         return ActionStatus(
             status=False,
             message=
-            f"{current_username}'s proposition '{proposition}' couldn't be set. {error}"
+            f"{current_username}'s proposition '{proposition.proposition}' couldn't be set. {error}"
         )
 
 
@@ -199,13 +224,9 @@ def get_player_propositions(
     """
     API call to get all player propositions.
 
-    :param current_username: Username of the current user performing the request (automatically obtained)
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: The list of all player propositions (ordered with the round order).
     """
-    description = "get player propositions"
-    check_round_valid(description)
-    check_player_in_game(current_username, description)
-
     player_propositions = [
         numbered_prop.player_proposition for numbered_prop in
         game.current_game.rounds[-1].numbered_player_propositions
@@ -213,30 +234,79 @@ def get_player_propositions(
     return player_propositions
 
 
+@router.get("/check_all_propositions_made")
+def check_all_propositions_made(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
+    """
+    API call to check that all player propositions have been made.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: True if all propositions have been made, False otherwise.
+    """
+    return game.current_game.rounds[-1].all_propositions_made()
+
+
+@router.post("/set_hypothesis")
+def set_temporary_hypothesis(
+        hypothesis: list[PlayerProposition],
+        current_username: Annotated[str, Depends(oauth2_scheme)]):
+    """
+    API call to temporarily store the hypothesis (for live update between users).
+
+    :param hypothesis: The list of player propositions as ordered for the temporary hypothesis
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    """
+    global temp_hypothesis
+    temp_hypothesis = hypothesis
+
+
+@router.get("/get_hypothesis")
+def get_temporary_hypothesis(
+    current_username: Annotated[str, Depends(oauth2_scheme)]
+) -> list[PlayerProposition]:
+    """
+    API call to access the temporarily stored hypothesis (for live update between users).
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The temporary hypothesis.
+    """
+    return temp_hypothesis
+
+
 @router.post("/make_hypothesis")
 def make_hypothesis(
-        hypothesis_names: list[str],
+        hypothesis: list[PlayerProposition],
         current_username: Annotated[str,
                                     Depends(oauth2_scheme)]) -> ActionStatus:
     """
     API call to set a hypothesis about correct order of propositions.
 
-    :param hypothesis_names: The list of player usernames as ordered for the hypothesis
+    :param hypothesis: The list of player propositions as ordered for the hypothesis
     :param current_username: Username of the current user performing the request (automatically obtained)
     :return: The status of setting the hypothesis.
     """
     description = "make the hypothesis"
-    check_round_valid(description)
-    check_player_in_game(current_username, description)
-    check_player_is_first(current_username, description)
+    if game.current_game is None:
+        return ActionStatus(
+            status=False,
+            message=f"Couldn't {description}, game wasn't started.")
 
-    player_to_prop = {
-        prop.player_proposition.player: prop.player_proposition
-        for prop in game.current_game.rounds[-1].numbered_player_propositions
-    }
-    hypothesis = [
-        player_to_prop[hypothesis_id] for hypothesis_id in hypothesis_names
-    ]
+    if not game.current_game.is_round_in_progress():
+        return ActionStatus(
+            status=False,
+            message=f"Couldn't {description}, no round in progress.")
+    if current_username not in game.current_game.rounds[-1].players_list:
+        return ActionStatus(
+            status=False,
+            message=
+            f"Couldn't {description}, player '{current_username}' not part of the game."
+        )
+    first_player = game.current_game.rounds[-1].players_list[0]
+    if current_username != first_player:
+        return ActionStatus(
+            status=False,
+            message=f"Only first player '{first_player}' can {description}.")
+
     try:
         game.current_game.rounds[-1].make_hypothesis(hypothesis)
         return ActionStatus(status=True,
@@ -246,21 +316,31 @@ def make_hypothesis(
                             message=f"Hypothesis couldn't be made. {error}")
 
 
+@router.get("/check_round_complete")
+def check_round_complete(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
+    """
+    API call to check if round is complete.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: True if round is complete, False otherwise.
+    """
+    return game.current_game.rounds[-1].is_complete()
+
+
 @router.get("/check_round_result")
 def check_round_result(
-        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
+        current_username: Annotated[str,
+                                    Depends(oauth2_scheme)]) -> RoundResult:
     """
     API call to check round result.
 
-    :param current_username: Username of the current user performing the request (automatically obtained)
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: True if round was won, False otherwise.
     """
-    description = "check round result"
-    if game.current_game is None:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Couldn't {description}, game wasn't started.")
-    check_player_in_game(current_username, description)
-
-    return game.current_game.rounds[-1].is_complete(
-    ) and game.current_game.rounds[-1].success
+    current_round = game.current_game.rounds[-1]
+    sorted_numbered_propositions = sorted(
+        current_round.numbered_player_propositions, key=lambda x: x.number)
+    return RoundResult(success=current_round.success,
+                       hypothesis=current_round.order_hypothesis,
+                       reality=sorted_numbered_propositions)

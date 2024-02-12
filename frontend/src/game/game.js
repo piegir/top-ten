@@ -1,125 +1,32 @@
 import './game.css';
 import {Component} from "react";
+import {getConnectedUsers, Users} from "../authentication/users.js";
+import {Username} from "../authentication/authentication.js";
+import {GameSetup} from "./game_start.js"
+import {makeGetCall} from "../common/common.js";
 
-let gameOptions = {
-    "Number of rounds": 7,
-    "Number of themes per card": 3,
+
+export let getGamePlayers = () => {
+    return makeGetCall("/game/get_players");
 }
-let roundHistory = [
-    1,
-    2,
-    1,
-    0,
-    null,
-    null,
-    null,
-];
-export let roundStarted = true;
 
-export class GameSetup extends Component {
-    render () {
+
+export class GamePreparation extends Component {
+    render() {
         return (
-            <div className="UserActionBox">
-                <div className="BoxTitle">
-                    Game Preparation
-                </div>
-                <div>
-                    {Object.entries(gameOptions).map(([optionName, optionValue]) => {
-                        return (
-                            <div className="UserActionInput">
-                                <div className="UserActionInputOption">
-                                    {optionName}:
-                                </div>
-                                <div className="UserActionInputField">
-                                    <input
-                                        type="text"
-                                        value={optionValue}
-                                        className="NumberInput"
-                                    />
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
-                <div className="UserActionButtonBox">
-                    <button onClick={this.props.gameStartedHandler} className="UserActionButton">
-                        Start Game
-                    </button>
+            <div className="App">
+                <div className="Grid">
+                    <div className="HeadBox">
+                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
+                        <div className="Title">
+                            Top Ten
+                        </div>
+                    </div>
+                    <Users getUsersListHandler={getConnectedUsers} checkOnlyOnce={false}/>
+                    <GameSetup goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}/>
                 </div>
             </div>
+
         );
     }
-}
-
-export class StartRound extends Component {
-    render () {
-        return (
-            <div className="UserActionBox">
-                <div className="BoxTitle">
-                    Ready to start the round?
-                </div>
-                <div className="UserActionButtonBox">
-                    <button onClick={this.props.roundStartedHandler} className="UserActionButton">
-                        Start Round
-                    </button>
-                </div>
-            </div>
-        );
-    }
-}
-
-export function GameProgress() {
-    return (
-        <div>
-            <table className="GameProgress">
-                <tr>
-                    <td>
-                        Round
-                    </td>
-                    {roundHistory.map((roundStatus, roundIndex) => {
-                        return (
-                            <td>
-                                {roundIndex + 1}
-                            </td>
-                        )
-                    })}
-                </tr>
-                <tr>
-                    <td>
-                        Status
-                    </td>
-                    {roundHistory.map((roundStatus, roundIndex) => {
-                        switch (roundStatus) {
-                            case null:
-                                return (
-                                    <td>
-
-                                    </td>
-                                );
-                            case 0:
-                                return (
-                                    <td>
-                                        ?
-                                    </td>
-                                );
-                            case 1:
-                                return (
-                                    <td style={{color: "green"}}>
-                                        W
-                                    </td>
-                                );
-                            case 2:
-                                return (
-                                    <td style={{color: "red"}}>
-                                        L
-                                    </td>
-                                );
-
-                        }
-                    })}
-                </tr>
-            </table>
-        </div>
-    )
-
 }
