@@ -99,7 +99,7 @@ export class PropositionMaking extends Component {
                 clearInterval(this.currentThemeGettingId);
             }
         });
-    }, 1000);
+    }, 200);
 
     turnStatusCheckingId = setInterval(() => {
         checkAllPropositionsMade().then((allPropositionsMade) => {
