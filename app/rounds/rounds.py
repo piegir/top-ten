@@ -4,7 +4,7 @@ from typing import Annotated
 from app.authentication.authentication import oauth2_scheme
 from app.utils import ActionStatus
 from app.game import game
-from lib.player_proposition import PlayerProposition
+from lib.player_proposition import Proposition, PlayerProposition
 from lib.theme import Theme
 
 router = APIRouter(prefix="/rounds", tags=["Round control"])
@@ -118,15 +118,28 @@ def get_number(
     return player_to_number[current_username]
 
 
+@router.get("/get_current_player")
+def get_current_player(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> str:
+    """
+    API call to get the current player whose turn it is.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The player's username.
+    """
+    return game.current_game.rounds[-1].players_list[
+        game.current_game.rounds[-1].playing_player_index]
+
+
 @router.post("/set_player_proposition")
 def set_player_proposition(
-        proposition: str,
+        proposition: Proposition,
         current_username: Annotated[str,
                                     Depends(oauth2_scheme)]) -> ActionStatus:
     """
     API call to set a player's proposition.
 
-    :param proposition: The content of the proposition made
+    :param proposition: The proposition made
     :param current_username: Username of the current user performing the request (automatically obtained)
     :return: The status of setting the player's proposition.
     """
@@ -158,14 +171,14 @@ def set_player_proposition(
     # Try setting the player's proposition
     try:
         game.current_game.rounds[-1].set_player_proposition(
-            proposition, current_username)
+            proposition.proposition, current_username)
         # Check if all propositions have been made
         if game.current_game.rounds[-1].all_propositions_made():
             starting_player = game.current_game.rounds[-1].players_list[0]
             return ActionStatus(
                 status=True,
                 message=
-                f"{current_username}'s proposition '{proposition}' was properly set. "
+                f"{current_username}'s proposition '{proposition.proposition}' was properly set. "
                 f"All propositions have been made. "
                 f"{starting_player} should make a hypothesis (/rounds/make_hypothesis)"
             )
@@ -175,13 +188,13 @@ def set_player_proposition(
             return ActionStatus(
                 status=True,
                 message=
-                f"{current_username}'s proposition '{proposition}' was properly set. "
+                f"{current_username}'s proposition '{proposition.proposition}' was properly set. "
                 f"It is now {current_player}'s turn to make a proposition")
     except Exception as error:
         return ActionStatus(
             status=False,
             message=
-            f"{current_username}'s proposition '{proposition}' couldn't be set. {error}"
+            f"{current_username}'s proposition '{proposition.proposition}' couldn't be set. {error}"
         )
 
 

@@ -1,6 +1,6 @@
 import {currentUser} from "../authentication/authentication";
 import React, {Component} from "react";
-import {makeGetCall} from "../common/common";
+import {makeGetCall, makePostCall} from "../common/common";
 
 
 export let playersList = [
@@ -22,8 +22,16 @@ export let userNumbers = {
     "Player4": 8,
 };
 
-let getUserNumber = () => {
+function getUserNumber() {
     return makeGetCall("/rounds/get_number");
+}
+
+function setPlayerProposition(proposition) {
+    return makePostCall("/rounds/set_player_proposition", {proposition: proposition});
+}
+
+function getPlayerPropositions() {
+    return makeGetCall("/rounds/get_player_propositions");
 }
 
 export class CurrentUserNumber extends Component {
@@ -49,39 +57,72 @@ export class CurrentUserNumber extends Component {
     }
 }
 
-export function PlayerPropositions() {
-    return (
-        <div className="PlayersBox">
-            <div className="BoxTitle">
-                Player Propositions
+export class PlayerPropositions extends Component {
+
+    state = {playerPropositions: []};
+
+    isPlayerTurnCheckingId = setInterval(() => {
+        getPlayerPropositions().then((playerPropositions) => {
+            this.setState({playerPropositions: playerPropositions});
+        });
+    }, 1000);
+
+    componentWillUnmount() {
+        clearInterval(this.isPlayerTurnCheckingId);
+    }
+
+    render () {
+        return (
+            <div className="PlayersBox">
+                <div className="BoxTitle">
+                    Player Propositions
+                </div>
+                <table className="PlayerPropositionsTable">
+                    <tr>
+                        <th>
+                            Players
+                        </th>
+                        <th>
+                            Propositions
+                        </th>
+                    </tr>
+                    {this.state.playerPropositions.map((playerProposition) => {
+                        return (
+                            <tr>
+                                <td>
+                                    {playerProposition.player}
+                                </td>
+                                <td>
+                                    {playerProposition.proposition}
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </table>
             </div>
-            <table className="PlayerPropositionsTable">
-                <tr>
-                    <th>
-                        Players
-                    </th>
-                    <th>
-                        Propositions
-                    </th>
-                </tr>
-                {playersList.map((playerName) => {
-                    return (
-                        <tr>
-                            <td>
-                                {playerName}
-                            </td>
-                            <td>
-                                {playerPropositions[playerName]}
-                            </td>
-                        </tr>
-                    )
-                })}
-            </table>
-        </div>
-    );
+        );
+    }
 }
 
 export class MakeProposition extends Component {
+
+    state = {proposition: null}
+
+    liveUpdateProposition = (event) => {
+        this.setState({proposition: event.target.value});
+    }
+
+    makePropositionHandler = () => {
+        setPlayerProposition(this.state.proposition).then((success) => {
+            if (success.status) {
+                this.props.goToHypothesisMakingHandler();
+            }
+            else {
+                alert(success.message);
+            }
+        });
+    }
+
     render() {
         return (
             <div className="UserActionBox">
@@ -93,11 +134,11 @@ export class MakeProposition extends Component {
                         Your proposition:
                     </div>
                     <div className="UserActionInputField">
-                        <textarea name="Text1" cols="40" rows="5"></textarea>
+                        <textarea onChange={this.liveUpdateProposition} name="Text1" cols="40" rows="5"></textarea>
                     </div>
                 </div>
                 <div className="UserActionButtonBox">
-                    <button onClick={this.props.goToHypothesisMakingHandler} className="UserActionButton">
+                    <button onClick={this.makePropositionHandler} className="UserActionButton">
                         Submit
                     </button>
                 </div>

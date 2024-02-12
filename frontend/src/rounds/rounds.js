@@ -13,6 +13,10 @@ export let getRoundPlayers = () => {
     return makeGetCall("/rounds/get_players");
 }
 
+function getCurrentPlayer() {
+    return makeGetCall("/rounds/get_current_player");
+}
+
 export class ThemeSelection extends Component {
 
     constructor(props) {
@@ -57,6 +61,19 @@ export class ThemeSelection extends Component {
 }
 
 export class PropositionMaking extends Component {
+
+    state = {isPlayersTurn: false};
+
+    isPlayerTurnCheckingId = setInterval(() => {
+        getCurrentPlayer().then((currentPlayer) => {
+            this.setState({isPlayersTurn: currentPlayer === currentUser.username});
+        });
+    }, 1000);
+
+    componentWillUnmount() {
+        clearInterval(this.isPlayerTurnCheckingId);
+    }
+
     render() {
         return (
             <div className="App">
@@ -73,7 +90,10 @@ export class PropositionMaking extends Component {
                         <CurrentTheme/>
                     </div>
                     <PlayerPropositions/>
-                    <MakeProposition goToHypothesisMakingHandler={this.props.goToHypothesisMakingHandler}/>
+                    {this.state.isPlayersTurn ?
+                        <MakeProposition goToHypothesisMakingHandler={this.props.goToHypothesisMakingHandler}/>:
+                        null
+                    }
                 </div>
             </div>
         );

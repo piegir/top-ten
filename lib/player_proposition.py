@@ -1,6 +1,11 @@
 from pydantic import BaseModel, Field, field_validator
 
 
+class Proposition(BaseModel):
+    proposition: str | None = Field(
+        description="The content of the proposition made.", default=None)
+
+
 class PlayerProposition(BaseModel):
     player: str = Field(
         description="The username of the player that made the proposition.",
