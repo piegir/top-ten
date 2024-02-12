@@ -79,6 +79,17 @@ def logout(username: Annotated[str, Depends(oauth2_scheme)]) -> ActionStatus:
     return remove_user(username)
 
 
+@router.post("/force_logout")
+def force_logout(username: str) -> ActionStatus:
+    """
+    API call to forcefully log out user.
+
+    :param username: The username of the user to log out
+    :return: The status success of the logout.
+    """
+    return remove_user(username)
+
+
 @router.get("/get_username")
 def get_username(username: Annotated[str, Depends(oauth2_scheme)]) -> str:
     """
