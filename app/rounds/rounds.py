@@ -1,13 +1,30 @@
 from fastapi import APIRouter, HTTPException, Depends
+from pydantic import BaseModel, Field
 from typing import Annotated
 
 from app.authentication.authentication import oauth2_scheme
 from app.utils import ActionStatus
 from app.game import game
-from lib.player_proposition import Proposition, PlayerProposition
+from lib.player_proposition import Proposition, PlayerProposition, NumberedPlayerProposition
 from lib.theme import Theme
 
 router = APIRouter(prefix="/rounds", tags=["Round control"])
+
+
+class RoundResult(BaseModel):
+    success: bool = Field(description="Whether the round was won or not.",
+                          example=False)
+    hypothesis: list[PlayerProposition] = Field(
+        description=
+        "The hypothesis of proposition ordering made by the player.",
+        example=[PlayerProposition(player="John Doe")])
+    reality: list[NumberedPlayerProposition] = Field(
+        description="The reality of proposition ordering (with numbers).",
+        example=[
+            NumberedPlayerProposition(
+                number=1,
+                player_proposition=PlayerProposition(player="John Doe"))
+        ])
 
 
 def round_valid() -> bool:
@@ -229,13 +246,13 @@ def check_all_propositions_made(
 
 @router.post("/make_hypothesis")
 def make_hypothesis(
-        hypothesis_names: list[str],
+        hypothesis: list[PlayerProposition],
         current_username: Annotated[str,
                                     Depends(oauth2_scheme)]) -> ActionStatus:
     """
     API call to set a hypothesis about correct order of propositions.
 
-    :param hypothesis_names: The list of player usernames as ordered for the hypothesis
+    :param hypothesis: The list of player propositions as ordered for the hypothesis
     :param current_username: Username of the current user performing the request (automatically obtained)
     :return: The status of setting the hypothesis.
     """
@@ -261,13 +278,6 @@ def make_hypothesis(
             status=False,
             message=f"Only first player '{first_player}' can {description}.")
 
-    player_to_prop = {
-        prop.player_proposition.player: prop.player_proposition
-        for prop in game.current_game.rounds[-1].numbered_player_propositions
-    }
-    hypothesis = [
-        player_to_prop[hypothesis_id] for hypothesis_id in hypothesis_names
-    ]
     try:
         game.current_game.rounds[-1].make_hypothesis(hypothesis)
         return ActionStatus(status=True,
@@ -277,14 +287,31 @@ def make_hypothesis(
                             message=f"Hypothesis couldn't be made. {error}")
 
 
+@router.get("/check_round_complete")
+def check_round_complete(
+        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
+    """
+    API call to check if round is complete.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: True if round is complete, False otherwise.
+    """
+    return game.current_game.rounds[-1].is_complete()
+
+
 @router.get("/check_round_result")
 def check_round_result(
-        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
+        current_username: Annotated[str,
+                                    Depends(oauth2_scheme)]) -> RoundResult:
     """
     API call to check round result.
 
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: True if round was won, False otherwise.
     """
-    return game.current_game.rounds[-1].is_complete(
-    ) and game.current_game.rounds[-1].success
+    current_round = game.current_game.rounds[-1]
+    sorted_numbered_propositions = sorted(
+        current_round.numbered_player_propositions, key=lambda x: x.number)
+    return RoundResult(success=current_round.success,
+                       hypothesis=current_round.order_hypothesis,
+                       reality=sorted_numbered_propositions)

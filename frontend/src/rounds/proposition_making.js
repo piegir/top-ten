@@ -30,7 +30,7 @@ function setPlayerProposition(proposition) {
     return makePostCall("/rounds/set_player_proposition", {proposition: proposition});
 }
 
-function getPlayerPropositions() {
+export function getPlayerPropositions() {
     return makeGetCall("/rounds/get_player_propositions");
 }
 

@@ -5,7 +5,6 @@ import {GamePreparation} from "./game/game.js"
 import {
     ThemeSelection,
     PropositionMaking,
-    WaitPropositionMaking,
     HypothesisMaking,
     ResultsChecking
 } from "./rounds/rounds"
@@ -14,14 +13,10 @@ import {wait} from "./common/common.js";
 let views = {
     AskCredentials: 0,
     GamePreparation: 1,
-    RoundStarting: 2,
-    ThemeSelection: 3,
-    WaitThemeSelection: 4,
-    PropositionMaking: 5,
-    WaitPropositionMaking: 6,
-    HypothesisMaking: 7,
-    WaitHypothesisMaking: 8,
-    ResultsChecking: 9,
+    ThemeSelection: 2,
+    PropositionMaking: 3,
+    HypothesisMaking: 4,
+    ResultsChecking: 5,
 }
 
 class App extends Component {
@@ -57,36 +52,16 @@ class App extends Component {
         this.setState({view: views.AskCredentials});
     };
 
-    goToRoundStartingHandler = () => {
-        this.setState({view: views.RoundStarting});
-    };
-
     goToThemeSelectionHandler = () => {
         this.setState({view: views.ThemeSelection});
     };
 
-    goToWaitThemeSelectionHandler = () => {
-        this.setState({view: views.WaitThemeSelection});
-    };
-
     goToPropositionMakingHandler = () => {
-        let roundCurrentPlayer = currentUser.username;
-        // TODO: replace with API call checking for current player
-        if (currentUser.username === roundCurrentPlayer) {
-            this.setState({view: views.PropositionMaking});
-        } else {
-            this.setState({view: views.WaitPropositionMaking});
-        }
+        this.setState({view: views.PropositionMaking});
     };
 
     goToHypothesisMakingHandler = () => {
-        let roundFirstPlayer = currentUser.username;
-        // TODO: replace with API call checking for first player and that all propositions were made
-        if (currentUser.username === roundFirstPlayer) {
-            this.setState({view: views.HypothesisMaking});
-        } else {
-            this.setState({view: views.WaitHypothesisMaking});
-        }
+        this.setState({view: views.HypothesisMaking});
     };
 
     goToResultsCheckingHandler = () => {
@@ -114,11 +89,6 @@ class App extends Component {
                     <PropositionMaking goToHypothesisMakingHandler={this.goToHypothesisMakingHandler}
                                        goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
                 )
-            case views.WaitPropositionMaking:
-                return (
-                    <WaitPropositionMaking goToHypothesisMakingHandler={this.goToHypothesisMakingHandler}
-                                           goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
-                )
             case views.HypothesisMaking:
                 return (
                     <HypothesisMaking goToResultsCheckingHandler={this.goToResultsCheckingHandler}
@@ -126,7 +96,7 @@ class App extends Component {
                 )
             case views.ResultsChecking:
                 return (
-                    <ResultsChecking goToRoundStartingHandler={this.goToRoundStartingHandler}
+                    <ResultsChecking goToThemeSelectionHandler={this.goToThemeSelectionHandler}
                                      goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>
                 )
             default:

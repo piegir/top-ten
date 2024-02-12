@@ -184,7 +184,7 @@ export class ResultsChecking extends Component {
                         <CurrentTheme/>
                     </div>
                     <PlayerNumberedPropositions/>
-                    <CheckResults goToRoundStartingHandler={this.props.goToRoundStartingHandler}/>
+                    <CheckResults goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}/>
                 </div>
             </div>
         );
