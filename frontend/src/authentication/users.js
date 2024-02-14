@@ -10,25 +10,21 @@ export let getConnectedUsers = () => {
 
 export class Users extends Component {
 
-    constructor(props) {
-        super(props);
-        if (this.props.checkOnlyOnce) {
-            setTimeout(() => {
-                clearInterval(this.userFetchingId);
-            }, 2000);
-        }
-    }
-
     state = {usersList: []};
 
-    userFetchingId = setInterval(() => {
+    fetchUser = () => {
         this.props.getUsersListHandler().then((listOfUsers) => {
             this.setState({usersList: listOfUsers});
+            if (!this.props.checkOnlyOnce) {
+                this.userFetchingId = setTimeout(this.fetchUser, 100);
+            }
         })
-    }, 1000, []);
+    }
+
+    userFetchingId = setTimeout(this.fetchUser, 100);
 
     componentWillUnmount() {
-        clearInterval(this.userFetchingId);
+        clearTimeout(this.userFetchingId);
     }
 
     render () {

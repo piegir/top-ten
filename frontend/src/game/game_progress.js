@@ -1,10 +1,16 @@
 import {Component} from "react";
-import {getGameOptions} from "./game_start";
+import {getGameOptionsFromConfig} from "./game_start";
 import {makeGetCall} from "../common/common";
 
 
 function getRoundsHistory() {
     return makeGetCall("/game/get_rounds_history");
+}
+
+function getGameOptions() {
+    return makeGetCall("/game/get_config").then((gameConfig) => {
+        return getGameOptionsFromConfig(gameConfig);
+    });
 }
 
 let status = {

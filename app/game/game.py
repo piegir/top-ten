@@ -60,10 +60,10 @@ def player_in_game(player: str):
     return player in current_game.players_list
 
 
-@router.post("/set_config")
-def set_game_config(game_config: GameConfig,
-                    current_username: Annotated[str,
-                                                Depends(oauth2_scheme)]):
+@router.post("/set_temp_config")
+def set_temp_game_config(game_config: GameConfig,
+                         current_username: Annotated[str,
+                                                     Depends(oauth2_scheme)]):
     """
     API call to temporarily store the game config (for live update between users).
 
@@ -74,8 +74,8 @@ def set_game_config(game_config: GameConfig,
     temp_game_config = game_config
 
 
-@router.get("/get_config")
-def get_game_config(
+@router.get("/get_temp_config")
+def get_temp_game_config(
         current_username: Annotated[str,
                                     Depends(oauth2_scheme)]) -> GameConfig:
     """
@@ -134,6 +134,22 @@ def is_started(
     :return: True if a game is started, False otherwise.
     """
     return game_created()
+
+
+@router.get("/get_config")
+def get_game_config(
+        current_username: Annotated[str,
+                                    Depends(oauth2_scheme)]) -> GameConfig:
+    """
+    API call to access the current game config.
+
+    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
+    :return: The game configuration.
+    """
+    return GameConfig(players_list=current_game.players_list,
+                      max_nb_rounds=current_game.max_nb_rounds,
+                      starting_player_index=current_game.starting_player_index,
+                      nb_themes_per_card=current_game.nb_themes_per_card)
 
 
 @router.get("/get_players")

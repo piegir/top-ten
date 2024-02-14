@@ -38,25 +38,21 @@ export class CurrentUserNumber extends Component {
 
 export class PlayerPropositions extends Component {
 
-    constructor(props) {
-        super(props);
-        if (this.props.checkOnlyOnce) {
-            setTimeout(() => {
-                clearInterval(this.isPlayerTurnCheckingId);
-            }, 2000);
-        }
-    }
-
     state = {playerPropositions: []};
 
-    isPlayerTurnCheckingId = setInterval(() => {
+    checkPlayerTurn = () => {
         getPlayerPropositions().then((playerPropositions) => {
             this.setState({playerPropositions: playerPropositions});
+            if (!this.props.checkOnlyOnce) {
+                this.isPlayerTurnCheckingId = setTimeout(this.checkPlayerTurn, 100);
+            }
         });
-    }, 1000);
+    }
+
+    isPlayerTurnCheckingId = setTimeout(this.checkPlayerTurn, 100);
 
     componentWillUnmount() {
-        clearInterval(this.isPlayerTurnCheckingId);
+        clearTimeout(this.isPlayerTurnCheckingId);
     }
 
     render () {

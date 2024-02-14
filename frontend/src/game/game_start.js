@@ -15,7 +15,7 @@ function createGameConfigFromOptions(gameOptions) {
     });
 }
 
-function getGameOptionsFromConfig(gameConfig) {
+export function getGameOptionsFromConfig(gameConfig) {
     return {
         "Number of rounds": gameConfig["max_nb_rounds"],
         "Starting Player Index": gameConfig["starting_player_index"],
@@ -23,14 +23,14 @@ function getGameOptionsFromConfig(gameConfig) {
     };
 }
 
-function setGameConfig(gameOptions) {
+function setTempGameConfig(gameOptions) {
     return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
-        return makePostCall("/game/set_config", gameConfig);
+        return makePostCall("/game/set_temp_config", gameConfig);
     });
 }
 
-export function getGameOptions() {
-    return makeGetCall("/game/get_config").then((gameConfig) => {
+function getTempGameOptions() {
+    return makeGetCall("/game/get_temp_config").then((gameConfig) => {
         return getGameOptionsFromConfig(gameConfig);
     });
 }
@@ -60,7 +60,7 @@ function isGameComplete() {
 export class GameSetup extends Component {
     constructor(props) {
         super(props);
-        setGameConfig(this.state.gameOptions)
+        setTempGameConfig(this.state.gameOptions)
             .then(() => {
                     this.setState({
                         gameOptions: this.state.gameOptions,
@@ -89,7 +89,7 @@ export class GameSetup extends Component {
      * - Checks if the current user is the first game user, i.e. if he can edit the game options
      * - Does the live visual update of options for other users
      */
-    gameCheckingId = setInterval(() => {
+    checkGameStatus = () => {
         isGameStarted().then((gameStarted) => {
             isGameComplete().then((gameComplete) => {
                 if (gameStarted && !gameComplete) {
@@ -105,28 +105,33 @@ export class GameSetup extends Component {
                             firstPlayer: firstPlayer,
                             areOptionsSet: this.state.areOptionsSet,
                         });
+                        this.gameCheckingId = setTimeout(this.checkGameStatus, 100);
                     } else if (this.state.areOptionsSet) {
-                        getGameOptions().then((gameOptions) => {
+                        getTempGameOptions().then((gameOptions) => {
                             this.setState({
                                 gameOptions: gameOptions,
                                 gameStarted: gameStarted,
                                 firstPlayer: firstPlayer,
                                 areOptionsSet: this.state.areOptionsSet,
                             });
+                            this.gameCheckingId = setTimeout(this.checkGameStatus, 100);
                         });
                     }
                 });
             });
         })
-    }, 1000, []);
+    }
+
+
+    gameCheckingId = setTimeout(this.checkGameStatus, 100);
 
     componentWillUnmount() {
-        clearInterval(this.gameCheckingId);
+        clearTimeout(this.gameCheckingId);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if ((this.state.firstPlayer === currentUser.username) && this.state.gameOptions !== prevState.gameOptions) {
-            setGameConfig(this.state.gameOptions).then();
+            setTempGameConfig(this.state.gameOptions).then();
         }
     }
 
