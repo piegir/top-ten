@@ -9,8 +9,8 @@ export function wait(delayMilliSeconds) {
     }
 }
 
-// let restApiIp = "https://top-ten-rest-api.onrender.com";
-let restApiIp = "http://0.0.0.0:80"; // For local testing
+let restApiIp = "https://top-ten-rest-api.onrender.com";
+// let restApiIp = "http://0.0.0.0:80"; // For local testing
 
 let endpointTypes = {
     GET: 0,
