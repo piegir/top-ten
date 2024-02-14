@@ -95,10 +95,10 @@ export class GameResultChecking extends Component {
         return (
             <div className="GlobalGrid">
                 <div className="HeadBox">
-                    <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                     <div className="Title">
                         Top Ten
                     </div>
+                    <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
                     <GameProgress/>
@@ -107,11 +107,11 @@ export class GameResultChecking extends Component {
                 <div className="BottomBox">
                     <Users getUsersListHandler={getGamePlayers} checkOnlyOnce={true}/>
                     <div className="UserActionBox">
-                        <div className="BoxTitle">
+                        <div className="SubTitle">
                             Setup a new game?
                         </div>
-                        <div className="UserActionButtonBox">
-                            <button onClick={this.props.goToGamePreparationHandler} className="UserActionButton">
+                        <div className="ButtonBox">
+                            <button onClick={this.props.goToGamePreparationHandler}>
                                 Setup new game
                             </button>
                         </div>
