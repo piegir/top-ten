@@ -46,7 +46,8 @@ class Login extends Component {
                     <div>
                         <input onChange={this.liveUpdateUsername}
                                type="text"
-                               class="InputBox"
+                               autoFocus={true}
+                               className="InputBox"
                         />
                     </div>
                 </div>
