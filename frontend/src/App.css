@@ -37,7 +37,7 @@
 .MiddleBox {
     grid-row-start: 2;
     display: grid;
-    grid-template: 40% 40% 20% / 50% 12% 28%; /* rows / columns */
+    grid-template: 40% 40% 20% / 50% 12% 1fr; /* rows / columns */
 }
 
 .BottomBox {
