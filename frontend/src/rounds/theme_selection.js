@@ -1,3 +1,6 @@
+import './theme_selection.css'
+import "./current_theme.css"
+
 import React, {Component} from "react";
 import {makeGetCall, makePostCall} from "../common/common";
 
@@ -37,8 +40,8 @@ export class SelectTheme extends Component {
     render() {
         return (
             <div className="UserActionBox">
-                <div className="BoxTitle">
-                    Select Theme
+                <div className="SubTitle">
+                    Select a theme
                 </div>
                 <table className="ThemesTable">
                     <tr>
@@ -46,10 +49,10 @@ export class SelectTheme extends Component {
                             Theme
                         </td>
                         <td>
-                            Top1
+                            Top 1
                         </td>
                         <td>
-                            Top10
+                            Top 10
                         </td>
                     </tr>
                     {this.state.card.map((themeObject, themeIndex) => {
@@ -84,14 +87,13 @@ export class WaitThemeSelected extends Component {
     render() {
         return (
             <div className="UserActionBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     Waiting for {this.props.firstPlayer} to set the theme...
                 </div>
             </div>
         );
     }
 }
-
 
 export class CurrentTheme extends Component {
 
@@ -115,7 +117,7 @@ export class CurrentTheme extends Component {
 
     render() {
         return (
-            <div>
+            <div className="ShowCurrentTheme">
                 {this.state.theme !== null ?
                     <table className="CurrentTheme">
                         <tr>
@@ -123,10 +125,10 @@ export class CurrentTheme extends Component {
                                 Theme
                             </th>
                             <th>
-                                Top1
+                                Top 1
                             </th>
                             <th>
-                                Top10
+                                Top 10
                             </th>
                         </tr>
                         <tr>

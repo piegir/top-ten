@@ -1,0 +1,70 @@
+.PlayerPropositionsTable {
+    width: 100%;
+    color: var(--text-color);
+}
+
+.PlayerPropositionsTable th {
+    line-height: 50%;
+    text-align: center;
+    border-color: var(--subtitle-color);
+    color: var(--subtitle-color);
+    padding: 15px;
+    border: solid 1px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable td {
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: solid 1px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable th {
+    border-top: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable tr:last-child td {
+    border-bottom: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable td:first-child {
+    border-left: solid 2px var(--subtitle-color);
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: "";
+    white-space: nowrap;
+}
+
+.PlayerPropositionsTable th:first-child {
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable th:last-child {
+    border-right: solid 2px var(--subtitle-color);
+}
+
+.PlayerPropositionsTable td:last-child {
+    max-width: 100%;
+    border-right: solid 2px var(--subtitle-color);
+    word-break: break-word;
+}
+
+.PlayerPropositionsTable th:last-child {
+    width: 80%;
+}
+
+.PlayerPropositionsTable th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.PlayerPropositionsTable th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.PlayerPropositionsTable tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.PlayerPropositionsTable tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}

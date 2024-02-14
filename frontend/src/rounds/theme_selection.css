@@ -1,0 +1,54 @@
+.ThemesTable {
+    width: 100%;
+    word-break: break-word;
+}
+
+.ThemesTable td:first-child {
+    width:50%;
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable td {
+    border: solid 1px;
+    padding: 5px;
+    padding-left: 10px;
+    border-color: var(--subtitle-color);
+}
+
+.ThemesTable tr:first-child td {
+    text-align: center;
+    color: var(--subtitle-color);
+    border-top: solid 2px;
+}
+
+.ThemesTable tr:first-child td:first-child {
+    border-top-left-radius: 5px;
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:first-child td:last-child, .ThemesTable tr:nth-child(2) td:last-child {
+    border-top-right-radius: 5px;
+    border-right: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:last-child td:first-child {
+    border-bottom-left-radius: 5px;
+}
+
+.ThemesTable tr:last-child td:last-child {
+    border-bottom-right-radius: 5px;
+    width:15%;
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:last-child td {
+    border-bottom: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:nth-child(3) td:last-child, .ThemesTable tr:nth-child(4) td:last-child {
+    border-right: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable tr:nth-child(2) td:last-child {
+    border-top: solid 2px var(--subtitle-color);
+}

@@ -14,19 +14,18 @@ export let getGamePlayers = () => {
 export class GamePreparation extends Component {
     render() {
         return (
-            <div className="App">
-                <div className="Grid">
-                    <div className="HeadBox">
-                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
-                        <div className="Title">
-                            Top Ten
-                        </div>
+            <div className="GlobalGrid">
+                <div className="HeadBox">
+                    <div className="Title">
+                        Top Ten
                     </div>
+                    <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
+                </div>
+                <div className="BottomBox">
                     <Users getUsersListHandler={getConnectedUsers} checkOnlyOnce={false}/>
                     <GameSetup goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}/>
                 </div>
             </div>
-
         );
     }
 }

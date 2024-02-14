@@ -1,3 +1,5 @@
+import "./game_progress.css"
+
 import {Component} from "react";
 import {getGameOptionsFromConfig} from "./game_start";
 import {makeGetCall} from "../common/common";

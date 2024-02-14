@@ -30,7 +30,7 @@ export class Users extends Component {
     render () {
         return (
             <div className="PlayersBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     Who's playing?
                 </div>
                 <table className="UsersTable">

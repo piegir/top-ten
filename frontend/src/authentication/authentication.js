@@ -39,17 +39,18 @@ class Login extends Component {
     render() {
         return (
             <div className="LoginBox">
-                <div className="LoginUsername">
-                    <div>
-                        Choose a Username:
+                <div>
+                    <div className="SubTitle">
+                        Choose a username:
                     </div>
                     <div>
                         <input onChange={this.liveUpdateUsername}
                                type="text"
+                               class="InputBox"
                         />
                     </div>
                 </div>
-                <div className="LoginButton">
+                <div className="ButtonBox">
                     <button onClick={this.loginHandler}>
                         Confirm
                     </button>
@@ -97,7 +98,7 @@ export class Username extends Component {
         return (
             <div className="Username">
                 {currentUser.username}<br/>
-                <button className="LogoutButton" onClick={this.logoutHandler}>
+                <button onClick={this.logoutHandler}>
                     Logout
                 </button>
             </div>
@@ -109,15 +110,14 @@ export class Username extends Component {
 export class AskCredentials extends Component {
     render() {
         return (
-            <div className="App">
-                <div className="Grid">
+            <div className="GlobalGrid">
+                <div className="HeadBox">
                     <div className="Title">
                         Top Ten
                     </div>
                 </div>
                 <Login goToGamePreparationHandler={this.props.goToGamePreparationHandler}/>
             </div>
-
         );
     }
 }

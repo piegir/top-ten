@@ -193,7 +193,7 @@ export class GameSetup extends Component {
     render() {
         return (
             <div className="UserActionBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     {this.state.firstPlayer === currentUser.username ?
                         <>Game Preparation</> :
                         <>{this.state.firstPlayer} is preparing the game...</>}
@@ -201,11 +201,11 @@ export class GameSetup extends Component {
                 <div>
                     {Object.keys(this.optionsCallbacks).map((optionName) => {
                         return (
-                            <div className="UserActionInput">
-                                <div className="UserActionInputOption">
+                            <div className="GamePreparation">
+                                <div className="GamePreparationOption">
                                     {optionName}:
                                 </div>
-                                <div className="UserActionInputField">
+                                <div className="GamePreparationField">
                                     {this.state.firstPlayer === currentUser.username ? <input
                                         type="text"
                                         value={this.state.gameOptions[optionName]}
@@ -217,9 +217,8 @@ export class GameSetup extends Component {
                         )
                     })}
                 </div>
-                {this.state.firstPlayer === currentUser.username ? <div className="UserActionButtonBox">
-                    <button onClick={this.startGameHandler}
-                            className="UserActionButton">
+                {this.state.firstPlayer === currentUser.username ? <div className="ButtonBox">
+                    <button onClick={this.startGameHandler}>
                         Start Game
                     </button>
                 </div> : null}

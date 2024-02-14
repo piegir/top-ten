@@ -1,4 +1,4 @@
-:root {
+:root { /* Creation of variables for colors */
     --subtitle-color: rgba(22, 49, 114, 1);
     --title-color: rgba(18, 37, 81, 1);
     --text-color: rgba(30, 86, 160, 1);
@@ -7,90 +7,125 @@
     --box-color: rgba(30, 86, 160, 0.2);
 }
 
-body {
-    margin: 10px;
+*{ /* Apply on whole game */
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-size: 2vw;
+    font-family: "Cookies";
+}
+
+.GlobalGrid { /* The page content is directly the grid */
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template: 10% 35% 55% / 100%; /* rows / columns */
     background-color: var(--background-color);
-}
-
-.BoxTitle { /* Title of players and action boxes */
-    text-align: center;
-    font-size: 1.5vw;
-    color: var(--subtitle-color);
-    padding-bottom: 10px;
-}
-
-.App {
-    font-size: 1vw;
-    font-family: "Komikax";
-}
-
-.Grid {
-    height: 97vh;
-    width: 98vw;
+    padding: 20px;
     grid-gap: 5px;
+    overflow-y: auto;
+}
+
+.HeadBox { /*The first row of the grid, for title, menu and username*/
+    grid-row-start: 1;
+    display: grid;
+    grid-template: 100% / 10% 1fr 10%;
+    background: var(--headbox-color);
+    border-radius: 10px;
+}
+
+.MiddleBox {
+    grid-row-start: 2;
+    display: grid;
+    grid-template: 40% 40% 20% / 50% 12% 28%; /* rows / columns */
+}
+
+.BottomBox {
+    grid-row-start: 3;
     display: grid;
     grid-template-columns: repeat(2, 50%);
-    grid-template-rows: 10% 35% 55%;
+    grid-gap: 5px;
 }
 
-.HeadBox {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 1;
-    background-color: var(--headbox-color);
-    border-radius: 15px;
-    display: grid;
-    grid-template-columns: 15% 70% 15%;
-    column-gap: 10px;
-    padding-right: 10px;
+.PlayersBox, .UserActionBox {
+    border-style: solid;
+    border-color: var(--title-color);
+    border-radius: 10px;
+    padding: 15px;
+    background-color: var(--box-color);
 }
 
 .Title {
     grid-column-start: 2;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 1;
-    text-align: center;
-    line-height: 100%;
-    font-size: 4vw;
+    align-self: center;
+    justify-self: center;
+    font-size: 5vw;
     color: var(--title-color);
-    font-weight: bolder;
 }
 
-.PlayersBox {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 3;
-    grid-row-end: 4;
-    border-style: solid;
-    border-color: var(--title-color);
+.SubTitle, .ResultText {
+    text-align: center;
+    color: var(--subtitle-color);
+    font-size: 2.5vw;
+}
+
+.SubTitle {
+    padding-bottom: 10px;
+}
+
+.InputBox {
     border-radius: 10px;
-    padding: 15px;
-    background-color: var(--box-color);
-    overflow-x: hidden;
-    overflow-y: scroll;
+    padding: 5px;
 }
 
-.UserActionBox {
-    grid-column-start: 2;
-    grid-column-end: 3;
+.ButtonBox {
+    text-align: center;
+    padding-top: 15px;
+}
+
+.Result {
     grid-row-start: 3;
-    grid-row-end: 4;
+    grid-column: 1 / span 4;
+    font-color: green;
+}
+
+button {
+    font-size: 1.7vw;
+    background-color: var(--subtitle-color);
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    color: var(--background-color);
+    border: solid 1px var(--background-color);
+}
+
+button:hover {
+    background-color: var(--background-color);
+    color: var(--subtitle-color);
+    border: solid 1px var(--subtitle-color);
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-color: var(--subtitle-color);
     color: var(--text-color);
-    border-style: solid;
-    border-color: var(--title-color);
-    border-radius: 10px;
-    padding: 15px;
-    background-color: var(--box-color);
-    overflow-x: hidden;
-    overflow-y: scroll;
+    word-break: break-word;
 }
 
-.MiddleBox {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 2;
-    display: grid;
+table th {
+    color: var(--subtitle-color);
+}
+
+textarea {
+    padding: 10px;
+    margin: auto;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid var(--title-color);
+    box-shadow: 1px 1px 1px #999;
+    font-family: monospace;
+    font-size: 1vw
 }

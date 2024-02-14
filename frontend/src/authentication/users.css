@@ -1,11 +1,16 @@
+.Username {
+    grid-column-start: 3;
+    text-align: center;
+}
+
+.PlayersBox {
+    grid-column-start: 1;
+}
+
 .UsersTable {
     width: 100%;
-    color: var(--text-color);
     border: none!important;
     border-radius: 15px;
-    border-spacing: 0;
-    border-collapse: separate;
-    border-color: var(--subtitle-color);
 }
 
 .UsersTable th {

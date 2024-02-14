@@ -27,7 +27,7 @@ tags_metadata = [
 ]
 
 origins = [
-    "https://top-ten-game.netlify.app",
+    "http://localhost:3000",
     # "http://localhost:3000",  # For local testing
 ]
 
