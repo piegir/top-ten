@@ -1,3 +1,5 @@
+import "./player_propositions.css"
+
 import React, {Component} from "react";
 import {makeGetCall, makePostCall} from "../common/common";
 
@@ -26,10 +28,12 @@ export class CurrentUserNumber extends Component {
 
     render () {
         return (
-            <div className="CurrentUserNumber">
-                <p>
+            <div>
+                <p className="ShowCurrentUserNumber">
                     Your Top Number:<br/>
-                    <span style={{fontSize: "2vw"}}>{this.state.topNumber}</span>
+                    <span className="CurrentUserNumber">
+                        {this.state.topNumber}
+                    </span>
                 </p>
             </div>
         )
@@ -58,7 +62,7 @@ export class PlayerPropositions extends Component {
     render () {
         return (
             <div className="PlayersBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     Player Propositions
                 </div>
                 <table className="PlayerPropositionsTable">
@@ -107,18 +111,13 @@ export class MakeProposition extends Component {
     render() {
         return (
             <div className="UserActionBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     Make your proposition
                 </div>
-                <div className="UserActionInput">
-                    <div className="UserActionInputOption">
-                        Your proposition:
-                    </div>
-                    <div className="UserActionInputField">
-                        <textarea onChange={this.liveUpdateProposition} name="Text1" cols="40" rows="5"></textarea>
-                    </div>
+                <div className="PropositionMaking">
+                <textarea onChange={this.liveUpdateProposition} cols="50" rows="10"></textarea>
                 </div>
-                <div className="UserActionButtonBox">
+                <div className="ButtonBox">
                     <button onClick={this.makePropositionHandler} className="UserActionButton">
                         Submit
                     </button>
@@ -132,7 +131,7 @@ export class WaitPropositionMade extends Component {
     render() {
         return (
             <div className="UserActionBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     Waiting for {this.props.currentPlayer} to make a proposition...
                 </div>
             </div>

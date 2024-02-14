@@ -1,3 +1,5 @@
+import "./player_top_table.css"
+
 import React, {Component} from "react";
 import {getRoundPlayers} from "../rounds/rounds.js";
 import {currentUser} from "../authentication/authentication";
@@ -14,8 +16,8 @@ export class RoundResult extends Component {
             <div className="Result">
                 {this.props.success !== null ?
                     this.props.success ?
-                        <div>Round Won!!!</div> :
-                        <div>Round Lost...</div> :
+                        <p className="ResultText">Round Won!!!</p> :
+                        <p className="ResultText">Round Lost...</p> :
                     null}
             </div>
         );
@@ -26,10 +28,10 @@ export class Reality extends Component {
     render() {
         return (
             <div className="PlayersBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     Reality
                 </div>
-                <table className="PlayerPropositionsTable">
+                <table className="PlayerTopTable">
                     <tr>
                         <th>
                             Players
@@ -97,7 +99,7 @@ export class Hypothesis extends Component {
     render() {
         return (
             <div className="UserActionBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     Hypothesis
                 </div>
                 <div>
@@ -127,13 +129,13 @@ export class Hypothesis extends Component {
                     </table>
                 </div>
                 {this.state.gameComplete ?
-                    <div className="UserActionButtonBox">
+                    <div className="ButtonBox">
                         <button onClick={this.props.goToGameResultsCheckingHandler} className="UserActionButton">
                             View game results
                         </button>
                     </div> :
                     this.state.isFirstPlayer ?
-                        <div className="UserActionButtonBox">
+                        <div className="ButtonBox">
                             <button onClick={this.roundStartingHandler} className="UserActionButton">
                                 Start a new round
                             </button>

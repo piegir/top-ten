@@ -1,56 +1,15 @@
-.Username {
-    grid-column-start: 3;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 1;
-    font-size: 1vw;
-    color: var(--title-color);
-    text-align: center;
-    padding-right: 10px;
-    justify-content: center;
-    overflow: hidden;
-    text-overflow: "...";
-    white-space: nowrap;
-}
-
 .LoginBox {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    justify-content: center;
-    border-style: solid;
-    padding: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+
+    border: solid 1px;
+    padding: 15px;
     border-radius: 15px;
-}
 
-.LoginUsername {
     text-align: center;
 }
 
-.LoginPassword {
-    text-align: center;
-}
-
-.LoginButton {
-    text-align: center;
-}
-
-.LogoutButton {
-    text-align: center;
-    font-size: 1vw;
-    background-color: var(--subtitle-color);
-    font-family: "Komikax";
-    border-radius: 10px;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: var(--background-color);
-    border: solid 1px var(--background-color);
-}
-
-.LogoutButton:hover {
-    background-color: var(--background-color);
-    color: var(--subtitle-color);
-    border: solid 1px var(--subtitle-color);
+.UsernameCreation {
+    margin-bottom: 15px;
 }

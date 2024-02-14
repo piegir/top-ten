@@ -1,0 +1,46 @@
+.GameProgress {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    line-height: 20%;
+    color: var(--title-color);
+    width: fit-content;
+    height: fit-content;
+}
+
+.GameProgress td {
+    padding: 15px;
+    border: solid 1px var(--subtitle-color);
+    text-align: center;
+}
+
+.GameProgress tr:first-child td {
+    border-top: solid 2px var(--subtitle-color);
+}
+
+.GameProgress tr:last-child td {
+    border-bottom: solid 2px var(--subtitle-color);
+}
+
+.GameProgress td:first-child {
+    border-left: solid 2px var(--subtitle-color);
+}
+
+.GameProgress td:last-child {
+    border-right: solid 2px var(--subtitle-color);
+}
+
+.GameProgress tr:first-child td:first-child {
+  border-top-left-radius: 10px;
+}
+
+.GameProgress tr:first-child td:last-child {
+  border-top-right-radius: 10px;
+}
+
+.GameProgress tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.GameProgress tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}

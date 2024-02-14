@@ -7,8 +7,8 @@ export class GameResult extends Component {
             <div className="Result">
                 {this.props.success !== null ?
                     this.props.success ?
-                        <div>Game Won!!!</div> :
-                        <div>Game Lost</div> :
+                        <div className="ResultText">Game Won!!!</div> :
+                        <div className="ResultText">Game Lost</div> :
                     null}
             </div>
         );

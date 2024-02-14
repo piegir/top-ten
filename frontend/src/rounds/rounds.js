@@ -40,20 +40,20 @@ export class ThemeSelection extends Component {
 
     render() {
         return (
-            <div className="App">
-                <div className="Grid">
-                    <div className="HeadBox">
-                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
-                        <div className="Title">
-                            Top Ten
-                        </div>
+            <div className="GlobalGrid">
+                <div className="HeadBox">
+                    <div className="Title">
+                        Top Ten
                     </div>
-                    <div className="MiddleBox">
-                        <GameProgress/>
-                        {this.state.firstPlayer === currentUser.username ?
-                            null :
-                            <CurrentUserNumber/>}
-                    </div>
+                    <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
+                </div>
+                <div className="MiddleBox">
+                    <GameProgress/>
+                    {this.state.firstPlayer === currentUser.username ?
+                        null :
+                        <CurrentUserNumber/>}
+                </div>
+                <div className="BottomBox">
                     <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true}/>
                     {this.state.firstPlayer === currentUser.username ?
                         <SelectTheme goToPropositionMakingHandler={this.props.goToPropositionMakingHandler}/> :
@@ -131,19 +131,19 @@ export class PropositionMaking extends Component {
 
     render() {
         return (
-            <div className="App">
-                <div className="Grid">
-                    <div className="HeadBox">
-                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
-                        <div className="Title">
-                            Top Ten
-                        </div>
+            <div className="GlobalGrid">
+                <div className="HeadBox">
+                    <div className="Title">
+                        Top Ten
                     </div>
-                    <div className="MiddleBox">
-                        <GameProgress/>
-                        <CurrentUserNumber/>
-                        <CurrentTheme/>
-                    </div>
+                    <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
+                </div>
+                <div className="MiddleBox">
+                    <GameProgress/>
+                    <CurrentUserNumber/>
+                    <CurrentTheme/>
+                </div>
+                <div className="BottomBox">
                     <PlayerPropositions/>
                     {this.state.theme === null ?
                         <WaitThemeSelected firstPlayer={this.state.firstPlayer}/> :
@@ -160,19 +160,19 @@ export class PropositionMaking extends Component {
 export class HypothesisMaking extends Component {
     render() {
         return (
-            <div className="App">
-                <div className="Grid">
-                    <div className="HeadBox">
-                        <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
-                        <div className="Title">
-                            Top Ten
-                        </div>
+            <div className="GlobalGrid">
+                <div className="HeadBox">
+                    <div className="Title">
+                        Top Ten
                     </div>
-                    <div className="MiddleBox">
-                        <GameProgress/>
-                        <CurrentUserNumber/>
-                        <CurrentTheme/>
-                    </div>
+                    <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
+                </div>
+                <div className="MiddleBox">
+                    <GameProgress/>
+                    <CurrentUserNumber/>
+                    <CurrentTheme/>
+                </div>
+                <div className="BottomBox">
                     <PlayerPropositions checkOnlyOnce={true}/>
                     <MakeHypothesis goToRoundResultsCheckingHandler={this.props.goToRoundResultsCheckingHandler}/>
                 </div>

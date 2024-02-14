@@ -1,3 +1,5 @@
+import "./hypothesis_table.css"
+
 import React, {Component} from "react";
 import {getPlayerPropositions} from "./proposition_making.js"
 import {getRoundPlayers} from "./rounds";
@@ -90,12 +92,12 @@ export class MakeHypothesis extends Component {
     render() {
         return (
             <div className="UserActionBox">
-                <div className="BoxTitle">
+                <div className="SubTitle">
                     {this.state.firstPlayer === currentUser.username ?
                         <>Make your hypothesis</> :
                         <>{this.state.firstPlayer} is making a hypothesis...</>}
                 </div>
-                <table className="PlayerPropositionsTable">
+                <table className="HypothesisTable">
                     <tr>
                         {this.state.firstPlayer === currentUser.username ? <th></th> : null}
                         <th>

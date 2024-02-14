@@ -1,19 +1,21 @@
-.UserActionInput {
+.UserActionBox {
+    grid-column-start: 2;
+}
+
+.GamePreparation {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 60% 40%;
     column-gap: 20px;
 }
 
-.UserActionInputOption {
+.GamePreparationOption {
     grid-column-start: 1;
-    grid-column-end: 4;
     text-align: right;
     padding-top: 30px;
 }
 
-.UserActionInputField {
-    grid-column-start: 4;
-    grid-column-end: 5;
+.GamePreparationField {
+    grid-column-start: 2;
     text-align: left;
     padding-top: 30px;
 }
@@ -21,84 +23,7 @@
 .NumberInput {
     width: 40px;
     text-align: center;
-    font-size: 20px;
+    font-size: 1.5vw;
     padding: 3px;
     border-radius: 10px;
-}
-
-.UserActionButtonBox {
-    text-align: center;
-    padding-top: 30px;
-}
-
-.UserActionButton {
-    text-align: center;
-    font-size: 1vw;
-    background-color: var(--subtitle-color);
-    font-family: "Komikax";
-    border-radius: 10px;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: var(--background-color);
-    border: solid 1px var(--background-color);
-}
-
-
-.UserActionButton:hover {
-    background-color: var(--background-color);
-    color: var(--subtitle-color);
-    border: solid 1px var(--subtitle-color);
-}
-
-.GameProgress {
-    grid-column-start: 1;
-    grid-column-end: 1;
-    grid-row-start: 2;
-    grid-row-end: 2;
-    line-height: 20%;
-    border-color: var(--subtitle-color);
-    color: var(--title-color);
-    width: fit-content;
-    height: fit-content;
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
-.GameProgress td {
-    padding: 15px;
-    border: solid 1px var(--subtitle-color);
-    text-align: center;
-}
-
-.GameProgress tr:first-child td {
-    border-top: solid 2px var(--subtitle-color);
-}
-
-.GameProgress tr:last-child td {
-    border-bottom: solid 2px var(--subtitle-color);
-}
-
-.GameProgress td:first-child {
-    border-left: solid 2px var(--subtitle-color);
-}
-
-.GameProgress td:last-child {
-    border-right: solid 2px var(--subtitle-color);
-}
-
-.GameProgress tr:first-child td:first-child {
-  border-top-left-radius: 10px;
-}
-
-.GameProgress tr:first-child td:last-child {
-  border-top-right-radius: 10px;
-}
-
-.GameProgress tr:last-child td:first-child {
-  border-bottom-left-radius: 10px;
-}
-
-.GameProgress tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
 }
