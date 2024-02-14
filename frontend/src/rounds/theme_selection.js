@@ -95,17 +95,23 @@ export class WaitThemeSelected extends Component {
 
 export class CurrentTheme extends Component {
 
-    currentThemeGettingId = setInterval(() => {
+    state = {theme: null};
+
+    getCurrentTheme = () => {
         getTheme().then((theme) => {
             this.setState({theme: theme});
-            // Get theme until it's not null
-            if (theme !== null) {
-                clearInterval(this.currentThemeGettingId);
+            if (theme === null) {
+                // Get theme until it's not null
+                this.currentThemeGettingId = setTimeout(this.getCurrentTheme, 100);
             }
         });
-    }, 1000);
+    }
 
-    state = {theme: null};
+    currentThemeGettingId = setTimeout(this.getCurrentTheme, 100);
+
+    componentWillUnmount() {
+        clearTimeout(this.currentThemeGettingId);
+    }
 
     render() {
         return (

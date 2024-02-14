@@ -86,7 +86,7 @@ export class PropositionMaking extends Component {
         allPropositionsMade: false,
     };
 
-    currentThemeGettingId = setInterval(() => {
+    getCurrentTheme = () => {
         getTheme().then((theme) => {
             this.setState({
                 theme: theme,
@@ -94,37 +94,39 @@ export class PropositionMaking extends Component {
                 currentPlayer: this.state.currentPlayer,
                 allPropositionsMade: this.state.allPropositionsMade,
             });
-            // Get theme until it's not null
-            if (theme !== null) {
-                clearInterval(this.currentThemeGettingId);
+            if (theme === null) {
+                // Get theme until it's not null
+                this.currentThemeGettingId = setTimeout(this.getCurrentTheme, 100);
             }
         });
-    }, 200);
+    }
 
-    turnStatusCheckingId = setInterval(() => {
-        checkAllPropositionsMade().then((allPropositionsMade) => {
-            this.setState({
-                theme: this.state.theme,
-                firstPlayer: this.state.firstPlayer,
-                currentPlayer: this.state.currentPlayer,
-                allPropositionsMade: allPropositionsMade,
-            });
-            if (allPropositionsMade) {
-                this.props.goToHypothesisMakingHandler();
-            }
-        })
+    currentThemeGettingId = setTimeout(this.getCurrentTheme, 100);
+
+    checkTurnStatus = () => {
         getCurrentPlayer().then((currentPlayer) => {
-            this.setState({
-                theme: this.state.theme,
-                firstPlayer: this.state.firstPlayer,
-                currentPlayer: currentPlayer,
-                allPropositionsMade: this.state.allPropositionsMade,
+            checkAllPropositionsMade().then((allPropositionsMade) => {
+                this.setState({
+                    theme: this.state.theme,
+                    firstPlayer: this.state.firstPlayer,
+                    currentPlayer: currentPlayer,
+                    allPropositionsMade: allPropositionsMade,
+                });
+                if (allPropositionsMade) {
+                    this.props.goToHypothesisMakingHandler();
+                }
+                else {
+                    this.turnStatusCheckingId = setTimeout(this.checkTurnStatus, 100);
+                }
             });
         });
-    }, 1000);
+    }
+
+    turnStatusCheckingId = setTimeout(this.checkTurnStatus, 100);
 
     componentWillUnmount() {
-        clearInterval(this.turnStatusCheckingId);
+        clearTimeout(this.currentThemeGettingId);
+        clearTimeout(this.turnStatusCheckingId);
     }
 
     render() {

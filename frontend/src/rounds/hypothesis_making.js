@@ -38,7 +38,7 @@ export class MakeHypothesis extends Component {
         firstPlayer: null,
     };
 
-    hypothesisMadeCheckingId = setInterval(() => {
+    checkHypothesisMade = () => {
         checkRoundComplete().then((complete) => {
             if (complete) {
                 this.props.goToRoundResultsCheckingHandler();
@@ -47,13 +47,19 @@ export class MakeHypothesis extends Component {
             if (this.state.firstPlayer !== currentUser.username) {
                 getTemporaryHypothesis().then((hypothesis) => {
                     this.setState({hypothesis: hypothesis, firstPlayer: this.state.firstPlayer});
+                    this.hypothesisMadeCheckingId = setTimeout(this.checkHypothesisMade, 100);
                 })
             }
+            else {
+                this.hypothesisMadeCheckingId = setTimeout(this.checkHypothesisMade, 100);
+            }
         })
-    }, 1000, []);
+    };
+
+    hypothesisMadeCheckingId = setTimeout(this.checkHypothesisMade, 100);
 
     componentWillUnmount() {
-        clearInterval(this.hypothesisMadeCheckingId);
+        clearTimeout(this.hypothesisMadeCheckingId);
     }
 
     raise = (index) => {

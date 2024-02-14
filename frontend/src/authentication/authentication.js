@@ -62,16 +62,21 @@ class Login extends Component {
 
 export class Username extends Component {
 
-    checkUserStillConnected = setInterval(() => {
+    checkUserStillConnected = () => {
         makeGetCall("/authentication/check_user_connected").then((connected) => {
             if (!connected) {
                 this.props.goToAskCredentialsHandler();
             }
+            else {
+                this.checkUserStillConnectedId = setTimeout(this.checkUserStillConnected, 100);
+            }
         })
-    }, 1000);
+    }
+
+    checkUserStillConnectedId = setTimeout(this.checkUserStillConnected, 100);
 
     componentWillUnmount() {
-        clearInterval(this.checkUserStillConnected);
+        clearTimeout(this.checkUserStillConnectedId);
     }
 
     logoutHandler = () => {

@@ -33,16 +33,21 @@ export class RoundResultChecking extends Component {
         reality: null,
     }
 
-    roundStartedCheckingId = setInterval(() => {
+    checkRoundStarted = () => {
         makeGetCall("/game/is_round_in_progress").then((inProgress) => {
             if (inProgress) {
                 this.props.goToThemeSelectionHandler();
             }
+            else {
+                this.roundStartedCheckingId = setTimeout(this.checkRoundStarted, 100);
+            }
         })
-    }, 1000);
+    }
+
+    roundStartedCheckingId = setTimeout(this.checkRoundStarted, 100);
 
     componentWillUnmount() {
-        clearInterval(this.roundStartedCheckingId);
+        clearTimeout(this.roundStartedCheckingId);
     }
 
     render() {
