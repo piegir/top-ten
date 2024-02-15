@@ -1,5 +1,5 @@
 import {Component} from "react";
-import {makeGetCall, makePostCall} from "../common/common";
+import {makeGetCall, makePostCall, repeat} from "../common/common";
 import {getConnectedUsers} from "../authentication/users";
 import {currentUser} from "../authentication/authentication";
 
@@ -58,19 +58,6 @@ function isGameComplete() {
 
 
 export class GameSetup extends Component {
-    constructor(props) {
-        super(props);
-        setTempGameConfig(this.state.gameOptions)
-            .then(() => {
-                    this.setState({
-                        gameOptions: this.state.gameOptions,
-                        gameStarted: this.state.gameStarted,
-                        firstPlayer: this.state.firstPlayer,
-                        areOptionsSet: true,
-                    });
-                }
-            );
-    }
 
     state = {
         gameOptions: {
@@ -80,7 +67,6 @@ export class GameSetup extends Component {
         },
         gameStarted: false,
         firstPlayer: null,
-        areOptionsSet: false,
     };
 
     /**
@@ -103,18 +89,16 @@ export class GameSetup extends Component {
                             gameOptions: this.state.gameOptions,
                             gameStarted: gameStarted,
                             firstPlayer: firstPlayer,
-                            areOptionsSet: this.state.areOptionsSet,
                         });
-                        this.gameCheckingId = setTimeout(this.checkGameStatus, 100);
-                    } else if (this.state.areOptionsSet) {
+                        this.gameCheckingId = repeat(this.checkGameStatus, 100);
+                    } else {
                         getTempGameOptions().then((gameOptions) => {
                             this.setState({
                                 gameOptions: gameOptions,
                                 gameStarted: gameStarted,
                                 firstPlayer: firstPlayer,
-                                areOptionsSet: this.state.areOptionsSet,
                             });
-                            this.gameCheckingId = setTimeout(this.checkGameStatus, 100);
+                            this.gameCheckingId = repeat(this.checkGameStatus, 100);
                         });
                     }
                 });
@@ -123,14 +107,14 @@ export class GameSetup extends Component {
     }
 
 
-    gameCheckingId = setTimeout(this.checkGameStatus, 100);
+    gameCheckingId = repeat(this.checkGameStatus, 100);
 
     componentWillUnmount() {
         clearTimeout(this.gameCheckingId);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if ((this.state.firstPlayer === currentUser.username) && this.state.gameOptions !== prevState.gameOptions) {
+        if ((this.state.firstPlayer === currentUser.username) && (this.state.gameOptions !== prevState.gameOptions)) {
             setTempGameConfig(this.state.gameOptions).then();
         }
     }
@@ -144,7 +128,6 @@ export class GameSetup extends Component {
             },
             gameStarted: this.state.gameStarted,
             firstPlayer: this.state.firstPlayer,
-            areOptionsSet: this.state.areOptionsSet,
         });
     }
 
@@ -157,7 +140,6 @@ export class GameSetup extends Component {
             },
             gameStarted: this.state.gameStarted,
             firstPlayer: this.state.firstPlayer,
-            areOptionsSet: this.state.areOptionsSet,
         });
     }
 
@@ -170,7 +152,6 @@ export class GameSetup extends Component {
             },
             gameStarted: this.state.gameStarted,
             firstPlayer: this.state.firstPlayer,
-            areOptionsSet: this.state.areOptionsSet,
         });
     }
 

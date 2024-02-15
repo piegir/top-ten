@@ -1,6 +1,6 @@
 import './users.css';
 import {Component} from "react";
-import {makeGetCall} from "../common/common";
+import {makeGetCall, repeat} from "../common/common";
 
 
 
@@ -16,12 +16,12 @@ export class Users extends Component {
         this.props.getUsersListHandler().then((listOfUsers) => {
             this.setState({usersList: listOfUsers});
             if (!this.props.checkOnlyOnce) {
-                this.userFetchingId = setTimeout(this.fetchUser, 100);
+                this.userFetchingId = repeat(this.fetchUser, 100);
             }
         })
     }
 
-    userFetchingId = setTimeout(this.fetchUser, 100);
+    userFetchingId = repeat(this.fetchUser, 100);
 
     componentWillUnmount() {
         clearTimeout(this.userFetchingId);
