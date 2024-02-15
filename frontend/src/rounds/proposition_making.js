@@ -115,7 +115,7 @@ export class MakeProposition extends Component {
                     Make your proposition
                 </div>
                 <div className="PropositionMaking">
-                <textarea autoFocus={true} onChange={this.liveUpdateProposition} cols="50" rows="10"></textarea>
+                <textarea autoFocus={true} onChange={this.liveUpdateProposition} cols="50" rows="7"></textarea>
                 </div>
                 <div className="ButtonBox">
                     <button onClick={this.makePropositionHandler} className="UserActionButton">
