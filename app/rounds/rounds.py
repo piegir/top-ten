@@ -10,7 +10,7 @@ from lib.theme import Theme
 
 router = APIRouter(prefix="/rounds", tags=["Round control"])
 
-temp_hypothesis: None | list[PlayerProposition] = None
+temp_hypothesis: list[PlayerProposition] = []
 
 
 class RoundResult(BaseModel):
