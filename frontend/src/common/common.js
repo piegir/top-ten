@@ -45,7 +45,11 @@ function makeRestApiCall(endpoint, endpointType, inputData = null) {
 
     return fetch(`${restApiIp}${endpoint}`, requestOptions)
         .then((response) => response.json())
-        .catch((error) => alert(error));
+        .catch((error) => {
+            alert(`${error}\n
+            From call: ${restApiIp}${endpoint}\n
+            With options: ${JSON.stringify(requestOptions)}`);
+        });
 }
 
 export function makeGetCall(endpoint) {
