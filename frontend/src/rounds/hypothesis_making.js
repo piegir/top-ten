@@ -51,8 +51,7 @@ export class MakeHypothesis extends Component {
                     this.setState({hypothesis: hypothesis, firstPlayer: this.state.firstPlayer});
                     this.hypothesisMadeCheckingId = setTimeout(this.checkHypothesisMade, 100);
                 })
-            }
-            else {
+            } else {
                 this.hypothesisMadeCheckingId = setTimeout(this.checkHypothesisMade, 100);
             }
         })
@@ -67,16 +66,33 @@ export class MakeHypothesis extends Component {
     raise = (index) => {
         let newHypothesis = this.state.hypothesis;
         [newHypothesis[index - 1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index - 1]];
-        this.setState({hypothesis: newHypothesis, firstPlayer: this.state.firstPlayer});
         setTemporaryHypothesis(newHypothesis).then();
     };
 
     lower = (index) => {
         let newHypothesis = this.state.hypothesis;
         [newHypothesis[index + 1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index + 1]];
-        this.setState({hypothesis: newHypothesis, firstPlayer: this.state.firstPlayer});
         setTemporaryHypothesis(newHypothesis).then();
     };
+
+    row;
+
+    dragStarted = (event) => {
+        this.row = event.target;
+    }
+
+    dragOver = (event) => {
+        let children = Array.from(event.target.parentNode.parentNode.children);
+        let beforeIndex = children.indexOf(this.row);
+        let afterIndex = children.indexOf(event.target.parentNode);
+        if (afterIndex > beforeIndex) {
+            this.lower(beforeIndex - 1);
+            event.target.parentNode.after(this.row);
+        } else if (afterIndex < beforeIndex) {
+            this.raise(beforeIndex - 1);
+            event.target.parentNode.before(this.row);
+        }
+    }
 
     makeHypothesisHandler = () => {
         makeHypothesis(this.state.hypothesis).then((success) => {
@@ -99,7 +115,6 @@ export class MakeHypothesis extends Component {
                 </div>
                 <table className="HypothesisTable">
                     <tr>
-                        {this.state.firstPlayer === currentUser.username ? <th></th> : null}
                         <th>
                             Players
                         </th>
@@ -108,31 +123,30 @@ export class MakeHypothesis extends Component {
                         </th>
                     </tr>
                     {this.state.hypothesis.map((proposition, index) => {
-                        return (
-                            <tr>
-                                {this.state.firstPlayer === currentUser.username ?
-                                    <td className="ButtonsInTable">
-                                        <div className="UpDownButtons">
-                                            {index > 0 ? <button onClick={() => {
-                                                this.raise(index)
-                                            }} className="UpButton">
-                                                ^
-                                            </button> : null}
-                                            {index < this.state.hypothesis.length - 1 ? <button onClick={() => {
-                                                this.lower(index)
-                                            }} className="DownButton">
-                                                v
-                                            </button> : null}
-                                        </div>
-                                    </td> : null}
-                                <td className="PlayerColumn">
-                                    {proposition.player}
-                                </td>
-                                <td>
-                                    {proposition.proposition}
-                                </td>
-                            </tr>
-                        )
+                        return this.state.firstPlayer === currentUser.username ?
+                            (
+                                <tr draggable={true}
+                                    onDragStart={this.dragStarted}
+                                    onDragOver={this.dragOver}
+                                    style={{cursor: "all-scroll"}}>
+                                    <td className="PlayerColumn">
+                                        {proposition.player}
+                                    </td>
+                                    <td>
+                                        {proposition.proposition}
+                                    </td>
+                                </tr>)
+                            :
+                            (
+                                <tr>
+                                    <td className="PlayerColumn">
+                                        {proposition.player}
+                                    </td>
+                                    <td>
+                                        {proposition.proposition}
+                                    </td>
+                                </tr>
+                            )
                     })}
                 </table>
                 {this.state.firstPlayer === currentUser.username ?
