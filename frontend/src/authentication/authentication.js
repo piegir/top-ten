@@ -21,7 +21,8 @@ class Login extends Component {
         this.setState({username: event.target.value});
     }
 
-    loginHandler = () => {
+    loginHandler = (e) => {
+        e.preventDefault();
         // Store username as provided by the user
         currentUser.username = this.state.username;
         // Perform REST API login
@@ -39,22 +40,21 @@ class Login extends Component {
     render() {
         return (
             <div className="LoginBox">
-                <div>
-                    <div className="SubTitle">
-                        Choose a username:
-                    </div>
-                    <div>
-                        <input onChange={this.liveUpdateUsername}
-                               type="text"
-                               class="InputBox"
-                        />
-                    </div>
+                <div className="SubTitle">
+                    Choose a username:
                 </div>
-                <div className="ButtonBox">
-                    <button onClick={this.loginHandler}>
-                        Confirm
-                    </button>
-                </div>
+                <form onSubmit={this.loginHandler}>
+                    <input onChange={this.liveUpdateUsername}
+                           type="text"
+                           autoFocus={true}
+                           className="InputBox"
+                    />
+                    <div className="ButtonBox">
+                        <button type="submit">
+                            Confirm
+                        </button>
+                    </div>
+                </form>
             </div>
         );
     }
