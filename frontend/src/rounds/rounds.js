@@ -23,8 +23,11 @@ function checkAllPropositionsMade() {
 
 export class ThemeSelection extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {
+        firstPlayer: null,
+    }
+
+    componentDidMount() {
         getRoundPlayers().then((playersList) => {
             let firstPlayer = playersList[0];
             this.setState({firstPlayer: firstPlayer});
@@ -32,10 +35,6 @@ export class ThemeSelection extends Component {
                 this.props.goToPropositionMakingHandler();
             }
         });
-    }
-
-    state = {
-        firstPlayer: null,
     }
 
     render() {
@@ -66,8 +65,14 @@ export class ThemeSelection extends Component {
 
 export class PropositionMaking extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {
+        theme: null,
+        firstPlayer: null,
+        currentPlayer: null,
+        allPropositionsMade: false,
+    };
+
+    componentDidMount() {
         getRoundPlayers().then((playersList) => {
             this.setState(
                 {
@@ -78,13 +83,6 @@ export class PropositionMaking extends Component {
                 });
         });
     }
-
-    state = {
-        theme: null,
-        firstPlayer: null,
-        currentPlayer: null,
-        allPropositionsMade: false,
-    };
 
     getCurrentTheme = () => {
         getTheme().then((theme) => {

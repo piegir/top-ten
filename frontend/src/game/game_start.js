@@ -2,12 +2,13 @@ import {Component} from "react";
 import {makeGetCall, makePostCall, repeat} from "../common/common";
 import {getConnectedUsers} from "../authentication/users";
 import {currentUser} from "../authentication/authentication";
+import {getGamePlayers} from "./game";
 
 
 function createGameConfigFromOptions(gameOptions) {
-    return getConnectedUsers().then((playersList) => {
+    return getConnectedUsers().then((usersList) => {
         return {
-            "players_list": playersList,
+            "players_list": usersList,
             "max_nb_rounds": gameOptions["Number of rounds"],
             "starting_player_index": gameOptions["Starting Player Index"],
             "nb_themes_per_card": gameOptions["Number of themes per card"],
@@ -66,8 +67,56 @@ export class GameSetup extends Component {
             "Starting Player Index": 0,
         },
         gameStarted: false,
+        gameComplete: false,
         firstPlayer: null,
+        allowedUser: false,
     };
+
+    componentDidMount() {
+        isGameStarted().then((gameStarted) => {
+            if (!gameStarted) {
+                // A user is allowed to join if no game is started
+                this.setState({
+                    gameOptions: this.state.gameOptions,
+                    gameStarted: gameStarted,
+                    gameComplete: false,
+                    firstPlayer: this.state.firstPlayer,
+                    allowedUser: true,
+                });
+                return;
+            }
+            isGameComplete().then((gameComplete) => {
+                if (gameComplete) {
+                    // A user is allowed to join if the previous game has been completed
+                    this.setState({
+                        gameOptions: this.state.gameOptions,
+                        gameStarted: gameStarted,
+                        gameComplete: true,
+                        firstPlayer: this.state.firstPlayer,
+                        allowedUser: true,
+                    });
+                    return;
+                }
+                getGamePlayers().then((playersList) => {
+                    if (playersList.includes(currentUser.username)) {
+                        // A user is allowed to join if he is part of the current started game, he is sent to the next step of the game
+                        this.setState({
+                            gameOptions: this.state.gameOptions,
+                            gameStarted: this.state.gameStarted,
+                            gameComplete: false,
+                            firstPlayer: this.state.firstPlayer,
+                            allowedUser: true,
+                        });
+                        this.props.goToThemeSelectionHandler();
+                        return;
+                    }
+                    // In any other case, the user is not allowed to join. Send him back to login page.
+                    alert(`You cannot join a game that you are not part of.`);
+                    this.props.goToAskCredentialsHandler();
+                });
+            });
+        });
+    }
 
     /**
      * Repeatedly check for multiple things regarding the game:
@@ -76,34 +125,40 @@ export class GameSetup extends Component {
      * - Does the live visual update of options for other users
      */
     checkGameStatus = () => {
+        if (!this.state.allowedUser) {
+            this.gameCheckingId = repeat(this.checkGameStatus, 100);
+            return;
+        }
         isGameStarted().then((gameStarted) => {
-            isGameComplete().then((gameComplete) => {
-                if (gameStarted && !gameComplete) {
-                    this.props.goToThemeSelectionHandler();
-                    return;
-                }
-                getConnectedUsers().then((playersList) => {
-                    let firstPlayer = playersList[0];
-                    if (firstPlayer === currentUser.username) {
+            if (gameStarted && !this.state.gameComplete) {
+                this.props.goToThemeSelectionHandler();
+                return;
+            }
+            getConnectedUsers().then((usersList) => {
+                let firstPlayer = usersList[0];
+                if (firstPlayer === currentUser.username) {
+                    this.setState({
+                        gameOptions: this.state.gameOptions,
+                        gameStarted: gameStarted,
+                        gameComplete: this.state.gameComplete,
+                        firstPlayer: firstPlayer,
+                        allowedUser: this.state.allowedUser,
+                    });
+                    this.gameCheckingId = repeat(this.checkGameStatus, 100);
+                } else {
+                    getTempGameOptions().then((gameOptions) => {
                         this.setState({
-                            gameOptions: this.state.gameOptions,
+                            gameOptions: gameOptions,
                             gameStarted: gameStarted,
+                            gameComplete: this.state.gameComplete,
                             firstPlayer: firstPlayer,
+                            allowedUser: this.state.allowedUser,
                         });
                         this.gameCheckingId = repeat(this.checkGameStatus, 100);
-                    } else {
-                        getTempGameOptions().then((gameOptions) => {
-                            this.setState({
-                                gameOptions: gameOptions,
-                                gameStarted: gameStarted,
-                                firstPlayer: firstPlayer,
-                            });
-                            this.gameCheckingId = repeat(this.checkGameStatus, 100);
-                        });
-                    }
-                });
+                    });
+                }
             });
-        })
+        });
     }
 
 
@@ -127,7 +182,9 @@ export class GameSetup extends Component {
                 "Starting Player Index": this.state.gameOptions["Starting Player Index"],
             },
             gameStarted: this.state.gameStarted,
+            gameComplete: this.state.gameComplete,
             firstPlayer: this.state.firstPlayer,
+            allowedUser: this.state.allowedUser,
         });
     }
 
@@ -139,7 +196,9 @@ export class GameSetup extends Component {
                 "Starting Player Index": this.state.gameOptions["Starting Player Index"],
             },
             gameStarted: this.state.gameStarted,
+            gameComplete: this.state.gameComplete,
             firstPlayer: this.state.firstPlayer,
+            allowedUser: this.state.allowedUser,
         });
     }
 
@@ -151,7 +210,9 @@ export class GameSetup extends Component {
                 "Starting Player Index": event.target.value,
             },
             gameStarted: this.state.gameStarted,
+            gameComplete: this.state.gameComplete,
             firstPlayer: this.state.firstPlayer,
+            allowedUser: this.state.allowedUser,
         });
     }
 
@@ -172,6 +233,9 @@ export class GameSetup extends Component {
     }
 
     render() {
+        if (!this.state.allowedUser) {
+            return null;
+        }
         return (
             <div className="UserActionBox">
                 <div className="SubTitle">
