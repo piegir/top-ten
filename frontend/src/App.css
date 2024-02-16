@@ -11,8 +11,9 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-size: 2vw;
-    font-family: "Cookies";
+    font-size: 1.5vw;
+    font-family: "Lemonberry";
+    font-weight: bold;
 }
 
 .GlobalGrid { /* The page content is directly the grid */
@@ -61,12 +62,14 @@
     justify-self: center;
     font-size: 5vw;
     color: var(--title-color);
+    font-family: "Cookies";
 }
 
 .SubTitle, .ResultText {
     text-align: center;
     color: var(--subtitle-color);
     font-size: 2.5vw;
+    font-family: "Cookies";
 }
 
 .SubTitle {
@@ -86,7 +89,6 @@
 .Result {
     grid-row-start: 3;
     grid-column: 1 / span 4;
-    font-color: green;
 }
 
 button {
@@ -126,6 +128,5 @@ textarea {
     border-radius: 5px;
     border: 1px solid var(--title-color);
     box-shadow: 1px 1px 1px #999;
-    font-family: monospace;
-    font-size: 1vw
+    font-size: 1.5vw
 }

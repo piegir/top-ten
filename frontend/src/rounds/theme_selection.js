@@ -71,7 +71,7 @@ export class SelectTheme extends Component {
                                     <button className="LogoutButton" onClick={() => {
                                         this.setThemeHandler(themeObject)
                                     }}>
-                                        Select theme {themeIndex + 1}
+                                        Select
                                     </button>
                                 </td>
                             </tr>

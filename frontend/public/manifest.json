@@ -1,6 +1,6 @@
 {
-  "short_name": "TOP TEN",
-  "name": "Create React App Sample",
+  "short_name": "Top Ten",
+  "name": "Top Ten online game",
   "icons": [
     {
       "src": "topten.ico",
@@ -8,14 +8,14 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "topten192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x160"
     },
     {
-      "src": "logo512.png",
+      "src": "topten512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x427"
     }
   ],
   "start_url": ".",
