@@ -4,7 +4,7 @@ import React, {Component} from "react";
 import {getPlayerPropositions} from "./proposition_making.js"
 import {getRoundPlayers} from "./rounds";
 import {currentUser} from "../authentication/authentication";
-import {makeGetCall, makePostCall} from "../common/common";
+import {makeGetCall, makePostCall, repeat} from "../common/common";
 
 function makeHypothesis(hypothesis) {
     return makePostCall("/rounds/make_hypothesis", hypothesis);
@@ -28,15 +28,13 @@ export class MakeHypothesis extends Component {
         super(props);
         getPlayerPropositions().then((playerPropositions) => {
             getRoundPlayers().then((currentPlayers) => {
-                setTemporaryHypothesis(playerPropositions).then(() => {
-                    this.setState({hypothesis: playerPropositions, firstPlayer: currentPlayers[0]});
-                });
+                this.setState({hypothesis: playerPropositions, firstPlayer: currentPlayers[0]});
             });
         });
     }
 
     state = {
-        hypothesis: [{player: null, proposition: null,},],
+        hypothesis: [],
         firstPlayer: null,
     };
 
@@ -49,30 +47,28 @@ export class MakeHypothesis extends Component {
             if (this.state.firstPlayer !== currentUser.username) {
                 getTemporaryHypothesis().then((hypothesis) => {
                     this.setState({hypothesis: hypothesis, firstPlayer: this.state.firstPlayer});
-                    this.hypothesisMadeCheckingId = setTimeout(this.checkHypothesisMade, 100);
+                    this.hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
                 })
             } else {
-                this.hypothesisMadeCheckingId = setTimeout(this.checkHypothesisMade, 100);
+                this.hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
             }
         })
     };
 
-    hypothesisMadeCheckingId = setTimeout(this.checkHypothesisMade, 100);
+    hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
 
     componentWillUnmount() {
         clearTimeout(this.hypothesisMadeCheckingId);
     }
 
-    raise = (index) => {
-        let newHypothesis = this.state.hypothesis;
-        [newHypothesis[index - 1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index - 1]];
-        setTemporaryHypothesis(newHypothesis).then();
+    lower = (index) => {
+        [this.state.hypothesis[index + 1], this.state.hypothesis[index]] = [this.state.hypothesis[index], this.state.hypothesis[index + 1]];
+        setTemporaryHypothesis(this.state.hypothesis).then();
     };
 
-    lower = (index) => {
-        let newHypothesis = this.state.hypothesis;
-        [newHypothesis[index + 1], newHypothesis[index]] = [newHypothesis[index], newHypothesis[index + 1]];
-        setTemporaryHypothesis(newHypothesis).then();
+    raise = (index) => {
+        [this.state.hypothesis[index - 1], this.state.hypothesis[index]] = [this.state.hypothesis[index], this.state.hypothesis[index - 1]];
+        setTemporaryHypothesis(this.state.hypothesis).then();
     };
 
     row;
@@ -86,11 +82,15 @@ export class MakeHypothesis extends Component {
         let beforeIndex = children.indexOf(this.row);
         let afterIndex = children.indexOf(event.target.parentNode);
         if (afterIndex > beforeIndex) {
-            this.lower(beforeIndex - 1);
-            event.target.parentNode.after(this.row);
+            for (let index = beforeIndex - 1; index < afterIndex - 1; ++index) {
+                this.lower(index);
+                event.target.parentNode.after(this.row);
+            }
         } else if (afterIndex < beforeIndex) {
-            this.raise(beforeIndex - 1);
-            event.target.parentNode.before(this.row);
+            for (let index = beforeIndex - 1; index > afterIndex - 1; --index) {
+                this.raise(index);
+                event.target.parentNode.before(this.row);
+            }
         }
     }
 
