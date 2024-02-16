@@ -2,7 +2,7 @@ import './theme_selection.css'
 import "./current_theme.css"
 
 import React, {Component} from "react";
-import {makeGetCall, makePostCall} from "../common/common";
+import {makeGetCall, makePostCall, repeat} from "../common/common";
 
 function getCard() {
     return makeGetCall("/rounds/get_card");
@@ -104,12 +104,12 @@ export class CurrentTheme extends Component {
             this.setState({theme: theme});
             if (theme === null) {
                 // Get theme until it's not null
-                this.currentThemeGettingId = setTimeout(this.getCurrentTheme, 100);
+                this.currentThemeGettingId = repeat(this.getCurrentTheme, 100);
             }
         });
     }
 
-    currentThemeGettingId = setTimeout(this.getCurrentTheme, 100);
+    currentThemeGettingId = repeat(this.getCurrentTheme, 100);
 
     componentWillUnmount() {
         clearTimeout(this.currentThemeGettingId);

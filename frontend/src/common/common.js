@@ -9,8 +9,17 @@ export function wait(delayMilliSeconds) {
     }
 }
 
+export function repeat(handler, timeout) {
+    if (currentUser.loggedIn) {
+        return setTimeout(handler, timeout);
+    }
+    else {
+        console.error("Method Not Allowed. User not logged in.");
+    }
+}
+
 let restApiIp = "https://top-ten-rest-api.onrender.com";
-//let restApiIp = "http://0.0.0.0:80"; // For local testing
+// let restApiIp = "http://0.0.0.0:80"; // For local testing
 
 let endpointTypes = {
     GET: 0,

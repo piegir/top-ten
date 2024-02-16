@@ -1,5 +1,5 @@
 import './rounds.css';
-import {makeGetCall} from "../common/common.js";
+import {makeGetCall, repeat} from "../common/common.js";
 import React, {Component} from "react";
 import {GameProgress} from "../game/game_progress.js";
 import {currentUser, Username} from "../authentication/authentication.js";
@@ -96,12 +96,12 @@ export class PropositionMaking extends Component {
             });
             if (theme === null) {
                 // Get theme until it's not null
-                this.currentThemeGettingId = setTimeout(this.getCurrentTheme, 100);
+                this.currentThemeGettingId = repeat(this.getCurrentTheme, 100);
             }
         });
     }
 
-    currentThemeGettingId = setTimeout(this.getCurrentTheme, 100);
+    currentThemeGettingId = repeat(this.getCurrentTheme, 100);
 
     checkTurnStatus = () => {
         getCurrentPlayer().then((currentPlayer) => {
@@ -116,13 +116,13 @@ export class PropositionMaking extends Component {
                     this.props.goToHypothesisMakingHandler();
                 }
                 else {
-                    this.turnStatusCheckingId = setTimeout(this.checkTurnStatus, 100);
+                    this.turnStatusCheckingId = repeat(this.checkTurnStatus, 100);
                 }
             });
         });
     }
 
-    turnStatusCheckingId = setTimeout(this.checkTurnStatus, 100);
+    turnStatusCheckingId = repeat(this.checkTurnStatus, 100);
 
     componentWillUnmount() {
         clearTimeout(this.currentThemeGettingId);

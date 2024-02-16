@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {makeGetCall} from "../common/common.js";
+import {makeGetCall, repeat} from "../common/common.js";
 import {Username} from "../authentication/authentication.js";
 import {GameProgress} from "../game/game_progress.js";
 import {getGamePlayers} from "../game/game.js";
@@ -39,12 +39,12 @@ export class RoundResultChecking extends Component {
                 this.props.goToThemeSelectionHandler();
             }
             else {
-                this.roundStartedCheckingId = setTimeout(this.checkRoundStarted, 100);
+                this.roundStartedCheckingId = repeat(this.checkRoundStarted, 100);
             }
         })
     }
 
-    roundStartedCheckingId = setTimeout(this.checkRoundStarted, 100);
+    roundStartedCheckingId = repeat(this.checkRoundStarted, 100);
 
     componentWillUnmount() {
         clearTimeout(this.roundStartedCheckingId);

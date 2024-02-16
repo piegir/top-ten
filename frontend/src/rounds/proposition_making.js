@@ -1,7 +1,7 @@
 import "./player_propositions.css"
 
 import React, {Component} from "react";
-import {makeGetCall, makePostCall} from "../common/common";
+import {makeGetCall, makePostCall, repeat} from "../common/common";
 
 function getUserNumber() {
     return makeGetCall("/rounds/get_number");
@@ -48,12 +48,12 @@ export class PlayerPropositions extends Component {
         getPlayerPropositions().then((playerPropositions) => {
             this.setState({playerPropositions: playerPropositions});
             if (!this.props.checkOnlyOnce) {
-                this.isPlayerTurnCheckingId = setTimeout(this.checkPlayerTurn, 100);
+                this.isPlayerTurnCheckingId = repeat(this.checkPlayerTurn, 100);
             }
         });
     }
 
-    isPlayerTurnCheckingId = setTimeout(this.checkPlayerTurn, 100);
+    isPlayerTurnCheckingId = repeat(this.checkPlayerTurn, 100);
 
     componentWillUnmount() {
         clearTimeout(this.isPlayerTurnCheckingId);

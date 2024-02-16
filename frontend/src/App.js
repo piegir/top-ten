@@ -113,7 +113,7 @@ class App extends Component {
             default:
                 return (
                     <div>
-                    {currentUser !== null ?
+                    {currentUser.username !== null ?
                         <GamePreparation goToThemeSelectionHandler={this.goToThemeSelectionHandler}
                                          goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>:
                         <AskCredentials goToAskCredentialsHandler={this.goToAskCredentialsHandler}/>}
