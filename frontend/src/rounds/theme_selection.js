@@ -27,6 +27,7 @@ export class SelectTheme extends Component {
                 });
             }
             else {
+                // Theme has already been set, i.e. game is already in progress
                 this.props.goToPropositionMakingHandler();
             }
         });
