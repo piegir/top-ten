@@ -3,6 +3,7 @@
 }
 
 .ShowCurrentUserNumber {
+    grid-column-start: 1;
     text-align: center;
 }
 

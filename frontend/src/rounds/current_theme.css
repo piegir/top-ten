@@ -7,15 +7,14 @@
 
 .CurrentTheme {
     margin: auto;
-    line-height: 20%;
     width: fit-content;
     height: fit-content;
 }
 
 .CurrentTheme td, .CurrentTheme th {
-    padding: 15px;
     border: solid 1px var(--subtitle-color);
     text-align: center;
+    word-break: break-word;
 }
 
 .CurrentTheme th {

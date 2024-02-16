@@ -20,9 +20,9 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template: 10% 35% 55% / 100%; /* rows / columns */
+    grid-template: 10% 30% 1fr / 100%; /* rows / columns */
     background-color: var(--background-color);
-    padding: 20px;
+    padding: 10px;
     grid-gap: 5px;
     overflow-y: auto;
 }
@@ -38,7 +38,7 @@
 .MiddleBox {
     grid-row-start: 2;
     display: grid;
-    grid-template: 40% 40% 20% / 50% 12% 1fr; /* rows / columns */
+    grid-template: 30% 70% / 12% 1fr; /* rows / columns */
 }
 
 .BottomBox {
@@ -87,8 +87,8 @@
 }
 
 .Result {
-    grid-row-start: 3;
-    grid-column: 1 / span 4;
+    grid-row-start: 1;
+    grid-column: 2 / span 2;
 }
 
 button {

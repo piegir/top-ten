@@ -60,10 +60,11 @@ export class RoundResultChecking extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <GameProgress/>
-                    <CurrentUserNumber/>
-                    <CurrentTheme/>
                     <RoundResult success={this.state.success}/>
+                    <div className="GameProgressBox">
+                        <GameProgress/>
+                    </div>
+                    <CurrentTheme/>
                 </div>
                 <div className="BottomBox">
                     <Reality reality={this.state.reality}/>
@@ -101,8 +102,10 @@ export class GameResultChecking extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <GameProgress/>
                     <GameResult success={this.state.gameResult}/>
+                    <div className="GameProgressBox">
+                        <GameProgress/>
+                    </div>
                 </div>
                 <div className="BottomBox">
                     <Users getUsersListHandler={getGamePlayers} checkOnlyOnce={true}/>
