@@ -1,9 +1,10 @@
 import './authentication.css';
 import React, {Component} from "react";
-import {makeGetCall, makePostCall} from "../common/common.js";
+import {makeGetCall, makePostCall, repeat} from "../common/common.js";
 
 export let currentUser = {
     username: null,
+    loggedIn: false,
 };
 
 export function userLogin() {
@@ -25,6 +26,7 @@ class Login extends Component {
         e.preventDefault();
         // Store username as provided by the user
         currentUser.username = this.state.username;
+        currentUser.loggedIn = true;
         // Perform REST API login
         userLogin()
             .then((loginSuccess) => {
@@ -66,15 +68,17 @@ export class Username extends Component {
     checkUserStillConnected = () => {
         makeGetCall("/authentication/check_user_connected").then((connected) => {
             if (!connected) {
+                currentUser.username = null;
+                currentUser.loggedIn = false;
                 this.props.goToAskCredentialsHandler();
             }
             else {
-                this.checkUserStillConnectedId = setTimeout(this.checkUserStillConnected, 100);
+                this.checkUserStillConnectedId = repeat(this.checkUserStillConnected, 100);
             }
         })
     }
 
-    checkUserStillConnectedId = setTimeout(this.checkUserStillConnected, 100);
+    checkUserStillConnectedId = repeat(this.checkUserStillConnected, 100);
 
     componentWillUnmount() {
         clearTimeout(this.checkUserStillConnectedId);
@@ -85,7 +89,8 @@ export class Username extends Component {
             userLogout()
                 .then((logoutSuccess) => {
                     if (logoutSuccess.status) {
-                        currentUser.username = "";
+                        currentUser.username = null;
+                        currentUser.loggedIn = false;
                         this.props.goToAskCredentialsHandler();
                     } else {
                         alert(logoutSuccess.message);
