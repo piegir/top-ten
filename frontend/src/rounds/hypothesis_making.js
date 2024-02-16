@@ -29,6 +29,9 @@ export class MakeHypothesis extends Component {
         getPlayerPropositions().then((playerPropositions) => {
             getRoundPlayers().then((currentPlayers) => {
                 this.setState({hypothesis: playerPropositions, firstPlayer: currentPlayers[0]});
+                if (currentPlayers[0] === currentUser.username) {
+                    setTemporaryHypothesis(playerPropositions).then();
+                }
             });
         });
     }
@@ -110,7 +113,7 @@ export class MakeHypothesis extends Component {
             <div className="UserActionBox">
                 <div className="SubTitle">
                     {this.state.firstPlayer === currentUser.username ?
-                        <>Make your hypothesis</> :
+                        <>Make your hypothesis by dragging rows</> :
                         <>{this.state.firstPlayer} is making a hypothesis...</>}
                 </div>
                 <table className="PlayerPropositionsTable">
