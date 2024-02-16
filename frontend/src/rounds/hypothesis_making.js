@@ -1,4 +1,4 @@
-import "./hypothesis_table.css"
+import "./player_propositions.css"
 
 import React, {Component} from "react";
 import {getPlayerPropositions} from "./proposition_making.js"
@@ -113,7 +113,7 @@ export class MakeHypothesis extends Component {
                         <>Make your hypothesis</> :
                         <>{this.state.firstPlayer} is making a hypothesis...</>}
                 </div>
-                <table className="HypothesisTable">
+                <table className="PlayerPropositionsTable">
                     <tr>
                         <th>
                             Players
@@ -129,7 +129,7 @@ export class MakeHypothesis extends Component {
                                     onDragStart={this.dragStarted}
                                     onDragOver={this.dragOver}
                                     style={{cursor: "all-scroll"}}>
-                                    <td className="PlayerColumn">
+                                    <td>
                                         {proposition.player}
                                     </td>
                                     <td>
@@ -139,7 +139,7 @@ export class MakeHypothesis extends Component {
                             :
                             (
                                 <tr>
-                                    <td className="PlayerColumn">
+                                    <td>
                                         {proposition.player}
                                     </td>
                                     <td>
@@ -150,8 +150,8 @@ export class MakeHypothesis extends Component {
                     })}
                 </table>
                 {this.state.firstPlayer === currentUser.username ?
-                    <div className="UserActionButtonBox">
-                        <button onClick={this.makeHypothesisHandler} className="UserActionButton">
+                    <div className="ButtonBox">
+                        <button onClick={this.makeHypothesisHandler}>
                             Submit
                         </button>
                     </div> : null}
