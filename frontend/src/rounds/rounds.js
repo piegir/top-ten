@@ -53,7 +53,7 @@ export class ThemeSelection extends Component {
                         <CurrentUserNumber/>}
                 </div>
                 <div className="BottomBox">
-                    <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true}/>
+                    <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true} displayNumbers={false}/>
                     {this.state.firstPlayer === currentUser.username ?
                         <SelectTheme goToPropositionMakingHandler={this.props.goToPropositionMakingHandler}/> :
                         null}
@@ -171,7 +171,7 @@ export class HypothesisMaking extends Component {
                     <CurrentTheme/>
                 </div>
                 <div className="BottomBox">
-                    <PlayerPropositions checkOnlyOnce={true}/>
+                    <PlayerPropositions checkOnlyOnce={true} displayNumbers={false}/>
                     <MakeHypothesis goToRoundResultsCheckingHandler={this.props.goToRoundResultsCheckingHandler}/>
                 </div>
             </div>

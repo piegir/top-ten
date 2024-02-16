@@ -103,7 +103,7 @@ export class GameResultChecking extends Component {
                     <GameResult success={this.state.gameResult}/>
                 </div>
                 <div className="BottomBox">
-                    <Users getUsersListHandler={getGamePlayers} checkOnlyOnce={true}/>
+                    <Users getUsersListHandler={getGamePlayers} checkOnlyOnce={true} displayNumbers={false}/>
                     <div className="UserActionBox">
                         <div className="SubTitle">
                             Setup a new game?
