@@ -1,7 +1,7 @@
 import {Component} from "react";
 import {makeGetCall, makePostCall, repeat} from "../common/common";
 import {getConnectedUsers} from "../authentication/users";
-import {currentUser} from "../authentication/authentication";
+import {currentUser, userLogout} from "../authentication/authentication";
 import {getGamePlayers} from "./game";
 
 
@@ -110,9 +110,18 @@ export class GameSetup extends Component {
                         this.props.goToThemeSelectionHandler();
                         return;
                     }
-                    // In any other case, the user is not allowed to join. Send him back to login page.
+                    // In any other case, the user is not allowed to join. Log him out and send him back to login page.
                     alert(`You cannot join a game that you are not part of.`);
-                    this.props.goToAskCredentialsHandler();
+                    userLogout()
+                        .then((logoutSuccess) => {
+                            if (logoutSuccess.status) {
+                                currentUser.username = null;
+                                currentUser.loggedIn = false;
+                                this.props.goToAskCredentialsHandler();
+                            } else {
+                                alert(logoutSuccess.message);
+                            }
+                        });
                 });
             });
         });
