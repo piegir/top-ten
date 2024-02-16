@@ -8,14 +8,14 @@
       "type": "image/x-icon"
     },
     {
-      "src": "topten.png",
+      "src": "topten192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x160"
     },
     {
-      "src": "topten.png",
+      "src": "topten512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x427"
     }
   ],
   "start_url": ".",
