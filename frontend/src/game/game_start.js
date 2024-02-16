@@ -135,7 +135,6 @@ export class GameSetup extends Component {
                 return;
             }
             getConnectedUsers().then((usersList) => {
-                console.log(usersList);
                 let firstPlayer = usersList[0];
                 if (firstPlayer === currentUser.username) {
                     this.setState({
