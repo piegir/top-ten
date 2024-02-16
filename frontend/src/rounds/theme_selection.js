@@ -20,8 +20,15 @@ export class SelectTheme extends Component {
 
     constructor(props) {
         super(props);
-        getCard().then((card) => {
-            this.setState({card: card});
+        getTheme().then((theme) => {
+            if (theme === null) {
+                getCard().then((card) => {
+                    this.setState({card: card});
+                });
+            }
+            else {
+                this.props.goToPropositionMakingHandler();
+            }
         });
     }
 
