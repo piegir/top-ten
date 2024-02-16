@@ -17,14 +17,13 @@ export function getPlayerPropositions() {
 
 export class CurrentUserNumber extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {topNumber: null};
+
+    componentDidMount() {
         getUserNumber().then((topNumber) => {
             this.setState({topNumber: topNumber});
         });
     }
-
-    state = {topNumber: null};
 
     render () {
         return (

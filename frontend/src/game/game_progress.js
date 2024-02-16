@@ -23,8 +23,10 @@ let status = {
 }
 
 export class GameProgress extends Component {
-    constructor(props) {
-        super(props);
+
+    state = {roundsHistory: []};
+
+    componentDidMount() {
         getGameOptions().then((gameOptions) => {
             let newRoundsHistory = Array(gameOptions["Number of rounds"]).fill(null);
             getRoundsHistory().then((roundsHistory) => {
@@ -36,7 +38,6 @@ export class GameProgress extends Component {
 
         })
     }
-    state = {roundsHistory: []};
 
     render () {
         return (

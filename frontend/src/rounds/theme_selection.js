@@ -18,8 +18,9 @@ export function getTheme() {
 
 export class SelectTheme extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {card: [{index: null, title: null, top1: null, top10: null},]};
+
+    componentDidMount() {
         getTheme().then((theme) => {
             if (theme === null) {
                 getCard().then((card) => {
@@ -32,8 +33,6 @@ export class SelectTheme extends Component {
             }
         });
     }
-
-    state = {card: [{index: null, title: null, top1: null, top10: null},]};
 
     setThemeHandler = (theme) => {
         setTheme(theme).then((success) => {
