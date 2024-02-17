@@ -45,6 +45,9 @@ export class RoundResultChecking extends Component {
     }
 
     render() {
+        if (this.state.result === null) {
+            return null;
+        }
         return (
             <div className="GlobalGrid">
                 <div className="HeadBox">
@@ -62,6 +65,7 @@ export class RoundResultChecking extends Component {
                 <div className="BottomBox">
                     <Reality reality={this.state.reality}/>
                     <Hypothesis hypothesis={this.state.hypothesis}
+                                reality={this.state.reality}
                                 goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
                                 goToGameResultsCheckingHandler={this.props.goToGameResultsCheckingHandler}
                     />

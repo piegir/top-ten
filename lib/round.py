@@ -83,8 +83,7 @@ class Round:
             prop.player_proposition == hyp
             for prop, hyp in zip(sorted_propositions, hypothesis)
         ]
-        self.result = round(sum(comparison) / len(comparison),
-                            3)  # Round to .XXX -> XX.X%
+        self.result = sum(comparison) / len(comparison)
 
     def is_complete(self):
         return self.order_hypothesis is not None

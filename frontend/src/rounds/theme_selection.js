@@ -55,10 +55,10 @@ export class SelectTheme extends Component {
                         <td>
                             Theme
                         </td>
-                        <td style={{color: getColorFromScale(1, 1, 10)}}>
+                        <td style={{color: getColorFromScale({value: 1, minValue: 1, maxValue: 10})}}>
                             Top 1
                         </td>
-                        <td style={{color: getColorFromScale(10, 1, 10)}}>
+                        <td style={{color: getColorFromScale({value: 10, minValue: 1, maxValue: 10})}}>
                             Top 10
                         </td>
                     </tr>
@@ -68,10 +68,10 @@ export class SelectTheme extends Component {
                                 <td>
                                     {themeObject.title}
                                 </td>
-                                <td style={{color: getColorFromScale(1, 1, 10)}}>
+                                <td style={{color: getColorFromScale({value: 1, minValue: 1, maxValue: 10})}}>
                                     {themeObject.top1}
                                 </td>
-                                <td style={{color: getColorFromScale(10, 1, 10)}}>
+                                <td style={{color: getColorFromScale({value: 10, minValue: 1, maxValue: 10})}}>
                                     {themeObject.top10}
                                 </td>
                                 <td>
@@ -131,10 +131,10 @@ export class CurrentTheme extends Component {
                             <th>
                                 Theme
                             </th>
-                            <th style={{color: getColorFromScale(1, 1, 10)}}>
+                            <th style={{color: getColorFromScale({value: 1, minValue: 1, maxValue: 10})}}>
                                 Top 1
                             </th>
-                            <th style={{color: getColorFromScale(10, 1, 10)}}>
+                            <th style={{color: getColorFromScale({value: 10, minValue: 1, maxValue: 10})}}>
                                 Top 10
                             </th>
                         </tr>
@@ -142,10 +142,10 @@ export class CurrentTheme extends Component {
                             <td>
                                 {this.state.theme.title}
                             </td>
-                            <td style={{color: getColorFromScale(1, 1, 10)}}>
+                            <td style={{color: getColorFromScale({value: 1, minValue: 1, maxValue: 10})}}>
                                 {this.state.theme.top1}
                             </td>
-                            <td style={{color: getColorFromScale(10, 1, 10)}}>
+                            <td style={{color: getColorFromScale({value: 10, minValue: 1, maxValue: 10})}}>
                                 {this.state.theme.top10}
                             </td>
                         </tr>

@@ -29,14 +29,18 @@ let interpolateColor = (position, firstColor, lastColor) => {
     })
 }
 
-export let getColorFromScale = (n, minValue = 0, maxValue = 100, beginColor = colors.darkGreen, endColor = colors.red, middleColor = colors.nicerYellow, opacity=1) => {
+export function getColorFromScale({value, minValue = 0, maxValue = 100, beginColor = colors.darkGreen, endColor = colors.red, middleColor = colors.nicerYellow, opacity = 1}) {
+    return getColorFromScaleValues(value, minValue, maxValue, beginColor, endColor, middleColor, opacity);
+}
+
+let getColorFromScaleValues = (value, minValue, maxValue, beginColor, endColor, middleColor, opacity) => {
     let middleValue = (maxValue - minValue) / 2;
     let arrayColor;
-    if (n < middleValue) {
-        arrayColor = interpolateColor(n / middleValue, beginColor, middleColor);
+    if (value < middleValue) {
+        arrayColor = interpolateColor(value / middleValue, beginColor, middleColor);
     }
     else {
-        arrayColor = interpolateColor((n - middleValue) / middleValue, middleColor, endColor);
+        arrayColor = interpolateColor((value - middleValue) / middleValue, middleColor, endColor);
     }
     return `rgba(${arrayColor[0]}, ${arrayColor[1]}, ${arrayColor[2]}, ${opacity})`;
 }

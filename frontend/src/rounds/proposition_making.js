@@ -30,7 +30,7 @@ export class CurrentUserNumber extends Component {
             <div>
                 <p className="ShowCurrentUserNumber">
                     Your Top Number:<br/>
-                    <span className="CurrentUserNumber" style={{color: getColorFromScale(this.state.topNumber, 1, 10)}}>
+                    <span className="CurrentUserNumber" style={{color: getColorFromScale({value: this.state.topNumber, minValue: 1, maxValue: 10})}}>
                         {this.state.topNumber}
                     </span>
                 </p>

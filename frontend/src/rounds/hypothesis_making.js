@@ -140,7 +140,7 @@ export class MakeHypothesis extends Component {
                                 </tr>)
                             :
                             (
-                                <tr style={{color: getColorFromScale(index, 0, this.state.hypothesis.length - 1)}}>
+                                <tr style={{"background-color": getColorFromScale({value: index, minValue: 0, maxValue: this.state.hypothesis.length - 1, opacity: 0.5})}}>
                                     <td>
                                         {proposition.player}
                                     </td>
