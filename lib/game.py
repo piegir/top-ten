@@ -59,15 +59,3 @@ class Game:
         """
         return (len(self.rounds)
                 == self.max_nb_rounds) and self.rounds[-1].is_complete()
-
-    def is_game_won(self):
-        if not self.is_game_complete():
-            return False
-        nb_rounds_won = 0
-        nb_rounds_lost = 0
-        for played_round in self.rounds:
-            if played_round.success:
-                nb_rounds_won += 1
-            else:
-                nb_rounds_lost += 1
-        return nb_rounds_won > nb_rounds_lost

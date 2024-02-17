@@ -2,7 +2,7 @@ import "./game_progress.css"
 
 import {Component} from "react";
 import {getGameOptionsFromConfig} from "./game_start";
-import {makeGetCall} from "../common/common";
+import {colors, getColorFromScale, makeGetCall} from "../common/common";
 
 
 function getRoundsHistory() {
@@ -17,9 +17,7 @@ function getGameOptions() {
 
 let status = {
     notStarted: null,
-    inProgress: 0,
-    won: 1,
-    lost: 2,
+    inProgress: -1,
 }
 
 export class GameProgress extends Component {
@@ -73,20 +71,12 @@ export class GameProgress extends Component {
                                             ?
                                         </td>
                                     );
-                                case status.won:
-                                    return (
-                                        <td style={{color: "green"}}>
-                                            W
-                                        </td>
-                                    );
-                                case status.lost:
-                                    return (
-                                        <td style={{color: "red"}}>
-                                            L
-                                        </td>
-                                    );
                                 default:
-                                    return null;
+                                    return (
+                                        <td style={{color: getColorFromScale(roundStatus * 100, 0, 100, colors.red, colors.darkGreen)}}>
+                                            {roundStatus * 100}%
+                                        </td>
+                                    );
                             }
                         })}
                     </tr>

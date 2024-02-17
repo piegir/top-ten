@@ -6,7 +6,6 @@ import {getGamePlayers} from "../game/game.js";
 import {CurrentUserNumber} from "../rounds/proposition_making.js";
 import {CurrentTheme} from "../rounds/theme_selection.js";
 import {Hypothesis, Reality, RoundResult} from "./round_result.js";
-import {GameResult} from "./game_result";
 import {Users} from "../authentication/users";
 
 
@@ -14,14 +13,10 @@ function checkRoundResult() {
     return makeGetCall("/rounds/check_round_result");
 }
 
-function isGameWon() {
-    return makeGetCall("/game/is_game_won");
-}
-
 export class RoundResultChecking extends Component {
 
     state = {
-        success: null,
+        result: null,
         hypothesis: null,
         reality: null,
     }
@@ -62,7 +57,7 @@ export class RoundResultChecking extends Component {
                     <GameProgress/>
                     <CurrentUserNumber/>
                     <CurrentTheme/>
-                    <RoundResult success={this.state.success}/>
+                    <RoundResult result={this.state.result}/>
                 </div>
                 <div className="BottomBox">
                     <Reality reality={this.state.reality}/>
@@ -78,17 +73,6 @@ export class RoundResultChecking extends Component {
 
 
 export class GameResultChecking extends Component {
-
-    state = {
-        gameResult: null,
-    }
-
-    componentDidMount() {
-        isGameWon().then((gameResult) => {
-            this.setState({gameResult: gameResult});
-        });
-    }
-
     render() {
         return (
             <div className="GlobalGrid">
@@ -100,7 +84,6 @@ export class GameResultChecking extends Component {
                 </div>
                 <div className="MiddleBox">
                     <GameProgress/>
-                    <GameResult success={this.state.gameResult}/>
                 </div>
                 <div className="BottomBox">
                     <Users getUsersListHandler={getGamePlayers} checkOnlyOnce={true} displayNumbers={false}/>

@@ -14,8 +14,10 @@ temp_hypothesis: list[PlayerProposition] = []
 
 
 class RoundResult(BaseModel):
-    success: bool = Field(description="Whether the round was won or not.",
-                          example=False)
+    result: float = Field(
+        description="-1 if the round is still in progress."
+        "A number between 0 and 1 representing the accuracy of the round otherwise.",
+        example=-1)
     hypothesis: list[PlayerProposition] = Field(
         description=
         "The hypothesis of proposition ordering made by the player.",
@@ -341,6 +343,6 @@ def check_round_result(
     current_round = game.current_game.rounds[-1]
     sorted_numbered_propositions = sorted(
         current_round.numbered_player_propositions, key=lambda x: x.number)
-    return RoundResult(success=current_round.success,
+    return RoundResult(result=current_round.result,
                        hypothesis=current_round.order_hypothesis,
                        reality=sorted_numbered_propositions)

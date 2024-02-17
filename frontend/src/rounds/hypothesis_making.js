@@ -4,7 +4,7 @@ import React, {Component} from "react";
 import {getPlayerPropositions} from "./proposition_making.js"
 import {getRoundPlayers} from "./rounds";
 import {currentUser} from "../authentication/authentication";
-import {makeGetCall, makePostCall, repeat} from "../common/common";
+import {getColorFromScale, makeGetCall, makePostCall, repeat} from "../common/common";
 
 function makeHypothesis(hypothesis) {
     return makePostCall("/rounds/make_hypothesis", hypothesis);
@@ -140,7 +140,7 @@ export class MakeHypothesis extends Component {
                                 </tr>)
                             :
                             (
-                                <tr>
+                                <tr style={{color: getColorFromScale(index, 0, this.state.hypothesis.length - 1)}}>
                                     <td>
                                         {proposition.player}
                                     </td>

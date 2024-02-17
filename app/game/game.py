@@ -209,24 +209,15 @@ def is_round_in_progress(
 
 @router.get("/get_rounds_history")
 def get_rounds_history(
-        current_username: Annotated[str, Depends(oauth2_scheme)]) -> list[int]:
+        current_username: Annotated[str,
+                                    Depends(oauth2_scheme)]) -> list[float]:
     """
     API call to obtain the history of success of the different rounds of the game.
 
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
-    :return: The list of the status success of each round.
-    0 if the round is still in progress, 1 if the round was won, 2 if the round was lost.
+    :return: The list of round results.
     """
-    rounds_history = []
-    for this_round in current_game.rounds:
-        if not this_round.is_complete():
-            rounds_history.append(0)
-        else:
-            if this_round.success:
-                rounds_history.append(1)
-            else:
-                rounds_history.append(2)
-    return rounds_history
+    return [this_round.result for this_round in current_game.rounds]
 
 
 @router.get("/is_game_complete")
@@ -239,16 +230,3 @@ def is_game_complete(
     :return: True if the game is complete, False otherwise.
     """
     return game_created() and current_game.is_game_complete()
-
-
-@router.get("/is_game_won")
-def is_game_won(
-        current_username: Annotated[str, Depends(oauth2_scheme)]) -> bool:
-    """
-    API call to check if the game is won.
-
-    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
-    :return: True if the game is won, False otherwise.
-    """
-
-    return game_created() and current_game.is_game_won()

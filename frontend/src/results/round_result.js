@@ -3,7 +3,7 @@ import "./player_top_table.css"
 import React, {Component} from "react";
 import {getRoundPlayers} from "../rounds/rounds.js";
 import {currentUser} from "../authentication/authentication";
-import {makeGetCall, makePostCall} from "../common/common";
+import {colors, getColorFromScale, makeGetCall, makePostCall} from "../common/common";
 
 function checkGameComplete() {
     return makeGetCall("/game/is_game_complete");
@@ -14,11 +14,9 @@ export class RoundResult extends Component {
     render() {
         return (
             <div className="Result">
-                {this.props.success !== null ?
-                    this.props.success ?
-                        <p className="ResultText">Round Won!!!</p> :
-                        <p className="ResultText">Round Lost...</p> :
-                    null}
+                <p className="ResultText" style={{color: getColorFromScale(this.props.result * 100, 0, 100, colors.red, colors.darkGreen)}}>
+                    Round Result: {this.props.result * 100}%
+                </p>
             </div>
         );
     }
@@ -46,7 +44,7 @@ export class Reality extends Component {
                     {this.props.reality !== null ?
                         this.props.reality.map((numberedProposition) => {
                             return (
-                                <tr>
+                                <tr style={{color: getColorFromScale(numberedProposition.number, 1, 10)}}>
                                     <td>
                                         {numberedProposition["player_proposition"].player}
                                     </td>
