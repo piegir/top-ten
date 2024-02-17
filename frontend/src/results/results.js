@@ -57,7 +57,6 @@ export class RoundResultChecking extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <RoundResult success={this.state.success}/>
                     <div className="GameProgressBox">
                         <GameProgress/>
                     </div>
