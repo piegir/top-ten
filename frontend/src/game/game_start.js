@@ -62,7 +62,7 @@ export class GameSetup extends Component {
 
     state = {
         gameOptions: {
-            "Number of rounds": 7,
+            "Number of rounds": 5,
             "Number of themes per card": 3,
             "Starting Player Index": 0,
         },

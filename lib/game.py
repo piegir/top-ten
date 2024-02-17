@@ -9,10 +9,18 @@ class Game:
                  max_nb_rounds: int,
                  starting_player_index: int = 0,
                  nb_themes_per_card: int = 3):
-        if len(players_list) > 10 or len(players_list) < 2:
+        if len(players_list) > 10 or len(players_list) < 4:
             raise ValueError(
-                f"Incorrect number of players {len(players_list)}. You need to be between 4 and 10 players."
+                f"Incorrect number of players {len(players_list)}. There needs to be between 4 and 10 players."
             )
+        if max_nb_rounds > 9 or max_nb_rounds < 1:
+            raise ValueError(
+                f"Incorrect number of rounds {max_nb_rounds}. Number of rounds should be between 1 and 9."
+            )
+        if nb_themes_per_card > 6 or nb_themes_per_card < 1:
+            raise ValueError(
+                f"Incorrect number of themes per card {nb_themes_per_card}. "
+                f"Number of themes per card should be between 1 and 6.")
         self.players_list: list[str] = players_list
         self.max_nb_rounds: int = max_nb_rounds
         self.starting_player_index: int = starting_player_index

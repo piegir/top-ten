@@ -53,7 +53,6 @@ def oauth2_login(
     :param form_data: The OAuth2 form that requests username and password (unused) for user login
     :return: A JSON object containing the 'access_token' (here the username) and the 'token_type' (here 'bearer').
     """
-    add_user(form_data.username)
     return {"access_token": form_data.username, "token_type": "bearer"}
 
 

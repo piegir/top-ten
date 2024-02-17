@@ -36,7 +36,7 @@ export class Users extends Component {
                 <table className="UsersTable">
                     <tr>
                         <th>
-                            Players{this.props.displayNumbers ? ` (${this.state.usersList.length}/10)`: null}
+                            Players{this.props.displayNumbers ? ` (${this.state.usersList.length} /10)`: null}
                         </th>
                         <th></th>
                     </tr>
