@@ -140,7 +140,7 @@ export class CurrentTheme extends Component {
                         </tr>
                         <tr>
                             <td>
-                                 {this.state.theme.title}
+                                {this.state.theme.title}
                             </td>
                             <td>
                                 {this.state.theme.top1}
