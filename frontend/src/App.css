@@ -20,9 +20,10 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template: 10% 20% 1fr / 100%; /* rows / columns */
+    grid-template: 10% 21% 1fr / 100%; /* rows / columns */
     background-color: var(--background-color);
     padding: 10px;
+    margin: 0;
     grid-gap: 5px;
     overflow-y: auto;
 }
@@ -38,13 +39,15 @@
 .MiddleBox {
     grid-row-start: 2;
     display: grid;
-    grid-template: 30% 70% / 12% 1fr; /* rows / columns */
+    grid-template: 40% 1fr / 12% 1fr; /* rows / columns */
+    padding: 0;
+    margin: 0;
 }
 
 .BottomBox {
     grid-row-start: 3;
     display: grid;
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: 50% 1fr;
     grid-gap: 5px;
 }
 
@@ -84,7 +87,7 @@
 
 .ButtonBox {
     text-align: center;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 .Result {
