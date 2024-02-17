@@ -20,17 +20,16 @@ function isGameWon() {
 
 export class RoundResultChecking extends Component {
 
-    constructor(props) {
-        super(props);
-        checkRoundResult().then((roundResult) => {
-            this.setState(roundResult);
-        });
-    }
-
     state = {
         success: null,
         hypothesis: null,
         reality: null,
+    }
+
+    componentDidMount() {
+        checkRoundResult().then((roundResult) => {
+            this.setState(roundResult);
+        });
     }
 
     checkRoundStarted = () => {
@@ -81,15 +80,14 @@ export class RoundResultChecking extends Component {
 
 export class GameResultChecking extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {
+        gameResult: null,
+    }
+
+    componentDidMount() {
         isGameWon().then((gameResult) => {
             this.setState({gameResult: gameResult});
         });
-    }
-
-    state = {
-        gameResult: null,
     }
 
     render() {

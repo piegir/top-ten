@@ -18,14 +18,21 @@ export function getTheme() {
 
 export class SelectTheme extends Component {
 
-    constructor(props) {
-        super(props);
-        getCard().then((card) => {
-            this.setState({card: card});
+    state = {card: [{index: null, title: null, top1: null, top10: null},]};
+
+    componentDidMount() {
+        getTheme().then((theme) => {
+            if (theme === null) {
+                getCard().then((card) => {
+                    this.setState({card: card});
+                });
+            }
+            else {
+                // Theme has already been set, i.e. game is already in progress
+                this.props.goToPropositionMakingHandler();
+            }
         });
     }
-
-    state = {card: [{index: null, title: null, top1: null, top10: null},]};
 
     setThemeHandler = (theme) => {
         setTheme(theme).then((success) => {

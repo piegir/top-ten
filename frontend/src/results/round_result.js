@@ -68,8 +68,12 @@ export class Reality extends Component {
 
 export class Hypothesis extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {
+        gameComplete: null,
+        isFirstPlayer: false
+    };
+
+    componentDidMount() {
         checkGameComplete().then((gameComplete) => {
             getRoundPlayers().then((currentPlayers) => {
                 this.setState(
@@ -80,11 +84,6 @@ export class Hypothesis extends Component {
             });
         });
     }
-
-    state = {
-        gameComplete: null,
-        isFirstPlayer: false
-    };
 
     roundStartingHandler = () => {
         makePostCall("/game/start_new_round").then((startSuccess) => {

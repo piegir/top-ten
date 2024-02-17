@@ -24,8 +24,12 @@ export function getTemporaryHypothesis() {
 
 export class MakeHypothesis extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {
+        hypothesis: [],
+        firstPlayer: null,
+    };
+
+    componentDidMount() {
         getPlayerPropositions().then((playerPropositions) => {
             getRoundPlayers().then((currentPlayers) => {
                 this.setState({hypothesis: playerPropositions, firstPlayer: currentPlayers[0]});
@@ -35,11 +39,6 @@ export class MakeHypothesis extends Component {
             });
         });
     }
-
-    state = {
-        hypothesis: [],
-        firstPlayer: null,
-    };
 
     checkHypothesisMade = () => {
         checkRoundComplete().then((complete) => {
