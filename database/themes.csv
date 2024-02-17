@@ -1,103 +1,306 @@
 title,top1,top10
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
+Invente une application sur téléphone,Utile,Inutile
+"Tu es perdu dans le désert, tu aperçois derrière une dune...",Utile,Inutile
+"Ton partenaire fouille ton historique de ton pc, il découvre...",Génant,Génial
+"Soirée déguisée de dernière minute, il ne reste qu'un seul costume chez le vendeur",Génant,Génial
+"Avec une faim de loup, tu ouvres le frigo et tu trouves ...",Miam,Berk
+"Un animal s'est échappé du zoo, c'est le ...",Oskour,Osef
+Tu as un rendez-vous aujourd'hui...,Tu as hâte,Tu appréhendes
+"Le livreur UberEats a échangé ton plat avec celui d'un voisin, il avait commandé ...",Trop bien !,Oh non...
+Ton voisin de pallier s'est découvert une nouvelle passion...,Oskour,Chouette
+Un recommandé est arrivé...,Mauvaise nouvelle,Bonne nouvelle
+"Tu oublies de freiner au feu rouge, le propriétaire de la voiture devant toi sort...",Problématique,Aucun problème
+Tu es coincé dans la cave de...,Gentil,Effrayant
+"Un astéroïde va s'écraser sur Terre dans une heure et détruire l'humanité, tu décides de...",Panique,Pas de panique
+"Tout le monde se transforme en zombies, tu décides de...",Survie assurée,Victime
+"Ta maison est en feu, tu sauves...",Utile,Inutile
+Tes parents ont une annonce à te faire,Super !,Pas encore...
+"Tu es invité au mariage de ta cousine, tu te retrouves à la table de...",Bonne soirée,Ennui mortel
+"À la Saint Valentin, tu offres...",Budget illimité,Radin
+"Au premier rendez-vous, ton date te cite sa plus grande passion...",Coup de foudre,Tu fuis en courant
+"Tu t'endors en voiture, à ton réveil vous n'êtes pas arrivés à la destination prévue mais...",Meilleur endroit,Pire endroit
+"Tu nages dans la mer, plonges sous l'eau et te retrouves nez à nez avec...",Inoffensif,Danger
+"Au lycée, ton prof vous annonce que vous partez en voyage scolaire à/en...",Séjour de folie,Je peux rester à la maison ?
+"Quelqu'un sonne à ta porte après minuit, tu regardes par le judas...",J'ouvre,Je verrouille à double tour
+Tu fais du baby-sitting et gardes un enfant pour la soirée...,Sage comme une image,Petit diable
+Méthode de triche pendant un examen,Ni vu ni connu,Pris la main dans le sac
+Vous rentrez tard chez vous après une longue journée de travail. Vous regardez dans le miroir et découvrez... ,Petit détail insignifiant,Catastrophe
+Quel est le nom de votre groupe de rock avec vos potes ?,Soft,Ça déchire
+"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo ""Batman et...""",Pire duo,Meilleur duo
+Que dit le proverbe dans le gâteau chinois que vous venez de manger ?,Très simple à comprendre,Très difficile à comprendre
+"À la fin du film que vous regardez, comment le grand méchant meurt-il ?",Une façon extrêmement stupide,Une façon extrêmement classe
+Votre patron vous annonce un changement des conditions de travail. Lequel ?,Pire changement,Meilleur changement
+Votre portrait est placardé sur des grandes affiches dans la ville pour une pub pour un produit. Lequel ?,Dévalorisant,Valorisant
+"Vous êtes reçu à Poudlard, l'école des sorciers. Vous arrivez le premier jour avec votre animal de compagnie de sorcier. Lequel ?",J'en suis pas fier,Je frime un max
+"""René et Bernadette, se promènent dans le pré, ..., ..."" Complétez avec 2 rimes.",Moins romantiques,Plus romantiques
+Quel invité met de l'ambiance à un mariage ?,Pas du tout,Beaucoup
+Où le Cap'ten pourrait-il emmener dîner son amoureux/se ?,Moins impressionnant,Plus impressionnant
+"Le bonheur au masculin, c'est être affalé dans son canapé, la bière à la main, et regarder... ",Petit bonheur,Grand bonheur
+"Vous avez gagné 1 million au loto ! Avant d'aller chercher le pactole, où mettez-vous votre billet gagnant ?",La pire cachette,La meilleur cachette
+Vous êtes commercial(e) en aspirateurs : quel est votre argument de vente ?,Pire argument,Meilleur argument
+Passe-partout vous fait entrer dans une nouvelle salle de Fort Boyard. Décrivez cette nouvelle épreuve.,Très sympa,Très sadique
+"Vous pouvez faire un saut dans le passé pour vous voir vous-même à 11 ans. Que dites-vous à votre ""moi"" plus jeune ?",Inutile,Très utile
+"Voici l'invention du siècle : ""un slip qui...""",Idée nulle,Idée géniale
+Citez une raison pour se marier.,Raison nulle,Très bonne raison
+Vous avez enfin décidé d'aborder la caissier / la caissière qui vous plaît et que vous voyez tous les jours. Quelle est votre phrase d'accroche ?,Méga relou,Très romantique
+"Vous créez le nouveau Chanel n.13. Complétez le slogan : ""Le parfum qui sent...""",Pire odeur,Meilleure odeur
+Citez un mensonge mis par le Cap'Ten sur son profil d'un site de rencontre.,Petit mensonge,Gros mensonge
+Vous prenez des cours de musique. Mais quel instrument choisir pour draguer ?,Inefficace,Très efficace
+"""Ils se marièrent et...""",Pire fin,Meilleure fin
+"Lu dans le magazine : ""Sois belle et tais-toi : le nouveau régime à la mode, ne mangez que""... ",Pire conseil,Meilleur conseil
+Le lièvre prend sa retraite et cherche son remplaçant pour faire la course contre la tortue. Citez un animal.,Lent,Très rapide
+Lisez un SMS suspect que votre conjoint(e) a reçu.,Anodin ,"C'est sûr, il/elle a une relation !"
+Bienvenue au parc d'attractions ! Quelle attraction choisissez-vous ?,Moins impressionnante,Plus impressionnante
+Le Cap'Ten ne sait jamais quoi faire le dimanche matin. Conseillez-lui une activité.,Peu agréable,Très agréable
+"Vous avez dressé votre chien et, c'est dingue, maintenant il peut...",Pas étonnant,Très étonnant
+Vous voici capitaine de votre embarcation maritime. Quel est le type et le nom de cette embarcation ? ,Pas très valorisant,Super valorisant
+"Vous êtes directeur/trice de l'école et annoncez aux parents : ""M. et Mme Martin, je vous ai convoqués à propos de votre fils car...""",Bêtise la moins grave ,Bêtise la plus grave
+"Dans le film Fast & Furious 12, il y a une poursuite en...",Petit budget ,Blockbuster impressionnant
+Une voyante vous annonce de quelle façon vous allez mourir. Racontez sa vision.,Pire mort,Meilleure mort pour vous
+Citez une revendication faite par des preneurs d'otage.,Insignifiante,Complètement gigantesque
+Trouvez une excuse pour ne pas sortir car vous préférez regarder la trilogie des Bronzés à la TV. ,Inefficace,Très efficace
+Que mettre dans son lit pour remplacer une bouillotte ?,Inefficace,Super efficace
+"""Pour gagner le prix Nobel de l'écologie, moi je..."" : racontez ce que vous faites.",C'est pas gagné,C'est très écolo
+Qu'emportez-vous pour une traversée du Sahara ?,Inutile,Utile
+"Si vous inscrivez le Cap'Ten à l'émission ""Incroyable Talent"", que lui conseillez-vous de faire sur scène ?",Il sera mauvais,Il sera excellent
+Que vous dit votre horoscope ce matin ?,Sale journée,Très bonne journée
+Vous vous retrouvez sur un ring de catch. Quelle personnalité (vivante ou morte) est votre adversaire ?,Je gagne facile,Je ne m'en sors pas vivant(e)
+Une épidémie zombie s'est déclarée aujourd'hui. Dans quelle ville fuyez-vous ? ,Plus proche d'ici,Plus éloignée d'ici
+"Quel est le 3eme ingrédient pour les vacances : soleil, dépaysement et...",Vacances ratées,Vacances idéales
+Quel objet emmener en voyage aux Maldives ?,Objet facultatif,Objet indispensable
+Vous êtes une divinité toute puissante et vous avez envie d'enfin montrer que vous existez aux humains. Que faites-vous ?,Pas efficace,Très efficace
+Vous offrez un t-shirt avec un message au Cap'Ten. Quel est ce message ?,Il ne le portera jamais de sa vie,Il le portera tous les jours
+En quel animal se réincarner pour une prochaine vie ?,Pas du tout envie,Très envie
+Vous voilà bien habillé(e) ! Mais est-ce la bonne tenue pour aller en randonnée sur l'Everest ?,Pas adaptée,Parfaitement adaptée
+"Invité(e) chez des amis, qu'apportez-vous ?",Habituel,Très original
+"Vous êtes tous dans la même équipe de foot. À la 3e mi-temps dans les vestiaires, racontez votre meilleure action du match.",Action nulle,Exploit
+"Oups, il n'y a plus de papier ! Avec quoi s'essuyer ?",Inefficace,Très efficace
+Que venez-vous de poster sur Instagram ?,Évènement banal,Évènement inoubliable
+"Après avoir téléphoné à sa maison, E.T. passe un second coup de fil : ""E.T. téléphone...""",Inutile pour se barrer de la Terre,Utile pour se barrer de la Terre
+Citez un métiez qui rapporte...,Moins d'argent,Plus d'argent
+Vous postulez pour un poste d'expert(e) comptable. Quel passe-temps est indiqué dans votre CV ?,Ça fera fuir l'employeur,Ça va convaincre l'employeur
+Vous êtes une sorcière qui a créé une potion de métamorphose. Vous l'offrez au Cap'Ten qui la boit... En quel objet se transforme-t-il ?,Pire pour lui,Plus sympa pour lui
+Bébé a dit son premier mot ! Qu'a-t-il dit ?,Moins probable,Plus probable
+Le petit Manneken fait pipi dans la neige et fait un joli dessin. Que dessine-t-il ? ,Petite envie,Grosse envie
+Décrivez le pitch de la prochaine série inédite Netflix.,Personne ne regardera,Succès assuré
+C'est votre premier jour de travail dans un zoo : vous êtes de corvée de caca. Dans quelle cage êtes-vous affecté(e) ?,Pire cage,Meilleure cage
+Inventez un post sur Twitter. ,N'entraîne aucune réaction,Provoque le plus de réaction
+Inventez le titre d'une vidéo postée sur YouTube. ,N'entraîne aucune réaction,Provoque le plus de réaction
+"Après la potion magique, Panoramix a fait une 2e potion qui...",Inutile pour les Gaulois,Très utile pour les Gaulois
+C'est vous le DJ ce soir ! Quelle chanson choisir pour faire la fête ?,Moins fiesta,Plus fiesta
+Le Cap'Ten est capable d'aller se batter le 1er jour des soldes pour acheter cet objet. Lequel ?,Moins probable,Plus probable
+Votre maman vous lit le même livre tous les soirs pour vous endormir. Lequel est-ce ?,Pire,Meilleur
+"Complétez : ""Moi, je déteste les gens qui...""","Bof, tu chipotes","Carrément, il faut les pendre sur la place publique !"
+"Après ""Tu ne tueras point"", ajoutez un 11e commandement.",Moins utile pour l'humanité,Plus utile pour l'humanité
+"""Violence, sexe et..."" : complétez le 3e ingrédient pour un scénario de série TV.",Moins réussi,Plus réussi
+Le guide touristique vous raconte ce qui s'est passé dans cette pièce du château.,Peu palpitant,Très intéressant
+Vous êtes dans la peau d'une star internationale durant une journée. Que faites-vous ?,Très généreux,Super égoïste
+On a envie de le/la caresser. De quoi ou de qui s'agit-il ?,Pas envie,Très envie
+Citez un son que l'on peut entendre par la fenêtre de sa maison.,Moins agréable,Plus agréable
+Le Cap'Ten fait la une des journaux. Quel est le gros titre ?,Peu flatteur,Très valorisant
+"Lundi matin, le réveil est très difficile : quelle chanson choisissez-vous ?",Celle qui vous rendort,Celle qui vous donne la pêche
+Racontez un secret que quelqu'un peut avoir.,Petite cachotterie,Grand secret d'état
+C'est la grande compétition du plus gros mangeur de hotdogs ! Quel personnage (réel ou fictif) participe ?,Perdant assuré ,Gagnant assuré
+"Imaginez le thème de votre mariage (vêtements, décoration, menu...).",Pire thème,Meilleur thème
+"Ce que vous aimez chez Daniela, c'est... ",Peu attirant,Très attirant
+"Surprise ! La mère du Cap'Ten lui a changé son papier peint, ses rideaux et sa couette avec les mêmes motifs. Lesquels ?",Pire idée,Meilleure idée
+Un chauffard vous coupe la route : insultez-le.,Façon la moins violente,Façon la plus virulente
+Quelle destination choisir pour partir en vacances ?,Celle qui fait le moins rêver,Celle qui fait le plus rêver
+Tous au restaurant : quel est le dessert au menu ?,Plus courant,Plus original
+Le Cap'Ten est invité par un date Tinder dans son appart. Que représente le poster au-dessus du lit ?,Il fuit,Il a trouvé son âme soeur
+Quel pays choisir pour emmener quelqu'un vivre un weekend gastronomique ?,Pire destination,Meilleure destination
+"Vous voici dans l'au-delà. Dieu vous annonce : ""Tu vas clairement en enfer, car toute ta vie tu as...""","C'est injuste, c'était pas si grave","Bon, ok, c'est bien mérité"
+Citez un personnage de dessin animé.,Plus idiot,Plus intelligent
+"Responsable marketing chez Robo3000, vous devez inventer le slogan du nouveau robot aspirateur qui porte le nom du joueur suivant.",Moins vendeur,Plus vendeur
+On peut s'en passer ?,"Oui, facilement","Non, impossible de vivre sans"
+"En speed dating, vous annoncez : ""Je suis champion(ne) de...""",Plus ringard,Plus cool
+This is the voice! Vous êtes dans le fauteuil rouge qui tourne. Écoutez le candidat chanter et réagissez.,Il chante très faux,"J'adore son univers, c'est un génie"
+Qu'y a-t-il dans votre valise pour les sports d'hiver ?,Moins utile,Plus utile
+"Menacez votre enfant : ""Si tu ne finis pas tes épinards...""",Pas trop méchant,Très très méchant
+Quelle personne (réelle ou fictive) recrutez-vous dans votre équipe pour un escape game ?,Pire recrue,Meilleure recrue
+Trouvez un métiez de reconversion pour le pape.,Moins probable,Plus probable
+Vous présentez le téléachat : montrez et vantez les atouts du robots de cuisine Macho3000.,Robot que personne n'achète,Robot que tout le monde s'arrache
+"Avant de poster la photo de vous à la plage sur Instagram, vous faites une petite retouche Photoshop pour frimer... Que changez-vous ?",Pas efficace,Très efficace
+Vous avez une machine à remonter le temps. Quel évènement allez-vous voir ?,Jamais de la vie,Un rêve qui se réalise
+"Quel livre ""... pour les Nuls"" serait utile au Cap'Ten ?",Il n'en a pas besoin,Il en a bien besoin
+"Après un naufrage, vous vous retrouvez avec un seul objet sur une île déserte... Lequel ?",Moins utile,Plus utile
+Vous vous réveillez à côté d'une personne inattendue (personne réelle). Qui est-ce ?,Très mauvaise surprise,Très bonne surprise
+Vous êtes invisible pendant une journée. Que faites-vous ?,Raisonnable,Complètement fou
+Vous participez au concours du meilleur pâtissier et réalisez un énorme gâteau en forme de...,Vous perdez le concours,Ça claque
+Vous présentez le JT. Annoncez le gros titre.,News qui n'intéresse personne,Grande nouvelle du siècle
+Poisson d'avril ! Vous glissez par surprise quelque chose dans le t-shirt d'un copain.,Pas bien méchant,Très méchant
+Vous envoyez un gâteau d'anniversaire à un ami en prison. Quel objet cachez-vous dedans pour l'aider à s'évader ?,Moins utile,Plus utile
+"En cherchant quelque chose dans la chambre de vos parents, vous trouvez un coffret et vous l'ouvrez... Qu'est-ce ?",Pas gênant,Très gênant
+Citez un mot du dictionnaire.,Celui que le Cap'Ten n'utilise jamais,Celui qu'il utilise souvent
+"À la fête du village, comme tous les ans, il y a eu l'élection de Miss...",Pas très classe,Super classe
+Vous voilà bien habillé(e) ! Quelle est votre tenue pour aller à la plage ?,Pas très adaptée,Parfaitement adaptée
+Vos amis lisent un SMS de votre mère que vous venez de recevoir. Que contient ce SMS ?,Pas embarrassant pour vous,Très embarrassant pour vous
+Vous organisez des castings pour la TV. Citez un critère de sélection pour faire de la téléréalité.,Moins recherché,Plus recherché
+Citez une activité de weekend.,Activité que vous ne faites jamais,Activité que vous faites très souvent
+"Sur Tinder, une personne semble intéressée par vous... Mais c'est quelqu'un que vous connaissez ! Qui ?",Pire surprise,Meilleure surprise
+Vous voyagez en mongolfière qui peine à monter... Que jetez-vous ?,Très léger,Très lourd
+Imaginez un avis lu sur TripAdvisor à propos d'un restaurant.,Ça ne donne pas du tout envie,Ça donne vraiment envie d'y aller
+Adressez-vous à l'un des joueurs et clamez 2 phrases qui riment.,Franchement pas romantique,Hyper romantique
+Quelle appli pour la vie ? Citez une seule application smartphone.,Inutile,Indispensable
+Vous êtes conférencier/ère dans un amphi et vous annoncez le sujet de votre exposé.,Celui qui n'intéressera personne,Celui qui remplit la salle
+"Pour convaincre les Vikings d'aller au Walhalla (le paradis viking), on leur promet...",Peu encourageant,Très encourageant
+Vous aimeriez plonger dans une piscine remplie de...,Pire,Plus génial
+Un des joueurs est un vampire... Dévoilez son identité et déclarez comment vous l'avez démasqué.,Petit indice,Preuve irréfutable
+Dites une phrase qui peut être entendue dans une téléréalité.,Moins probable,Plus probable
+"Bientôt, la grande comédie musicale à Broadway sera : ""... the musical. Imaginez un nom.",Moins attirant,Plus attirant
+Quelle nouvelle chanson connue est reprise par les Kids United ?,Chanson pour les enfants,Chanson pas franchement pour les enfants
+Vous faites partie d'une équipe de football américain. Quel surnom vous donne-t-on dans les vestiaires ?,Moins avantageux,Celui qui séduit les fans de l'équipe
+"Le Cap'Ten désigne un homme dans la pièce. Pouf, il est tout nu ! Quel objet utilise-t-il pour cacher son engin ?",Petit truc à cacher,Gros truc à cacher
+Ce que l'on peut dire à sa belle-mère.,Pas gentil du tout,Très gentil
+Citez un programme de TV.,Plus stupide,Plus intello
+"C'est le grand repas de famille. Vous vous levez, tapez avec votre petite cuillère sur votre verre et commencez : ""J'ai quelque chose à vous annoncer...""",Peu surprenant,Très surprenant
+Citez un diplôme (existant ou inventé) accroché au-dessus de votre cheminée.,Moins prestigieux,Plus prestigieux
+Lisez un plat du menu d'un restaurant.,Resto bas de gamme,Resto 3 étoiles
+Que font les élèves quand le prof écrit au tableau ?,Classe calme,Classe très agitée
+"Dans la suite du film Dans avec les loups, le héros danse avec...",Idée la moins vendeuse,Film à succès
+Quel objet fallait-il avoir lors du naufrage du Titanic ?,Moins utile,Plus utile
+Vous hypnotisez quelqu'un pour qu'il fasse quelque chose... Quoi ?,Sympa,Il va énormément vous en vouloir
+"En claquant des doigts, là, tout de suite, vous pouvez faire pleuvoir quelque chose. Que choisissez-vous ?",Pire,Plus sympa
+Citez un animal.,Moins dangereux pour les humains,Plus dangereux pour les humains
+Donnez votre avis sur un jeu à votre meilleur ami.,Vous détestez ce jeu,Vous adorez ce jeu
+Ça passe à la TV.,Plus petite audience,Plus grande audience
+"Dans ce temple tibétain, pour devenir un grand maître zen, il y a une dernière épreuve. Laquelle ?",Facile,Très difficile
+Demandez un autre joueur en mariage. ,Déclaration qui ne marchera pas,Celle qui va convaincre votre dulciné(e)
+Vous vous mariez à Las Vegas ! Qu'y a-t-il de spécial à votre mariage ?,Peu original,Très excentrique
+On vous a donné rendez-vous pour la teuf du siècle dans un lieu secret. Vous arrivez sur place... Quel est cet endroit ?,Je pars en courant,C'est le spot de rêve
+Un Tyrannosaure vous poursuit. Vous vous trouvez face à plusieurs moyens de locomotion : lequel choisissez-vous ?,Je serai son 4h...,Je m'en sors facile
+"""Ci-gît..."" : complétez la phrase écrite sur la tombe du Cap'Ten. ",Moins flatteuse,Plus flatteuse
+Flûte ! Plus de concombre pour faire votre masque de beauté... Par quoi le remplacer ?,Pire idée,Meilleure idée
+Inventez un gros titre pour la une de Voici sur le président.,Inintéressant,Très accrocheur
+Vous êtes témoin de mariage. Quelle surprise avez-vous préparée aux mariés pour la soirée ?,Surprise catastrophique,Super surprise
+"La légende dit que marcher pied nul sur un Lego est ce qu'il y a de plus douloureux. Mais en réalité, c'est marcher sur...",Pas douloureux,Très douloureux
+"Quand on mesure 1m50, il y a des situations plus agréables que d'autres. Décrivez-en une.",Très inconfortable,C'est génial
+Quel est le nom du meuble Ikea qui vous tente ?,Facile à prononcer,Impossible à prononcer
+"Dans le journal, sur quelle petite annonce êtes-vous tombé(e) ?",Celle qui donne le moins envie de répondre,Celle qui donne le plus envie de répondre
+Vous êtes tranquillement dans un magasin d'accessoires de sport quand un clown maléfique vous attaque ! Qu'est-ce que vous attrapez pour lui lancer dessus ?,Peu efficace,Très efficace
+C'est la journée de la gentillesse : faites un compliment à un autre joueur.,Gentillet,Très élogieux
+"Ce weekend, c'est marathon d'une série TV : laquelle choisissez-vous ?",Pire série,Meilleure série
+Quel documentaire passe à la TV ce soir ?,Sujet qui ne vous intéresse pas du tout,Celui que vous ne rateriez pour rien au monde
+"Ce matin, au boulot, vous avez la tête dans le cul. À la machine à café, vous racontez votre nuit.",La nuit pourrie,La nuit de rêve
+Inventez un nom de Batgadget (comme la Batmobile) pour aider Batman.,Inutile,Indispensable
+"Complétez la brochure de tourisme : ""Paris, ville de...""",Peu flatteur,Très attrayant
+La sonnerie de votre réveil est inefficace pour vous tirer du lit. Quelle méthode originale utilisez-vous le matin ?,Réveil tranquille,Réveil violent
+Vous êtes en pleine scène de ménage avec le joueur suivant. Que jetez-vous par la fenêtre de colère ?,Il s'en contrefiche,Ça lui brise le coeur pour toujours
+Réagissez au bulletin de notes de votre enfant.,Gros cancre,1er de la classe
+"Complétez la phrase affichée à l'arrière de votre véhicule pour faire ralentir les voitures. ""Attention, ... au volant !""",Ce qui ne fait pas ralentir,Ce qui fait ralentir
+"Un Terminator frappe à votre porte et annonce : ""Je viens du futur. Ma mission est...""",Plus ridicule,Plus importante
+"Sur Le bon coin, le Cap'Ten va s'acheter...",Moins utile pour lui,Plus utile pour lui
+"Avoir un dragon domestique, ça serait cool ! Pourquoi ?",Argument le moins recevable,Argument le plus recevable
+Quel acteur ou quelle actrice mettre en haut de l'affiche ?,Ça n'attirera personne,Ça fera déplacer les foules
+"Vous êtes hyper content(e) de votre collection, alors avouez-la fièrement à tous : ""Je possède la plus grande collection au monde de...""",Ils vont se moquer,Ils vont trouver ça super
+Tic-Tac le crocodile a mangé une autre partie du capitaine Crochet. Laquelle ?,Celle qui lui manquera le moins,Celle qui lui manquera le plus
+Écrivez une carte postale à un ami.,Vacances pourries,Vacances géniales
+Le responsable informatique vous demande votre mot de passe devant tout le monde. Quel est-il ?,Moins gênant,Plus gênant
+Prononcez le voeu que vous feriez au génie d'Aladdin.,Voeu tout pourri,Voeu génial
+Trouvez un surnom au Cap'Ten (et vous pouvez l'appeler comme ça jusqu'à la fin de la partie !),Petit surnom énervant,Surnom qu'il aura envie de garder
+"Vous utiliez un détecteur de métaux sur la plage. Ça bippe ! Ce n'est pas une pièce, mais qu'est-ce donc ?",Découverte nulle,Découverte géniale
+On est déjà le 14 février ! Quel cadeau offrez-vous à la Saint-Valentin ?,Pire,Meilleur
+Citez un personnage (réel ou fictif) à qui vous laisseriez vos enfants en baby-sitting.,Pire personnage,Meilleur personnage
+"Hier, vous avez encore raté votre permis. Que s'est-il passé ?",Raté de peu,Vous êtes un danger public
+"Le baby-sitter vous appelle au téléphone en urgence : ""C'est affreux...""",Souci pas gênant,Catastrophe
+Le football a maintenant une règle supplémentaire. Laquelle ?,L'audience s'écroule,L'audience explose
+Écrivez un SMS imaginaire envoyé par votre conjoint(e). ,Celui qu'on ne voudrait jamais recevoir,Celui qui faire le plus plaisir
+Vous créez une startup pour une nouvelle appli smartphone révolutionnaire ! Que fait cette appli ?,Moins utile,Plus utile
+"En soirée, présentez en une phrase le joueur précédent à quelqu'un qui lui plaît.",Râteau assuré,"Grâce à vous, il va pécho"
+"Cette semaine, quelle star est en couverture du magazine people ?",Moins vendeur,Plus vendeur
+On vous offre un place pour un concert unique. Lequel ?,Mauvaise surprise,Très bonne surprise
+Votre collègue vous envoie une photo de ses vacances. Que représente-t-elle ?,Je préfère encore rester au boulot,Jaloux...
+Citez un objet.,Celui que personne ne possède,Celui que tout le monde possède
+"Vous rentrez à la maison après une soirée bien arrosée et tentez d'être discret(e), mais vous avez quelque chose avec vous qui fait du bruit... Quoi ?","Ça va, le son est discret","Bruyant, vous allez vous faire griller"
+"""Maman, voici Kevin, il est..."" : complétez avec son métiez.",Pire métier,Métier rêvé par les beaux-parents
+Vous avez tellement attendu en faisant la queue à la Poste que vous auriez eu le temps de...,Activité courte,Activité bien longue
+"Le Cap'Ten apprend, après un test ADN, qu'il est de la famille de...",Pire nouvelle,Meilleure nouvelle
+"Vous êtes les lutins du Père Noël. Cette année, vous allez distribuer à tous les humains le même cadeau. Proposez une idée au Père Noël.",Pire cadeau,Cadeau le plus génial
+Vous avez réservé un AirBNB et arrivez sur place avec votre sac à dos. Décrivez la pièce où vous allez dormir.,Mauvaise surprise,Très bonne surprise
+Citez une invention dans l'histoire de l'humanité.,Moins révolutionnaire,Plus révolutionnaire
+Tic Toc... Citez une petite manie.,Facile à avouer,Très difficile à avouer
+"Vous êtes à la fin du repas de Noël, chacun se vante d'une bonne action qu'il a faite. Racontez votre action.",Plus petite,Plus grandiose
+Imaginez un surnom de cour d'école que le Cap'Ten avait.,Pas populaire,Méga star
+Vous êtes conseiller/ère d'orientation et Edward aux mains d'argent voudrait trouver un métier. Que lui conseillez-vous ?,Pire idée,Meilleure idée
+Les hommes en veulent toujours plus... De quoi s'agit-il ?,Moins désiré,Plus désiré
+"Il paraît que, secrètement, le pape ne peut pas s'empêcher de... ",Moins probable,Plus probable
+"Dans l'au-delà, le Cap'Ten sera dans un monde entouré de...",C'est l'enfer,C'est le paradis
+Vous êtes maire de Paris. Que faites-vous construire pour marquer votre mandat ?,Moins prestigieux,Plus prestigieux
 "Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
-"Mr Bond, si vous ne me donnez pas le code secret, je vais... ",Plus petite menace,Plus grande menace
-"Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
-"Very Bad Trip: vous vous réveillez un lendemain de fête et découvrez ce que vous avez fait la veille.",Juste pompette,Grosse cuite
-"Citez un lieu.",Je veux en partir immédiatement,J'aimerais y rester pour toujours
-"Quel objet fallait-il avoir lors du naufrage du Titanic",Moins utile,Plus utile
-"Batman veut remplacer Robin pour lutter contre les méchants. Créez un nouveau duo 'Batman et...'",Pire,Meilleur
+"Mister Bond, si vous ne me donnez pas le code secret, je vais...",Petite menace,Grande menace
+Vous êtes invité(e) pour le dîner dans un temple maudit au milieu de la jungle... Vos voisins de table ont eu droit à une cervelle de singe en sorbet. Et vous ?,Beurk,Miam
+Vous êtes un super vilain du prochain blockbuster ! Quels sont votre vom et votre pouvoir ?,Pas très nuisible,Méga vilain qui fait très peur
+"En une du Closer : ""Une célébrité retrouvée complètement ivre dans un caniveau, voir page 12"" Qui allez-vous trouver page 12 ?",Moins probable,Plus probable
+Vous êtes en speed dating : dites une phrase pour vous mettre en valeur.,Pire phrase,Meilleure phrase
+Où se cacher en cas d'invasion zombie ?,Survie assurée,Mort assurée
+"Le Cap'Ten se retrouve perdu au milieu de la jungle, loin de toute civilisation. Il est évident qu'il doit vivre le reste de sa vie comme Tarzan. Qu'est-ce qui lui manque le plus ?",Un peu,Énormément
+"Vous en avez commandé 1 sur internet et le livreur vous annonce que, suite à une erreur, il va vous en livrer 1000. Qu'est-ce ?",Très mauvaise nouvelle,Très bonne nouvelle
+Vous êtes en garde à vue pour avoir creusé un tunnel entre chez vous et la Banque de France. Vous avez droit à un seul appel. Qui appelez-vous ?,Moins logique,Plus logique
+Vous pouvez vivre la vie d'un personnage de série. Lequel ?,Cauchemar,Idéal
+"Vous avez pris place dans un avion de ligne qui va bientôt décoller. ""Bonjour, je suis Kevin, votre pilote, ...""",Moins rassurant,Plus rassurant
+Citez une personnalité (vivante ou morte) pour participer à Koh Lanta.,Défaite assurée,Victoire assurée
+Vous êtes voyant(e). Lisez l'avenir à un client dans votre boule de cristal.,Malchance,Bonne aventure
+"Vous frimez : ""Voici ma carte de membre d'honneur du club de...""",Pas très glorieux,Trop la classe
+Qui a la plus longue ? Citez un animal en fonction de la longueur de sa queue.,Plus petite,Plus grande
+Quel déguisement conseillez-vous pour le Cap'Ten ?,Moins adapté,Qui lui va le mieux
+Vous vous réveillez avec un gros mal de crâne et découvrez que vous avez un tatouage sur le bras. Lequel ?,Au secours,Génial
+"La vérité sort de la bouche de votre enfant, surtout à la caisse du supermarché. Quelle phrase dit-il tout haut ?",Pas gênant ,Très embarassant
+"Magnifaïque, ma chérie ! Citez un vêtement ou accessoire.",Ringard,Stylé
+Vous enquêtez sur une scène de crime. Annoncez l'indice que vous avez trouvé.,Inutile,Très utile pour arrêter pour le coupable
+Vous entrez dans une maison abandonnée de nuit... Vous tombez nez à nez avec quelqu'un d'effrayant. Qui est-ce ?,Peu effrayant,Très très effrayant
+Votre téléphone sonne. Quel est cet appel ?,Coup de fil banal,Énorme surprise
+"Et si Daenerys n'était pas la ""mère des dragons"", mais la ""mère des..."" ?",Trop la honte,Trop la classe
+Quel jouet peut-on trouver avec le menu enfant d'un fast food ?,Pire qu'on puisse imaginer,Préféré des enfants
+Votre meilleure amie vous présente son nouveau-né. Quelle est votre réaction ?,Bébé très laid,Bébé très beau
+"Vous êtes fier/ère et montrez votre jardin à vos amis : ""Regardez en plein milieu, il y a...""",Nul,Magnifique
+Votre voisin de l'appartement du dessus fait du bruit... Que fait-il ?,Moins énervant,Plus énervant
+"""Offert pour l'achat de votre voiture : une garantie 2 ans, la peinture métallisée et...""",Moins avantageux,Plus avantageux
+Vous travaillez à la Poste et vous êtes muté(e) dans une ville de France. Laquelle ?,Mauvaise nouvelle,Très bonne nouvelle
+Quel cadeau d'anniversaire offrez-vous au Cap'Ten ?,Il va être déçu,Il saute de joie
+"Si vous étiez président(e), quel ministère créeriez-vous ?",Ça n'intéresserait que vous,Ça intéresserait tout le monde
+Résumez le pitch d'un film que vous allez réaliser.,Navet ennuyeux,Gros blockbuster
+"Chez ""Le crêpier farceur"" en Bretagne, à quoi garnissez-vous votre crêpe ?",Pire saveur,Meilleure saveur
+Chopé(e) au radar ! Quelle raison donnez-vous au gendarme pour éviter le PV pour excès de vitesse ?,Excuse bidon,Bonne raison
+Citez une personnalité en fonction de son nombre d'abonnés Instagram.,Moins de fan,Plus de fans
+Vive les mariés ! Quel cadeau offrez-vous à l'heureux couple ?,Moins impressionnant,Plus impressionnant
+Quelle photo mettriez-vous sur votre cible de fléchettes ?,"Non, jamais","Oui, évidemment"
+"Pour interpréter le rôle du dieu de la beauté et de la bogossitude, quel acteur (homme réel, vivant ou mort) recrutez-vous ?",Pire choix,Meilleur choix
+Racontez une situation qui fait peur au Cap'Ten.,Petite frayeur,Grande trouille
+Vous avez le pouvoir de rendre réel un personnage fictif ! Lequel ?,Pire idée,Meilleure idée
+Quelle phrase prononce l'agent immobilier lors de la visite d'un nouvel appartement ?,Ça fait fuir,Ça fait acheter
+"Il y a la journée de la gentillesse, celle du vélo, celle de la photo et, demain, c'est la journée de...",Tout le monde s'en fout,"C'est génial, fêtons ça !"
+Votre oncle Indiana Johnny n'est pas revenu de son dernier périple. Quel objet rapporté d'une précédente exploration vous a-t-il légué dans son testament ?,Banal,Très rare
+On vous drague. Répondez en une phrase.,Pas du tout intéressé(e),Très très intéressé(e)
+"Dans ""Cauchemar en cuisine"", Philippe Etchebest est catastrophé : il n'a jamais vu cela dans une cuisine ! Quoi ?",Petit truc,Truc immonde
+Vous offrez une place au Cap'Ten pour le grand salon mondial du/de...,Plutôt mourir,Il ne manquerait ça pour rien au monde
+"Vous apprenez que Brad Pitt a un défaut, lequel ?",Pas bien grave,Très rédhibitoire
+"Complétez la carte de voeux du Nouvel An : ""Je vous souhaite amour, argent, santé et surtout...""",Moins sympa,Plus sympa
+Une femme est en train d'accoucher seule au milieu de nulle part. Il n'y a que vous. Qu'allez-vous chercher pour l'aider ?,Inutile,Très utile
+Vous êtes dans l'avion Paris-Tahiti et un seul film tourne en boucle pendant tout le vol. Lequel ?,Pire film,Meilleur film
+Racontez ce que vous avez attrapé à la pêche.,Pas très impressionnant,Très impressionnant
+Journée au zoo avec les enfants : citez un animal.,Les enfants l'ignorent,Ils se précipitent vers lui
+Vous avez vu un crime en direct : racontez votre témoignage pour retrouver le coupable.,Inutile,Très utile
+"Et le huitième jour, Dieu créa...",Pire,Meilleur
+La princesse en armure va délivrer le pauvre prince enfermé en haut du donjon ! Qu'est-ce qui se dresse sur le chemin entre elle et son amoureux ?,Petit obstacle surmontable,Très gros problème
+Quel animal de compagnie offrez-vous au Cap'Ten ?,Il le laissera sur le bord de l'autoroute,Il en rêvait
+Quelle activité peut-on faire le weekend ?,Activité tranquille,Activité dont on ne sort pas vivant
+Imaginez et racontez une mésaventure qui peut vous arriver en voyage.,Petite galère,Grosse galère
+Citez un personnage (réel ou fictif) en fonction du temps qu'il passe dans la salle de bain.,Peu de temps,Énormément
+Qui veut gagner des millions ? Imaginez la dernière question que l'on vous pose.,"Facile, je suis millionnaire","Difficile, j'ai perdu..."
+Jouez votre réaction face à un but du PSG.,Supporter de l'OM,Super fan du PSG
+Il y a la queue devant les toilettes et vous êtes très pressé(e). Quel argument donnez-vous pour passer devant tout le monde ?,Peu convaincant,Très convaincant
+"Demain, vous vous réveillez dans la peau d'un personnage de film. Lequel ?",Très méchant,Très gentil
+"Trouvez une raison pour débarquer à un mariage en criant ""Annulez ce mariage !""",Injustifiée,Complètement justifiée
+Vous partez en randonnée pour plusieurs jours. Que planquez-vous dans le sac de votre compagnon pour ne pas le porter ?,Très léger,Très lourd
+Décrivez ce que le Cap'Ten pourrait publier sur Instagram.,Peu probable,Très probable
+Une personne vous a tenu la porte. Quelle formule de politesse lui dites-vous ?,Pas élaborée,Très élaborée
+Les aliens arrivent et vous êtes responsable du 1er contact : vous pouvez offrir n'importe quel objet de la Terre en guise de bienvenue. Lequel ?,Cadeau pourri,Cadeau digne d'un grand ambassadeur
+À quoi pensez-vous pendant votre petit footing matinal ?,Ça fait ralentir,Ça motive à aller plus vite
+"Vous allez créer un nouveau parc d'attraction : ""...Land"". Quel sera le thème ?",Moins attirant,Plus attirant
+Décrivez votre résidence secondaire où vous passez les weekends.,Pire endroit,Meilleur endroit
+"Quelle personne (vivante, morte ou fictive) peut-on croiser dans une salle de musculation ? ",Peu probable,Très probable
+Sacrée matinée ! Que vous est-il arrivé ?,Matinée malchanceuse,Matinée très chanceuse
+Une explosion radioactive vous donne des super pouvoirs : vous voilà un super-héros ! Quels sont votre nom et votre pouvoir ?,Super-héros pitoyable,Super-héros qui en jette un max !
+Vous avez tuné votre voiture ! Que lui avez-vous ajouté ?,Très nul,Très classe
+Citez une personne (réelle ou fictive) selon son nombre probable de conquêtes amoureuses.,Moins de conquêtes,Plus de conquêtes
+"Vous êtes nouveau au village d'Astérix et Obélix. Quel est votre nom de gaulois, qui finit en ""-ix"" ? ",La honte,Trop classe
