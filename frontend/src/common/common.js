@@ -1,6 +1,50 @@
 import React from "react";
 import {currentUser} from "../authentication/authentication.js";
 
+export const colors = {
+    white: [255, 255, 255],
+    red: [255, 0, 0],
+    green: [0, 255, 0],
+    blue: [0, 0, 255],
+    darkRed: [127, 0, 0],
+    darkGreen: [0, 127, 0],
+    darkBlue: [0, 0, 127],
+    yellow: [255, 255, 0],
+    nicerYellow: [230, 230, 0],
+    magenta: [255, 0, 255],
+    cyan: [0, 255, 255],
+    gray: [127, 127, 127],
+    orange: [255, 127, 0],
+    grassGreen: [127, 255, 0],
+    pink: [255, 0, 127],
+    purple: [127, 0, 255],
+    springGreen: [0, 255, 127],
+    brightBlue: [0, 127, 255],
+    black: [0, 0, 0],
+}
+
+let interpolateColor = (position, firstColor, lastColor) => {
+    return firstColor.map((colorComponent, index) => {
+        return (1-position) * colorComponent + position * lastColor[index];
+    })
+}
+
+export function getColorFromScale({value, minValue = 0, maxValue = 100, beginColor = colors.darkGreen, endColor = colors.red, middleColor = colors.nicerYellow, opacity = 1}) {
+    return getColorFromScaleValues(value, minValue, maxValue, beginColor, endColor, middleColor, opacity);
+}
+
+let getColorFromScaleValues = (value, minValue, maxValue, beginColor, endColor, middleColor, opacity) => {
+    let middleValue = (maxValue - minValue) / 2;
+    let arrayColor;
+    if (value < middleValue) {
+        arrayColor = interpolateColor(value / middleValue, beginColor, middleColor);
+    }
+    else {
+        arrayColor = interpolateColor((value - middleValue) / middleValue, middleColor, endColor);
+    }
+    return `rgba(${arrayColor[0]}, ${arrayColor[1]}, ${arrayColor[2]}, ${opacity})`;
+}
+
 export function wait(delayMilliSeconds) {
     let start = Date.now();
     let now = start;

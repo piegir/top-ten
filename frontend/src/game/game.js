@@ -22,7 +22,7 @@ export class GamePreparation extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="BottomBox">
-                    <Users getUsersListHandler={getConnectedUsers} checkOnlyOnce={false}/>
+                    <Users getUsersListHandler={getConnectedUsers} checkOnlyOnce={false} displayNumbers={true}/>
                     <GameSetup goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
                                goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>

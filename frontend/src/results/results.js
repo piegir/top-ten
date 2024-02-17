@@ -6,7 +6,6 @@ import {getGamePlayers} from "../game/game.js";
 import {CurrentUserNumber} from "../rounds/proposition_making.js";
 import {CurrentTheme} from "../rounds/theme_selection.js";
 import {Hypothesis, Reality, RoundResult} from "./round_result.js";
-import {GameResult} from "./game_result";
 import {Users} from "../authentication/users";
 
 
@@ -14,14 +13,10 @@ function checkRoundResult() {
     return makeGetCall("/rounds/check_round_result");
 }
 
-function isGameWon() {
-    return makeGetCall("/game/is_game_won");
-}
-
 export class RoundResultChecking extends Component {
 
     state = {
-        success: null,
+        result: null,
         hypothesis: null,
         reality: null,
     }
@@ -50,6 +45,9 @@ export class RoundResultChecking extends Component {
     }
 
     render() {
+        if (this.state.result === null) {
+            return null;
+        }
         return (
             <div className="GlobalGrid">
                 <div className="HeadBox">
@@ -59,15 +57,16 @@ export class RoundResultChecking extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <RoundResult success={this.state.success}/>
                     <div className="GameProgressBox">
                         <GameProgress/>
                     </div>
                     <CurrentTheme/>
+                    <RoundResult result={this.state.result}/>
                 </div>
                 <div className="BottomBox">
                     <Reality reality={this.state.reality}/>
                     <Hypothesis hypothesis={this.state.hypothesis}
+                                reality={this.state.reality}
                                 goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
                                 goToGameResultsCheckingHandler={this.props.goToGameResultsCheckingHandler}
                     />
@@ -79,17 +78,6 @@ export class RoundResultChecking extends Component {
 
 
 export class GameResultChecking extends Component {
-
-    state = {
-        gameResult: null,
-    }
-
-    componentDidMount() {
-        isGameWon().then((gameResult) => {
-            this.setState({gameResult: gameResult});
-        });
-    }
-
     render() {
         return (
             <div className="GlobalGrid">
@@ -100,13 +88,12 @@ export class GameResultChecking extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <GameResult success={this.state.gameResult}/>
                     <div className="GameProgressBox">
                         <GameProgress/>
                     </div>
                 </div>
                 <div className="BottomBox">
-                    <Users getUsersListHandler={getGamePlayers} checkOnlyOnce={true}/>
+                    <Users getUsersListHandler={getGamePlayers} checkOnlyOnce={true} displayNumbers={false}/>
                     <div className="UserActionBox">
                         <div className="SubTitle">
                             Setup a new game?

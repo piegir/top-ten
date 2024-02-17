@@ -6,7 +6,7 @@ import {currentUser, Username} from "../authentication/authentication.js";
 import {Users} from "../authentication/users.js";
 import {CurrentTheme, getTheme, SelectTheme, WaitThemeSelected} from "./theme_selection.js";
 import {CurrentUserNumber, PlayerPropositions, MakeProposition, WaitPropositionMade} from "./proposition_making.js";
-import {MakeHypothesis} from "./hypothesis_making.js";
+import {MakeHypothesis, WaitHypothesisMade} from "./hypothesis_making.js";
 
 
 export let getRoundPlayers = () => {
@@ -24,14 +24,14 @@ function checkAllPropositionsMade() {
 export class ThemeSelection extends Component {
 
     state = {
-        firstPlayer: null,
+        firstRoundPlayer: null,
     }
 
     componentDidMount() {
         getRoundPlayers().then((playersList) => {
-            let firstPlayer = playersList[0];
-            this.setState({firstPlayer: firstPlayer});
-            if (firstPlayer !== currentUser.username) {
+            let firstRoundPlayer = playersList[0];
+            this.setState({firstRoundPlayer: firstRoundPlayer});
+            if (firstRoundPlayer !== currentUser.username) {
                 this.props.goToPropositionMakingHandler();
             }
         });
@@ -47,7 +47,7 @@ export class ThemeSelection extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    {this.state.firstPlayer === currentUser.username ?
+                    {this.state.firstRoundPlayer === currentUser.username ?
                         null :
                         <CurrentUserNumber/>}
                     <div className="GameProgressBox">
@@ -55,8 +55,8 @@ export class ThemeSelection extends Component {
                     </div>
                 </div>
                 <div className="BottomBox">
-                    <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true}/>
-                    {this.state.firstPlayer === currentUser.username ?
+                    <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true} displayNumbers={false}/>
+                    {this.state.firstRoundPlayer === currentUser.username ?
                         <SelectTheme goToPropositionMakingHandler={this.props.goToPropositionMakingHandler}/> :
                         null}
                 </div>
@@ -69,7 +69,7 @@ export class PropositionMaking extends Component {
 
     state = {
         theme: null,
-        firstPlayer: null,
+        firstRoundPlayer: null,
         currentPlayer: null,
         allPropositionsMade: false,
     };
@@ -78,7 +78,7 @@ export class PropositionMaking extends Component {
         getRoundPlayers().then((playersList) => {
             this.setState(
                 {
-                    firstPlayer: playersList[0],
+                    firstRoundPlayer: playersList[0],
                     theme: this.state.theme,
                     currentPlayer: this.state.currentPlayer,
                     allPropositionsMade: this.state.allPropositionsMade,
@@ -90,7 +90,7 @@ export class PropositionMaking extends Component {
         getTheme().then((theme) => {
             this.setState({
                 theme: theme,
-                firstPlayer: this.state.firstPlayer,
+                firstRoundPlayer: this.state.firstRoundPlayer,
                 currentPlayer: this.state.currentPlayer,
                 allPropositionsMade: this.state.allPropositionsMade,
             });
@@ -108,7 +108,7 @@ export class PropositionMaking extends Component {
             checkAllPropositionsMade().then((allPropositionsMade) => {
                 this.setState({
                     theme: this.state.theme,
-                    firstPlayer: this.state.firstPlayer,
+                    firstRoundPlayer: this.state.firstRoundPlayer,
                     currentPlayer: currentPlayer,
                     allPropositionsMade: allPropositionsMade,
                 });
@@ -148,7 +148,7 @@ export class PropositionMaking extends Component {
                 <div className="BottomBox">
                     <PlayerPropositions/>
                     {this.state.theme === null ?
-                        <WaitThemeSelected firstPlayer={this.state.firstPlayer}/> :
+                        <WaitThemeSelected firstRoundPlayer={this.state.firstRoundPlayer}/> :
                         this.state.currentPlayer === currentUser.username ?
                             <MakeProposition/> :
                             <WaitPropositionMade currentPlayer={this.state.currentPlayer}/>
@@ -160,6 +160,14 @@ export class PropositionMaking extends Component {
 }
 
 export class HypothesisMaking extends Component {
+
+    state = {firstRoundPlayer: null};
+
+    componentDidMount() {
+        getRoundPlayers().then((playersList) => {
+            this.setState({firstRoundPlayer: playersList[0]});
+        });
+    }
     render() {
         return (
             <div className="GlobalGrid">
@@ -177,8 +185,11 @@ export class HypothesisMaking extends Component {
                     <CurrentTheme/>
                 </div>
                 <div className="BottomBox">
-                    <PlayerPropositions checkOnlyOnce={true}/>
-                    <MakeHypothesis goToRoundResultsCheckingHandler={this.props.goToRoundResultsCheckingHandler}/>
+                    <PlayerPropositions checkOnlyOnce={true} displayNumbers={false}/>
+                    {this.state.firstRoundPlayer === currentUser.username ?
+                        <MakeHypothesis goToRoundResultsCheckingHandler={this.props.goToRoundResultsCheckingHandler}/> :
+                        <WaitHypothesisMade firstRoundPlayer={this.state.firstRoundPlayer} goToRoundResultsCheckingHandler={this.props.goToRoundResultsCheckingHandler}/>
+                    }
                 </div>
             </div>
         );

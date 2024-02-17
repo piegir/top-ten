@@ -3,7 +3,7 @@ import "./player_top_table.css"
 import React, {Component} from "react";
 import {getRoundPlayers} from "../rounds/rounds.js";
 import {currentUser} from "../authentication/authentication";
-import {makeGetCall, makePostCall} from "../common/common";
+import {colors, getColorFromScale, makeGetCall, makePostCall} from "../common/common";
 
 function checkGameComplete() {
     return makeGetCall("/game/is_game_complete");
@@ -11,14 +11,14 @@ function checkGameComplete() {
 
 
 export class RoundResult extends Component {
+    roundResult = Math.round(+this.props.result * 1000) / 10; // XX.X%
     render() {
         return (
             <div className="Result">
-                {this.props.success !== null ?
-                    this.props.success ?
-                        <p className="ResultText">Round Won!!!</p> :
-                        <p className="ResultText">Round Lost...</p> :
-                    null}
+                <p className="ResultText"
+                   style={{color: getColorFromScale({value: this.roundResult, beginColor: colors.red, endColor: colors.darkGreen})}}>
+                    Round Result: {this.roundResult}%
+                </p>
             </div>
         );
     }
@@ -46,7 +46,7 @@ export class Reality extends Component {
                     {this.props.reality !== null ?
                         this.props.reality.map((numberedProposition) => {
                             return (
-                                <tr>
+                                <tr style={{"background-color": getColorFromScale({value: numberedProposition.number, minValue: 1, maxValue: 10, opacity: 0.5})}}>
                                     <td>
                                         {numberedProposition["player_proposition"].player}
                                     </td>
@@ -102,21 +102,28 @@ export class Hypothesis extends Component {
                     Hypothesis
                 </div>
                 <div>
-                    <table className="PlayerPropositionsTable">
+                    <table className="PlayerTopTable">
                         <tr>
                             <th>
                                 Players
                             </th>
                             <th>
+                                Top
+                            </th>
+                            <th>
                                 Propositions
                             </th>
                         </tr>
-                        {this.props.hypothesis !== null ?
-                            this.props.hypothesis.map((proposition) => {
+                        {((this.props.hypothesis !== null) && (this.props.reality !== null)) ?
+                            this.props.hypothesis.map((proposition, index) => {
+                                let thisNumber = this.props.reality[this.props.reality.findIndex(numberedProposition => numberedProposition["player_proposition"].player === proposition.player)].number;
                                 return (
-                                    <tr>
+                                    <tr style={{"background-color": getColorFromScale({value: thisNumber, minValue: 1, maxValue: 10, opacity: 0.5})}}>
                                         <td>
                                             {proposition.player}
+                                        </td>
+                                        <td style={{textAlign: "center"}}>
+                                            {thisNumber}
                                         </td>
                                         <td>
                                             {proposition.proposition}
@@ -132,13 +139,15 @@ export class Hypothesis extends Component {
                         <button onClick={this.props.goToGameResultsCheckingHandler} className="UserActionButton">
                             View game results
                         </button>
-                    </div> :
+                    </div>
+                    :
                     this.state.isFirstPlayer ?
                         <div className="ButtonBox">
                             <button onClick={this.roundStartingHandler} className="UserActionButton">
                                 Start a new round
                             </button>
-                        </div> :
+                        </div>
+                        :
                         null}
             </div>
         );

@@ -17,7 +17,7 @@ class Round:
             NumberedPlayerProposition] = self.assign_numbers()
 
         self.playing_player_index: int = 0
-        self.success: bool = False
+        self.result: float = -1
         self.order_hypothesis: list[PlayerProposition] | None = None
         self.theme: Theme | None = None
 
@@ -79,9 +79,11 @@ class Round:
         self.order_hypothesis = hypothesis
         sorted_propositions = sorted(self.numbered_player_propositions,
                                      key=lambda x: x.number)
-        self.success = [
-            prop.player_proposition for prop in sorted_propositions
-        ] == hypothesis
+        comparison = [
+            prop.player_proposition == hyp
+            for prop, hyp in zip(sorted_propositions, hypothesis)
+        ]
+        self.result = sum(comparison) / len(comparison)
 
     def is_complete(self):
         return self.order_hypothesis is not None
