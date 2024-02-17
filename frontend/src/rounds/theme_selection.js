@@ -95,7 +95,7 @@ export class WaitThemeSelected extends Component {
         return (
             <div className="UserActionBox">
                 <div className="SubTitle">
-                    Waiting for {this.props.firstPlayer} to set the theme...
+                    Waiting for {this.props.firstRoundPlayer} to set the theme...
                 </div>
             </div>
         );

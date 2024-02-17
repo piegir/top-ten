@@ -25,51 +25,33 @@ export function getTemporaryHypothesis() {
 export class MakeHypothesis extends Component {
 
     state = {
+        propositions: [],
         hypothesis: [],
-        firstPlayer: null,
     };
 
     componentDidMount() {
-        getPlayerPropositions().then((playerPropositions) => {
-            getRoundPlayers().then((currentPlayers) => {
-                this.setState({hypothesis: playerPropositions, firstPlayer: currentPlayers[0]});
-                if (currentPlayers[0] === currentUser.username) {
-                    setTemporaryHypothesis(playerPropositions).then();
-                }
-            });
-        });
-    }
-
-    checkHypothesisMade = () => {
         checkRoundComplete().then((complete) => {
             if (complete) {
                 this.props.goToRoundResultsCheckingHandler();
                 return;
             }
-            if (this.state.firstPlayer !== currentUser.username) {
-                getTemporaryHypothesis().then((hypothesis) => {
-                    this.setState({hypothesis: hypothesis, firstPlayer: this.state.firstPlayer});
-                    this.hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
-                })
-            } else {
-                this.hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
-            }
-        })
-    };
-
-    hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
-
-    componentWillUnmount() {
-        clearTimeout(this.hypothesisMadeCheckingId);
+            getPlayerPropositions().then((playerPropositions) => {
+                setTemporaryHypothesis(playerPropositions).then(() => {
+                    this.setState({propositions: [...playerPropositions], hypothesis: [...playerPropositions]});
+                });
+            });
+        });
     }
 
     lower = (index) => {
         [this.state.hypothesis[index + 1], this.state.hypothesis[index]] = [this.state.hypothesis[index], this.state.hypothesis[index + 1]];
+        this.setState({propositions: this.state.propositions, hypothesis: this.state.hypothesis})
         setTemporaryHypothesis(this.state.hypothesis).then();
     };
 
     raise = (index) => {
         [this.state.hypothesis[index - 1], this.state.hypothesis[index]] = [this.state.hypothesis[index], this.state.hypothesis[index - 1]];
+        this.setState({propositions: this.state.propositions, hypothesis: this.state.hypothesis})
         setTemporaryHypothesis(this.state.hypothesis).then();
     };
 
@@ -111,9 +93,86 @@ export class MakeHypothesis extends Component {
         return (
             <div className="UserActionBox">
                 <div className="SubTitle">
-                    {this.state.firstPlayer === currentUser.username ?
-                        <>Make your hypothesis by dragging rows</> :
-                        <>{this.state.firstPlayer} is making a hypothesis...</>}
+                    Make your hypothesis by dragging rows
+                </div>
+                <table className="PlayerPropositionsTable">
+                    <tr>
+                        <th>
+                            Players
+                        </th>
+                        <th>
+                            Propositions
+                        </th>
+                    </tr>
+                    {this.state.propositions.map((proposition) => {
+                        let propHypIndex = this.state.hypothesis.indexOf(proposition);
+                        return (
+                                <tr draggable={true}
+                                    onDragStart={this.dragStarted}
+                                    onDragOver={this.dragOver}
+                                    style={{
+                                        cursor: "all-scroll",
+                                        "background-color": getColorFromScale({
+                                            value: propHypIndex,
+                                            minValue: 0,
+                                            maxValue: this.state.propositions.length - 1,
+                                            opacity: 0.5
+                                        })
+                                    }}>
+                                    <td>
+                                        {proposition.player}
+                                    </td>
+                                    <td>
+                                        {proposition.proposition}
+                                    </td>
+                                </tr>
+                        );
+                    })}
+                </table>
+                <div className="ButtonBox">
+                    <button onClick={this.makeHypothesisHandler}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        );
+    }
+}
+
+export class WaitHypothesisMade extends Component {
+
+    state = {hypothesis: []};
+
+    componentDidMount() {
+        getPlayerPropositions().then((playerPropositions) => {
+            this.setState({hypothesis: playerPropositions});
+        });
+    }
+
+    checkHypothesisMade = () => {
+        checkRoundComplete().then((complete) => {
+            if (complete) {
+                this.props.goToRoundResultsCheckingHandler();
+                return;
+            }
+            getTemporaryHypothesis().then((hypothesis) => {
+                this.setState({hypothesis: hypothesis});
+                this.hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
+            });
+        })
+    };
+
+    hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
+
+    componentWillUnmount() {
+        clearTimeout(this.hypothesisMadeCheckingId);
+    }
+
+    render() {
+        return (
+            <div className="UserActionBox">
+                <div className="SubTitle">
+                    {this.props.firstRoundPlayer} is making a hypothesis...
                 </div>
                 <table className="PlayerPropositionsTable">
                     <tr>
@@ -125,22 +184,15 @@ export class MakeHypothesis extends Component {
                         </th>
                     </tr>
                     {this.state.hypothesis.map((proposition, index) => {
-                        return this.state.firstPlayer === currentUser.username ?
-                            (
-                                <tr draggable={true}
-                                    onDragStart={this.dragStarted}
-                                    onDragOver={this.dragOver}
-                                    style={{cursor: "all-scroll"}}>
-                                    <td>
-                                        {proposition.player}
-                                    </td>
-                                    <td>
-                                        {proposition.proposition}
-                                    </td>
-                                </tr>)
-                            :
-                            (
-                                <tr style={{"background-color": getColorFromScale({value: index, minValue: 0, maxValue: this.state.hypothesis.length - 1, opacity: 0.5})}}>
+                        return  (
+                                <tr style={{
+                                    "background-color": getColorFromScale({
+                                        value: index,
+                                        minValue: 0,
+                                        maxValue: this.state.hypothesis.length - 1,
+                                        opacity: 0.5
+                                    })
+                                }}>
                                     <td>
                                         {proposition.player}
                                     </td>
@@ -151,12 +203,6 @@ export class MakeHypothesis extends Component {
                             )
                     })}
                 </table>
-                {this.state.firstPlayer === currentUser.username ?
-                    <div className="ButtonBox">
-                        <button onClick={this.makeHypothesisHandler}>
-                            Submit
-                        </button>
-                    </div> : null}
             </div>
         );
     }
