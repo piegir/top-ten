@@ -1,14 +1,19 @@
-.GameProgress {
+.GameProgressBox {
     grid-row-start: 1;
-    grid-column-start: 1;
-    line-height: 20%;
+    grid-column-start: 2;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.GameProgress {
+    line-height: fit-content;
     color: var(--title-color);
     width: fit-content;
-    height: fit-content;
 }
 
 .GameProgress td {
-    padding: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
     border: solid 1px var(--subtitle-color);
     text-align: center;
 }

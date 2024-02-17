@@ -75,7 +75,7 @@ export class SelectTheme extends Component {
                                     {themeObject.top10}
                                 </td>
                                 <td>
-                                    <button className="LogoutButton" onClick={() => {
+                                    <button onClick={() => {
                                         this.setThemeHandler(themeObject)
                                     }}>
                                         Select

@@ -4,7 +4,7 @@
 }
 
 .PlayerPropositionsTable th {
-    line-height: 50%;
+    line-height: 40%;
     text-align: center;
     border-color: var(--subtitle-color);
     color: var(--subtitle-color);
@@ -31,7 +31,7 @@
     border-left: solid 2px var(--subtitle-color);
     max-width: 0;
     overflow: hidden;
-    text-overflow: "";
+    text-overflow: "...";
     white-space: nowrap;
 }
 

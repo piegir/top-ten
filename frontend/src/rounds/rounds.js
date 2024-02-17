@@ -47,10 +47,12 @@ export class ThemeSelection extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <GameProgress/>
                     {this.state.firstRoundPlayer === currentUser.username ?
                         null :
                         <CurrentUserNumber/>}
+                    <div className="GameProgressBox">
+                        <GameProgress/>
+                    </div>
                 </div>
                 <div className="BottomBox">
                     <Users getUsersListHandler={getRoundPlayers} checkOnlyOnce={true} displayNumbers={false}/>
@@ -137,8 +139,10 @@ export class PropositionMaking extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <GameProgress/>
                     <CurrentUserNumber/>
+                    <div className="GameProgressBox">
+                        <GameProgress/>
+                    </div>
                     <CurrentTheme/>
                 </div>
                 <div className="BottomBox">
@@ -174,8 +178,10 @@ export class HypothesisMaking extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <GameProgress/>
                     <CurrentUserNumber/>
+                    <div className="GameProgressBox">
+                        <GameProgress/>
+                    </div>
                     <CurrentTheme/>
                 </div>
                 <div className="BottomBox">
