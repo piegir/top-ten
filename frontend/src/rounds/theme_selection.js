@@ -140,13 +140,13 @@ export class CurrentTheme extends Component {
                         </tr>
                         <tr>
                             <td>
-                                  Le Cap'Ten se retrouve perdu au milieu de la jungle, loin de toute civilisation. Il est évident qu'il doit vivre le reste de sa vie comme Tarzan. Qu'est-ce qui lui manque le plus ?
+                                {this.state.theme.title}
                             </td>
                             <td>
-                                Carrément, il faut les pendre sur la place publique !
+                                {this.state.theme.top1}
                             </td>
                             <td>
-                                Carrément, il faut les pendre sur la place publique !
+                                {this.state.theme.top10}
                             </td>
                         </tr>
                     </table> :

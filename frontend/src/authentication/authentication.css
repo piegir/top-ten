@@ -13,3 +13,7 @@
 .UsernameCreation {
     margin-bottom: 15px;
 }
+
+.SmallButton {
+    font-size: 1vw;
+}

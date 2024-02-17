@@ -38,7 +38,6 @@
 .ThemesTable tr:last-child td:last-child {
     border-bottom-right-radius: 5px;
     width:15%;
-    border-left: solid 2px var(--subtitle-color);
 }
 
 .ThemesTable tr:last-child td {
