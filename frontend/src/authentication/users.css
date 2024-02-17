@@ -1,6 +1,17 @@
 .Username {
     grid-column-start: 3;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.UsernameText {
+    max-width: 100%;
     text-align: center;
+    overflow-x: hidden;
+    text-overflow: "...";
+    white-space: nowrap;
 }
 
 .PlayersBox {
@@ -14,7 +25,7 @@
 }
 
 .UsersTable th {
-    line-height: 50%;
+    line-height: 40%;
     text-align: center;
     border-color: var(--subtitle-color);
     color: var(--subtitle-color);
@@ -22,7 +33,9 @@
 }
 
 .UsersTable td {
-    padding: 15px;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .UsersTable th:first-child {
@@ -49,12 +62,11 @@
     border-right: solid 2px var(--subtitle-color);
     max-width: 0;
     overflow: hidden;
-    text-overflow: "";
+    text-overflow: "...";
     white-space: nowrap;
 }
 
 .UsersTable tr td{
-    line-height: 10%;
     border-top: solid 2px var(--subtitle-color);
 }
 

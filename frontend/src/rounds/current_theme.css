@@ -1,21 +1,21 @@
 .ShowCurrentTheme {
     grid-row-start: 2;
     grid-column: 1 / span 4;
-    margin: auto;
-    width: 100%;
+    margin-top:auto;
 }
 
 .CurrentTheme {
     margin: auto;
-    line-height: 20%;
     width: fit-content;
     height: fit-content;
 }
 
 .CurrentTheme td, .CurrentTheme th {
-    padding: 15px;
     border: solid 1px var(--subtitle-color);
     text-align: center;
+    word-break: break-word;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .CurrentTheme th {

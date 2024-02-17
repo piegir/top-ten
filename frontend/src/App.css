@@ -11,7 +11,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-size: 1.5vw;
+    font-size: 1.3vw;
     font-family: "Lemonberry";
     font-weight: bold;
 }
@@ -20,9 +20,10 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template: 10% 35% 55% / 100%; /* rows / columns */
+    grid-template: 10% 21% 1fr / 100%; /* rows / columns */
     background-color: var(--background-color);
-    padding: 20px;
+    padding: 10px;
+    margin: 0;
     grid-gap: 5px;
     overflow-y: auto;
 }
@@ -38,13 +39,15 @@
 .MiddleBox {
     grid-row-start: 2;
     display: grid;
-    grid-template: 40% 40% 20% / 50% 12% 1fr; /* rows / columns */
+    grid-template: 40% 1fr / 12% 1fr; /* rows / columns */
+    padding: 0;
+    margin: 0;
 }
 
 .BottomBox {
     grid-row-start: 3;
     display: grid;
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: 50% 1fr;
     grid-gap: 5px;
 }
 
@@ -52,7 +55,8 @@
     border-style: solid;
     border-color: var(--title-color);
     border-radius: 10px;
-    padding: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
     background-color: var(--box-color);
 }
 
@@ -83,16 +87,16 @@
 
 .ButtonBox {
     text-align: center;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 .Result {
-    grid-row-start: 3;
-    grid-column: 1 / span 4;
+    grid-row-start: 1;
+    grid-column: 2 / span 2;
 }
 
 button {
-    font-size: 1.7vw;
+    font-size: 1.3vw;
     background-color: var(--subtitle-color);
     border-radius: 10px;
     padding-left: 5px;
@@ -128,5 +132,5 @@ textarea {
     border-radius: 5px;
     border: 1px solid var(--title-color);
     box-shadow: 1px 1px 1px #999;
-    font-size: 1.5vw
+    font-size: 1.3vw
 }

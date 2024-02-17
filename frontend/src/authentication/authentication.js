@@ -102,7 +102,7 @@ export class Username extends Component {
     render () {
         return (
             <div className="Username">
-                {currentUser.username}<br/>
+                <span className="UsernameText">{currentUser.username}<br/></span>
                 <button onClick={this.logoutHandler}>
                     Logout
                 </button>
