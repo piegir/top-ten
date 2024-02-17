@@ -1,11 +1,18 @@
 .ThemesTable {
     width: 100%;
     word-break: break-word;
+    border-color: var(--subtitle-color);
 }
 
 .ThemesTable td:first-child {
-    width:50%;
+    width: 50%;
     border-left: solid 2px var(--subtitle-color);
+}
+
+.ThemesTable td:last-child {
+    text-align: center;
+    min-width: 10%;
+    width: fit-content;
 }
 
 .ThemesTable td {
@@ -18,7 +25,7 @@
 .ThemesTable tr:first-child td {
     text-align: center;
     color: var(--subtitle-color);
-    border-top: solid 2px;
+    border-top: solid 2px var(--subtitle-color);;
 }
 
 .ThemesTable tr:first-child td:first-child {
@@ -37,7 +44,6 @@
 
 .ThemesTable tr:last-child td:last-child {
     border-bottom-right-radius: 5px;
-    width:15%;
 }
 
 .ThemesTable tr:last-child td {
