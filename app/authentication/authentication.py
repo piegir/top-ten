@@ -22,6 +22,8 @@ def add_user(username: str) -> ActionStatus:
     :param username: The user's username
     :return: The status of adding the user.
     """
+    if len(username) == 0:
+        return ActionStatus(status=False, message=f"Username cannot be empty.")
     if user_connected(username):
         return ActionStatus(status=False,
                             message=f"Username '{username}' already taken.")
