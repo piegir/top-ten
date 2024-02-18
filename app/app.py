@@ -63,5 +63,6 @@ def reset():
     API call to reset the app, clears game, rounds and disconnects all users.
     """
     game.current_game = None
-    rounds.temp_hypothesis = None
+    game.temp_game_config = game.GameConfig(players_list=[])
+    rounds.temp_hypothesis = []
     authentication.connected_users = []
