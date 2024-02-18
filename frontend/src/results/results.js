@@ -88,7 +88,7 @@ export class GameResultChecking extends Component {
                     <Username goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}/>
                 </div>
                 <div className="MiddleBox">
-                    <div className="GameProgressBox">
+                    <div className="CenteredGameProgressBox">
                         <GameProgress/>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import "./player_propositions.css"
 
 import React, {Component} from "react";
-import {getColorFromScale, makeGetCall, makePostCall, repeat} from "../common/common";
+import {colors, getColorFromScale, makeGetCall, makePostCall, repeat} from "../common/common";
 
 function getUserNumber() {
     return makeGetCall("/rounds/get_number");
@@ -30,7 +30,7 @@ export class CurrentUserNumber extends Component {
             <div>
                 <p className="ShowCurrentUserNumber">
                     Your Top Number:<br/>
-                    <span className="CurrentUserNumber" style={{color: getColorFromScale({value: this.state.topNumber, minValue: 1, maxValue: 10})}}>
+                    <span className="CurrentUserNumber" style={{color: getColorFromScale({value: this.state.topNumber, minValue: 1, maxValue: 10, middleColor: colors.gold})}}>
                         {this.state.topNumber}
                     </span>
                 </p>

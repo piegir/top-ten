@@ -11,6 +11,7 @@ export const colors = {
     darkBlue: [0, 0, 127],
     yellow: [255, 255, 0],
     nicerYellow: [230, 230, 0],
+    gold: [255, 192, 0],
     magenta: [255, 0, 255],
     cyan: [0, 255, 255],
     gray: [127, 127, 127],
@@ -37,10 +38,10 @@ let getColorFromScaleValues = (value, minValue, maxValue, beginColor, endColor, 
     let middleValue = (maxValue - minValue) / 2;
     let arrayColor;
     if (value < middleValue) {
-        arrayColor = interpolateColor(value / middleValue, beginColor, middleColor);
+        arrayColor = interpolateColor((value - minValue) / (middleValue - minValue), beginColor, middleColor);
     }
     else {
-        arrayColor = interpolateColor((value - middleValue) / middleValue, middleColor, endColor);
+        arrayColor = interpolateColor((value - middleValue) / (maxValue - middleValue), middleColor, endColor);
     }
     return `rgba(${arrayColor[0]}, ${arrayColor[1]}, ${arrayColor[2]}, ${opacity})`;
 }
