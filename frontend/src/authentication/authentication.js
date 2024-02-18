@@ -24,13 +24,13 @@ class Login extends Component {
 
     loginHandler = (e) => {
         e.preventDefault();
-        // Store username as provided by the user
-        currentUser.username = this.state.username;
-        currentUser.loggedIn = true;
         // Perform REST API login
         userLogin()
             .then((loginSuccess) => {
                 if (loginSuccess.status) {
+                    // Store username as provided by the user
+                    currentUser.username = this.state.username;
+                    currentUser.loggedIn = true;
                     this.props.goToGamePreparationHandler();
                 } else {
                     alert(loginSuccess.message);
