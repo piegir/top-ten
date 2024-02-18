@@ -21,7 +21,7 @@ class GameConfig(BaseModel):
         example=["player1", "player2", "player3", "player4"])
     max_nb_rounds: int = Field(
         description="Total number of rounds to be played in the game.",
-        default=7)
+        default=5)
     starting_player_index: int = Field(
         description="Index of starting player in the players list.", default=0)
     nb_themes_per_card: int = Field(

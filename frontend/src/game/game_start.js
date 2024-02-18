@@ -62,9 +62,9 @@ export class GameSetup extends Component {
 
     state = {
         gameOptions: {
-            "Number of rounds": 5,
-            "Number of themes per card": 3,
-            "Starting Player Index": 0,
+            "Number of rounds": null,
+            "Number of themes per card": null,
+            "Starting Player Index": null,
         },
         gameStarted: false,
         gameComplete: false,
@@ -73,55 +73,57 @@ export class GameSetup extends Component {
     };
 
     componentDidMount() {
-        isGameStarted().then((gameStarted) => {
-            if (!gameStarted) {
-                // A user is allowed to join if no game is started
-                this.setState({
-                    gameOptions: this.state.gameOptions,
-                    gameStarted: gameStarted,
-                    gameComplete: false,
-                    firstPlayer: this.state.firstPlayer,
-                    allowedUser: true,
-                });
-                return;
-            }
-            isGameComplete().then((gameComplete) => {
-                if (gameComplete) {
-                    // A user is allowed to join if the previous game has been completed
+        getTempGameOptions().then((gameOptions) => {
+            isGameStarted().then((gameStarted) => {
+                if (!gameStarted) {
+                    // A user is allowed to join if no game is started
                     this.setState({
-                        gameOptions: this.state.gameOptions,
+                        gameOptions: gameOptions,
                         gameStarted: gameStarted,
-                        gameComplete: true,
+                        gameComplete: false,
                         firstPlayer: this.state.firstPlayer,
                         allowedUser: true,
                     });
                     return;
                 }
-                getGamePlayers().then((playersList) => {
-                    if (playersList.includes(currentUser.username)) {
-                        // A user is allowed to join if he is part of the current started game, he is sent to the next step of the game
+                isGameComplete().then((gameComplete) => {
+                    if (gameComplete) {
+                        // A user is allowed to join if the previous game has been completed
                         this.setState({
-                            gameOptions: this.state.gameOptions,
-                            gameStarted: this.state.gameStarted,
-                            gameComplete: false,
+                            gameOptions: gameOptions,
+                            gameStarted: gameStarted,
+                            gameComplete: true,
                             firstPlayer: this.state.firstPlayer,
                             allowedUser: true,
                         });
-                        this.props.goToThemeSelectionHandler();
                         return;
                     }
-                    // In any other case, the user is not allowed to join. Log him out and send him back to login page.
-                    alert(`You cannot join a game that you are not part of.`);
-                    userLogout()
-                        .then((logoutSuccess) => {
-                            if (logoutSuccess.status) {
-                                currentUser.username = null;
-                                currentUser.loggedIn = false;
-                                this.props.goToAskCredentialsHandler();
-                            } else {
-                                alert(logoutSuccess.message);
-                            }
-                        });
+                    getGamePlayers().then((playersList) => {
+                        if (playersList.includes(currentUser.username)) {
+                            // A user is allowed to join if he is part of the current started game, he is sent to the next step of the game
+                            this.setState({
+                                gameOptions: gameOptions,
+                                gameStarted: this.state.gameStarted,
+                                gameComplete: false,
+                                firstPlayer: this.state.firstPlayer,
+                                allowedUser: true,
+                            });
+                            this.props.goToThemeSelectionHandler();
+                            return;
+                        }
+                        // In any other case, the user is not allowed to join. Log him out and send him back to login page.
+                        alert(`You cannot join a game that you are not part of.`);
+                        userLogout()
+                            .then((logoutSuccess) => {
+                                if (logoutSuccess.status) {
+                                    currentUser.username = null;
+                                    currentUser.loggedIn = false;
+                                    this.props.goToAskCredentialsHandler();
+                                } else {
+                                    alert(logoutSuccess.message);
+                                }
+                            });
+                    });
                 });
             });
         });
