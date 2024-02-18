@@ -2,6 +2,7 @@
     grid-row-start: 2;
     grid-column: 1 / span 4;
     margin-top:auto;
+    padding-top: 15px;
 }
 
 .CurrentTheme {

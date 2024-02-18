@@ -16,7 +16,7 @@ export class RoundResult extends Component {
         return (
             <div className="Result">
                 <p className="ResultText"
-                   style={{color: getColorFromScale({value: this.roundResult, beginColor: colors.red, endColor: colors.darkGreen})}}>
+                   style={{color: getColorFromScale({value: this.roundResult, beginColor: colors.red, endColor: colors.darkGreen, middleColor: colors.gold})}}>
                     Round Result: {this.roundResult}%
                 </p>
             </div>

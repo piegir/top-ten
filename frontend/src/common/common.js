@@ -11,6 +11,7 @@ export const colors = {
     darkBlue: [0, 0, 127],
     yellow: [255, 255, 0],
     nicerYellow: [230, 230, 0],
+    gold: [255, 192, 0],
     magenta: [255, 0, 255],
     cyan: [0, 255, 255],
     gray: [127, 127, 127],

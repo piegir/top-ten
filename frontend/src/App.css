@@ -20,7 +20,7 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template: 10% 21% 1fr / 100%; /* rows / columns */
+    grid-template: 10% fit-content(21%) 1fr / 100%; /* rows / columns */
     background-color: var(--background-color);
     padding: 10px;
     margin: 0;
@@ -39,8 +39,9 @@
 .MiddleBox {
     grid-row-start: 2;
     display: grid;
-    grid-template: 40% 1fr / 12% 1fr; /* rows / columns */
-    padding: 0;
+    grid-template: fit-content(40%) 1fr / 12% 1fr fit-content(50%); /* rows / columns */
+    padding-top: 15px;
+    padding-bottom: 15px;
     margin: 0;
 }
 
@@ -92,7 +93,7 @@
 
 .Result {
     grid-row-start: 1;
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 3;
 }
 
 button {
@@ -105,6 +106,7 @@ button {
     padding-bottom: 3px;
     color: var(--background-color);
     border: solid 1px var(--background-color);
+    width: fit-content;
 }
 
 button:hover {

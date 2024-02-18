@@ -74,7 +74,7 @@ export class GameProgress extends Component {
                                 default:
                                     let roundResult = Math.round(roundStatus * 1000) / 10; // XX.X%
                                     return (
-                                        <td style={{color: getColorFromScale({value: roundResult, beginColor: colors.red, endColor: colors.darkGreen})}}>
+                                        <td style={{color: getColorFromScale({value: roundResult, beginColor: colors.red, endColor: colors.darkGreen, middleColor: colors.gold})}}>
                                             {roundResult}%
                                         </td>
                                     );
