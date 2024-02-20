@@ -5,10 +5,23 @@ from typing import Annotated
 from app.authentication.authentication import oauth2_scheme, user_connected
 from app.utils import ActionStatus
 from lib.game import Game
+from lib.theme import Theme
 
 router = APIRouter(prefix="/game", tags=["Game setup"])
 
 current_game: Game | None = None
+
+
+class RoundSummary(BaseModel):
+    result: float = Field(
+        description="-1 if the round is still in progress."
+        "A number between 0 and 1 representing the accuracy of the round otherwise.",
+        example=-1)
+    capten: str = Field(
+        description="The Cap'Ten of the round, i.e. the first player.",
+        example="John Doe")
+    theme: Theme | None = Field(description="The theme of the round.",
+                                default=None)
 
 
 class GameConfig(BaseModel):
@@ -209,15 +222,20 @@ def is_round_in_progress(
 
 @router.get("/get_rounds_history")
 def get_rounds_history(
-        current_username: Annotated[str,
-                                    Depends(oauth2_scheme)]) -> list[float]:
+    current_username: Annotated[str, Depends(oauth2_scheme)]
+) -> list[RoundSummary]:
     """
-    API call to obtain the history of success of the different rounds of the game.
+    API call to obtain the history of the different rounds of the game represented as summaries (result + capten name).
 
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
-    :return: The list of round results.
+    :return: The list of round summaries.
     """
-    return [this_round.result for this_round in current_game.rounds]
+    return [
+        RoundSummary(result=this_round.result,
+                     capten=this_round.players_list[0],
+                     theme=this_round.theme)
+        for this_round in current_game.rounds
+    ]
 
 
 @router.get("/is_game_complete")

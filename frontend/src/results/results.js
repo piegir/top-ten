@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import {makeGetCall, repeat} from "../common/common.js";
 import {Username} from "../authentication/authentication.js";
-import {GameProgress} from "../game/game_progress.js";
+import {GameProgress, GameSummary} from "../game/game_progress.js";
 import {getGamePlayers} from "../game/game.js";
-import {CurrentUserNumber} from "../rounds/proposition_making.js";
 import {CurrentTheme} from "../rounds/theme_selection.js";
 import {Hypothesis, Reality, RoundResult} from "./round_result.js";
 import {Users} from "../authentication/users";
@@ -89,7 +88,7 @@ export class GameResultChecking extends Component {
                 </div>
                 <div className="MiddleBox">
                     <div className="CenteredGameProgressBox">
-                        <GameProgress/>
+                        <GameSummary/>
                     </div>
                 </div>
                 <div className="BottomBox">
