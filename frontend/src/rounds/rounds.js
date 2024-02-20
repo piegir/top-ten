@@ -5,7 +5,7 @@ import {GameProgress} from "../game/game_progress.js";
 import {currentUser, Username} from "../authentication/authentication.js";
 import {Users} from "../authentication/users.js";
 import {CurrentTheme, getTheme, SelectTheme, WaitThemeSelected} from "./theme_selection.js";
-import {CurrentUserNumber, PlayerPropositions, MakeProposition, WaitPropositionMade} from "./proposition_making.js";
+import {CurrentUserNumber, PlayerPropositions, MakeProposition} from "./proposition_making.js";
 import {MakeHypothesis, WaitHypothesisMade} from "./hypothesis_making.js";
 
 
@@ -149,9 +149,7 @@ export class PropositionMaking extends Component {
                     <PlayerPropositions/>
                     {this.state.theme === null ?
                         <WaitThemeSelected firstRoundPlayer={this.state.firstRoundPlayer}/> :
-                        this.state.currentPlayer === currentUser.username ?
-                            <MakeProposition/> :
-                            <WaitPropositionMade currentPlayer={this.state.currentPlayer}/>
+                        <MakeProposition currentPlayer={this.state.currentPlayer}/>}
                     }
                 </div>
             </div>

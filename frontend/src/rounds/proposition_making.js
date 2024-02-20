@@ -2,6 +2,7 @@ import "./player_propositions.css"
 
 import React, {Component} from "react";
 import {colors, getColorFromScale, makeGetCall, makePostCall, repeat} from "../common/common";
+import {currentUser} from "../authentication/authentication";
 
 function getUserNumber() {
     return makeGetCall("/rounds/get_number");
@@ -93,15 +94,18 @@ export class PlayerPropositions extends Component {
 
 export class MakeProposition extends Component {
 
-    state = {proposition: null}
+    state = {proposition: null, propositionMade: false}
 
     liveUpdateProposition = (event) => {
-        this.setState({proposition: event.target.value});
+        this.setState({proposition: event.target.value, propositionMade: this.state.propositionMade});
     }
 
     makePropositionHandler = () => {
         setPlayerProposition(this.state.proposition).then((success) => {
-            if (!success.status) {
+            if (success.status) {
+                this.setState({proposition: this.state.proposition, propositionMade: true});
+            }
+            else {
                 alert(success.message);
             }
         });
@@ -110,28 +114,29 @@ export class MakeProposition extends Component {
     render() {
         return (
             <div className="UserActionBox">
-                <div className="SubTitle">
-                    Make your proposition
-                </div>
-                <div className="PropositionMaking">
-                <textarea autoFocus={true} onChange={this.liveUpdateProposition} cols="50" rows="7"></textarea>
-                </div>
+                {this.state.propositionMade ?
+                    null:
+                    <>
+                        <div className="SubTitle">
+                            {this.props.currentPlayer === currentUser.username ?
+                                <>Make your proposition</>:
+                                <>Prepare your proposition</>
+                            }
+                        </div>
+                        <div className="PropositionMaking">
+                        <textarea autoFocus={true} onChange={this.liveUpdateProposition} cols="50" rows="7"></textarea>
+                        </div>
+                    </>
+                }
                 <div className="ButtonBox">
+                    {this.props.currentPlayer === currentUser.username ?
                     <button onClick={this.makePropositionHandler} className="UserActionButton">
                         Submit
-                    </button>
-                </div>
-            </div>
-        );
-    }
-}
-
-export class WaitPropositionMade extends Component {
-    render() {
-        return (
-            <div className="UserActionBox">
-                <div className="SubTitle">
-                    Waiting for {this.props.currentPlayer} to make a proposition...
+                    </button>:
+                        <div className="SubTitle">
+                            Waiting for {this.props.currentPlayer} to make a proposition...
+                        </div>
+                    }
                 </div>
             </div>
         );
