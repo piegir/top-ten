@@ -22,9 +22,11 @@ This repository is composed of three main parts:
 
 The Python Library is contained in the [lib](lib) folder. It implements the game logic as classes, one for the `game` instances, one for the `round` instances and some classes to hold data for the themes and player propositions.
 
+Another part of the library is the database (the list of themes made available to the game). This database is contained in the [database](database) folder.
+
 ### Python REST API
 
-The Python REST API is based on FastAPI. It exposes all useful game logic from the [Library](#python-library) to allow users to play a game via `POST` and `GET` calls.
+The Python REST API is contained in the [app](app) folder. It is based on FastAPI. It exposes all useful game logic from the [Library](#python-library) to allow users to play a game via `POST` and `GET` calls.
 
 It also handles most of the login logic. For example, it ensures that users are connected when playing and that there are no duplicate users.
 
@@ -32,7 +34,7 @@ This can be called the backend of the whole game. A single instance of that API 
 
 ### React Frontend
 
-The React Frontend is a React app that creates a Graphical User Interface via web browsers.
+The React Frontend is contained in the [frontend](frontend) folder. It is a React app that creates a Graphical User Interface via web browsers.
 
 It will talk to the [REST API](#python-rest-api) to handle the game logic while allowing users to interactively play the game.
 
