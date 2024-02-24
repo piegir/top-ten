@@ -2,49 +2,51 @@ import './theme_selection.css'
 import "./current_theme.css"
 
 import {Component} from "react";
-import {getColorFromScale, makeGetCall, makePostCall, repeat} from "../common/common";
 
-function getCard() {
-    return makeGetCall("/rounds/get_card");
-}
+import {
+  getColorFromScale,
+  makeGetCall,
+  makePostCall,
+  repeat
+} from "../common/common";
 
-function setTheme(theme) {
-    return makePostCall("/rounds/set_theme", theme);
-}
+function getCard() { return makeGetCall("/rounds/get_card"); }
 
-export function getTheme() {
-    return makeGetCall("/rounds/get_theme");
-}
+function setTheme(theme) { return makePostCall("/rounds/set_theme", theme); }
+
+export function getTheme() { return makeGetCall("/rounds/get_theme"); }
 
 export class SelectTheme extends Component {
 
-    state = {card: [{index: null, title: null, top1: null, top10: null},]};
+  state = {
+    card : [
+      {index : null, title: null, top1: null, top10: null},
+    ]
+  };
 
-    componentDidMount() {
-        getTheme().then((theme) => {
-            if (theme === null) {
-                getCard().then((card) => {
-                    this.setState({card: card});
-                });
-            }
-            else {
-                // Theme has already been set, i.e. game is already in progress
-                this.props.goToPropositionMakingHandler();
-            }
-        });
-    }
+  componentDidMount() {
+    getTheme().then((theme) => {
+      if (theme === null) {
+        getCard().then((card) => { this.setState({card : card}); });
+      } else {
+        // Theme has already been set, i.e. game is already in progress
+        this.props.goToPropositionMakingHandler();
+      }
+    });
+  }
 
-    setThemeHandler = (theme) => {
+  setThemeHandler =
+      (theme) => {
         setTheme(theme).then((success) => {
-            if (success.status) {
-                this.props.goToPropositionMakingHandler();
-            } else {
-                alert(success.message);
-            }
+          if (success.status) {
+            this.props.goToPropositionMakingHandler();
+          } else {
+            alert(success.message);
+          }
         });
-    }
+      }
 
-    render() {
+  render() {
         return (
             <div className="UserActionBox">
                 <div className="SubTitle">
@@ -55,7 +57,8 @@ export class SelectTheme extends Component {
                         <td>
                             Theme
                         </td>
-                        <td style={{color: getColorFromScale({value: 1, minValue: 1, maxValue: 10})}}>
+                        <td style={{
+      color: getColorFromScale({value : 1, minValue : 1, maxValue : 10})}}>
                             Top 1
                         </td>
                         <td style={{color: getColorFromScale({value: 10, minValue: 1, maxValue: 10})}}>
@@ -68,7 +71,8 @@ export class SelectTheme extends Component {
                                 <td>
                                     {themeObject.title}
                                 </td>
-                                <td style={{color: getColorFromScale({value: 1, minValue: 1, maxValue: 10})}}>
+                                <td style={{
+      color: getColorFromScale({value : 1, minValue : 1, maxValue : 10})}}>
                                     {themeObject.top1}
                                 </td>
                                 <td style={{color: getColorFromScale({value: 10, minValue: 1, maxValue: 10})}}>
@@ -76,7 +80,7 @@ export class SelectTheme extends Component {
                                 </td>
                                 <td>
                                     <button onClick={() => {
-                                        this.setThemeHandler(themeObject)
+      this.setThemeHandler(themeObject)
                                     }}>
                                         Select
                                     </button>
@@ -112,46 +116,45 @@ export class CurrentTheme extends Component {
             if (theme === null) {
                 // Get theme until it's not null
                 this.currentThemeGettingId = repeat(this.getCurrentTheme, 100);
-            }
-        });
-    }
+  }
+});
+}
 
-    currentThemeGettingId = repeat(this.getCurrentTheme, 100);
+currentThemeGettingId = repeat(this.getCurrentTheme, 100);
 
-    componentWillUnmount() {
-        clearTimeout(this.currentThemeGettingId);
-    }
+componentWillUnmount() { clearTimeout(this.currentThemeGettingId); }
 
-    render() {
+render() {
         return (
             <div className="ShowCurrentTheme">
-                {this.state.theme !== null ?
-                    <table className="CurrentTheme">
-                        <tr>
-                            <th>
-                                Theme
-                            </th>
+                {
+    this.state.theme !== null
+        ? <table className = "CurrentTheme"><tr><th>Theme<
+              /th>
                             <th style={{color: getColorFromScale({value: 1, minValue: 1, maxValue: 10})}}>
                                 Top 1
                             </th>
-                            <th style={{color: getColorFromScale({value: 10, minValue: 1, maxValue: 10})}}>
-                                Top 10
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                                {this.state.theme.title}
-                            </td>
+              <th style = {
+                {
+                  color: getColorFromScale(
+                      {value : 10, minValue : 1, maxValue : 10})
+                }
+              }>Top 10 < /th>
+                        </tr > <tr>
+              <td>{this.state.theme.title} <
+              /td>
                             <td style={{color: getColorFromScale({value: 1, minValue: 1, maxValue: 10})}}>
                                 {this.state.theme.top1}
-                            </td>
-                            <td style={{color: getColorFromScale({value: 10, minValue: 1, maxValue: 10})}}>
-                                {this.state.theme.top10}
-                            </td>
-                        </tr>
-                    </table> :
+                            </td >
+              <td style = {
+                {
+                  color: getColorFromScale(
+                      {value : 10, minValue : 1, maxValue : 10})
+                }
+              }>{this.state.theme.top10} < /td>
+                        </tr >
+              </table> :
                     null}
-            </div>
-        );
+            </div>);
     }
 }

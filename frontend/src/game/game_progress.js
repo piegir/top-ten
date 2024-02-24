@@ -1,53 +1,50 @@
 import "./game_progress.css"
 
 import {Component} from "react";
-import {getGameOptionsFromConfig} from "./game_start";
+
 import {colors, getColorFromScale, makeGetCall} from "../common/common";
 
+import {getGameOptionsFromConfig} from "./game_start";
 
-function getRoundsHistory() {
-    return makeGetCall("/game/get_rounds_history");
-}
+function getRoundsHistory() { return makeGetCall("/game/get_rounds_history"); }
 
 function getGameOptions() {
-    return makeGetCall("/game/get_config").then((gameConfig) => {
-        return getGameOptionsFromConfig(gameConfig);
-    });
+  return makeGetCall("/game/get_config")
+      .then((gameConfig) => { return getGameOptionsFromConfig(gameConfig); });
 }
 
 let status = {
-    notStarted: null,
-    inProgress: -1,
+  notStarted : null,
+  inProgress : -1,
 }
 
-
 function displayRoundPercentage(rawResult) {
-    switch (rawResult) {
-        case status.notStarted:
-            return (
-                <td>
+  switch (rawResult) {
+  case status.notStarted:
+    return (
+        <td>
 
-                </td>
+        </td>
             );
         case status.inProgress:
             return (
                 <td>
                     ?
-                </td>
-            );
-        default:
-            let roundResult = Math.round(rawResult * 1000) / 10; // XX.X%
-            return (
-                <td style={{
-                    color: getColorFromScale({
-                        value: roundResult,
-                        beginColor: colors.red,
-                        endColor: colors.darkGreen,
-                        middleColor: colors.gold
-                    })
-                }}>
-                    {roundResult}%
-                </td>
+                </td>);
+  default:
+    let roundResult = Math.round(rawResult * 1000) / 10; // XX.X%
+    return (
+        <td style = {
+          {
+            color: getColorFromScale({
+              value : roundResult,
+              beginColor : colors.red,
+              endColor : colors.darkGreen,
+              middleColor : colors.gold
+            })
+          }
+        }>{roundResult} %
+            </td>
             );
     }
 }
@@ -81,37 +78,29 @@ export class GameProgress extends Component {
                     <tr>
                         <td>
                             Round
-                        </td>
-                        {this.state.roundsHistory.map((roundSummary, roundIndex) => {
-                            return (
-                                <td>
-                                    {roundIndex + 1}
-                                </td>
+                        </td>{
+                this.state.roundsHistory.map(
+                    (roundSummary, roundIndex) => {return (
+                        <td>{
+                            roundIndex + 1} < /td>
                             )
                         })}
-                    </tr>
-                    <tr>
-                        <td>
-                            Cap'Ten
-                        </td>
+                    </tr > <tr><td>Cap'Ten </td>
                         {this.state.roundsHistory.map((roundSummary) => {
                             return (
                                 <td>
                                     {roundSummary.capten}
-                                </td>
-                            )
-                        })}
-                    </tr>
+                                </td>)})} <
+        /tr>
                     <tr>
                         <td>
                             Status
-                        </td>
-                        {this.state.roundsHistory.map((roundSummary) => {
-                            return displayRoundPercentage(roundSummary.result);
-                        })}
-                    </tr>
-                </table>
-            </div>
+                        </td >
+        {this.state.roundsHistory.map((roundSummary) => {
+          return displayRoundPercentage(roundSummary.result);
+        })} < /tr>
+                </table >
+        </div>
         )
     }
 }
@@ -127,34 +116,24 @@ export class GameSummary extends GameProgress {
                         <td>
                             Round
                         </td>
-                        <td>
-                            Cap'Ten
-                        </td>
+        <td>Cap'Ten <
+            /td>
                         <td>
                             Theme
                         </td>
-                        <td>
-                            Status
-                        </td>
-                    </tr>
-                    {this.state.roundsHistory.map((roundSummary, roundIndex) => {
-                        return (
-                            <tr>
-                                <td>
-                                    {roundIndex + 1}
-                                </td>
+        <td>Status</td>
+                    </tr>{this.state.roundsHistory.map(
+            (roundSummary, roundIndex) => {return (
+                <tr><td>{roundIndex + 1} <
+                /td>
                                 <td>
                                     {roundSummary.capten}
-                                </td>
-                                <td>
-                                    {roundSummary.theme.title}
-                                </td>
+                                </td >
+                <td>{roundSummary.theme.title} <
+                /td>
                                 {displayRoundPercentage(roundSummary.result)}
-                            </tr>
-                        )
-                    })}
-                </table>
-            </div>
-        )
-    }
+                            </tr >)})} <
+        /table>
+            </div >)
+  }
 }
