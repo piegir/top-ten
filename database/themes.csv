@@ -1,7 +1,7 @@
 title,top1,top10
 Invente une application sur téléphone,Utile,Inutile
 "Tu es perdu dans le désert, tu aperçois derrière une dune...",Utile,Inutile
-"Ton partenaire fouille ton historique de ton pc, il découvre...",Génant,Génial
+"Ton partenaire fouille ton historique internet, il découvre...",Génant,Génial
 "Soirée déguisée de dernière minute, il ne reste qu'un seul costume chez le vendeur",Génant,Génial
 "Avec une faim de loup, tu ouvres le frigo et tu trouves ...",Miam,Berk
 "Un animal s'est échappé du zoo, c'est le ...",Oskour,Osef
@@ -77,7 +77,7 @@ Vous voilà bien habillé(e) ! Mais est-ce la bonne tenue pour aller en randonn�
 "Oups, il n'y a plus de papier ! Avec quoi s'essuyer ?",Inefficace,Très efficace
 Que venez-vous de poster sur Instagram ?,Évènement banal,Évènement inoubliable
 "Après avoir téléphoné à sa maison, E.T. passe un second coup de fil : ""E.T. téléphone...""",Inutile pour se barrer de la Terre,Utile pour se barrer de la Terre
-Citez un métiez qui rapporte...,Moins d'argent,Plus d'argent
+Citez un métier qui rapporte...,Moins d'argent,Plus d'argent
 Vous postulez pour un poste d'expert(e) comptable. Quel passe-temps est indiqué dans votre CV ?,Ça fera fuir l'employeur,Ça va convaincre l'employeur
 Vous êtes une sorcière qui a créé une potion de métamorphose. Vous l'offrez au Cap'Ten qui la boit... En quel objet se transforme-t-il ?,Pire pour lui,Plus sympa pour lui
 Bébé a dit son premier mot ! Qu'a-t-il dit ?,Moins probable,Plus probable
@@ -102,7 +102,6 @@ Le Cap'Ten fait la une des journaux. Quel est le gros titre ?,Peu flatteur,Très
 Racontez un secret que quelqu'un peut avoir.,Petite cachotterie,Grand secret d'état
 C'est la grande compétition du plus gros mangeur de hotdogs ! Quel personnage (réel ou fictif) participe ?,Perdant assuré ,Gagnant assuré
 "Imaginez le thème de votre mariage (vêtements, décoration, menu...).",Pire thème,Meilleur thème
-"Ce que vous aimez chez Daniela, c'est... ",Peu attirant,Très attirant
 "Surprise ! La mère du Cap'Ten lui a changé son papier peint, ses rideaux et sa couette avec les mêmes motifs. Lesquels ?",Pire idée,Meilleure idée
 Un chauffard vous coupe la route : insultez-le.,Façon la moins violente,Façon la plus virulente
 Quelle destination choisir pour partir en vacances ?,Celle qui fait le moins rêver,Celle qui fait le plus rêver
@@ -118,7 +117,7 @@ This is the voice! Vous êtes dans le fauteuil rouge qui tourne. Écoutez le can
 Qu'y a-t-il dans votre valise pour les sports d'hiver ?,Moins utile,Plus utile
 "Menacez votre enfant : ""Si tu ne finis pas tes épinards...""",Pas trop méchant,Très très méchant
 Quelle personne (réelle ou fictive) recrutez-vous dans votre équipe pour un escape game ?,Pire recrue,Meilleure recrue
-Trouvez un métiez de reconversion pour le pape.,Moins probable,Plus probable
+Trouvez un métier de reconversion pour le pape.,Moins probable,Plus probable
 Vous présentez le téléachat : montrez et vantez les atouts du robots de cuisine Macho3000.,Robot que personne n'achète,Robot que tout le monde s'arrache
 "Avant de poster la photo de vous à la plage sur Instagram, vous faites une petite retouche Photoshop pour frimer... Que changez-vous ?",Pas efficace,Très efficace
 Vous avez une machine à remonter le temps. Quel évènement allez-vous voir ?,Jamais de la vie,Un rêve qui se réalise
@@ -143,7 +142,7 @@ Imaginez un avis lu sur TripAdvisor à propos d'un restaurant.,Ça ne donne pas 
 Adressez-vous à l'un des joueurs et clamez 2 phrases qui riment.,Franchement pas romantique,Hyper romantique
 Quelle appli pour la vie ? Citez une seule application smartphone.,Inutile,Indispensable
 Vous êtes conférencier/ère dans un amphi et vous annoncez le sujet de votre exposé.,Celui qui n'intéressera personne,Celui qui remplit la salle
-"Pour convaincre les Vikings d'aller au Walhalla (le paradis viking), on leur promet...",Peu encourageant,Très encourageant
+"Pour convaincre les Vikings d'aller au Valhalla (le paradis viking), on leur promet...",Peu encourageant,Très encourageant
 Vous aimeriez plonger dans une piscine remplie de...,Pire,Plus génial
 Un des joueurs est un vampire... Dévoilez son identité et déclarez comment vous l'avez démasqué.,Petit indice,Preuve irréfutable
 Dites une phrase qui peut être entendue dans une téléréalité.,Moins probable,Plus probable
@@ -212,7 +211,7 @@ On vous offre un place pour un concert unique. Lequel ?,Mauvaise surprise,Très 
 Votre collègue vous envoie une photo de ses vacances. Que représente-t-elle ?,Je préfère encore rester au boulot,Jaloux...
 Citez un objet.,Celui que personne ne possède,Celui que tout le monde possède
 "Vous rentrez à la maison après une soirée bien arrosée et tentez d'être discret(e), mais vous avez quelque chose avec vous qui fait du bruit... Quoi ?","Ça va, le son est discret","Bruyant, vous allez vous faire griller"
-"""Maman, voici Kevin, il est..."" : complétez avec son métiez.",Pire métier,Métier rêvé par les beaux-parents
+"""Maman, voici Kevin, il est..."" : complétez avec son métier.",Pire métier,Métier rêvé par les beaux-parents
 Vous avez tellement attendu en faisant la queue à la Poste que vous auriez eu le temps de...,Activité courte,Activité bien longue
 "Le Cap'Ten apprend, après un test ADN, qu'il est de la famille de...",Pire nouvelle,Meilleure nouvelle
 "Vous êtes les lutins du Père Noël. Cette année, vous allez distribuer à tous les humains le même cadeau. Proposez une idée au Père Noël.",Pire cadeau,Cadeau le plus génial
