@@ -34,7 +34,7 @@ This can be called the backend of the whole game. A single instance of that API 
 
 ### React Frontend
 
-The React Frontend is contained in the [frontend](frontend) folder. It is a React app that creates a Graphical User Interface via web browsers.
+The React Frontend is mainly contained in the [frontend](frontend) folder. It is a React app that creates a Graphical User Interface via web browsers.
 
 It will talk to the [REST API](#python-rest-api) to handle the game logic while allowing users to interactively play the game.
 
