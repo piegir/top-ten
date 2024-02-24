@@ -101,14 +101,16 @@ function makeRestApiCall(endpoint, endpointType, inputData = null) {
         "Content-Type" : "application/json",
       },
       body : inputData !== null ? JSON.stringify(inputData) : "",
-    } break;
+    };
+    break;
   case endpointTypes.GET:
     requestOptions = {
       method : "GET",
       headers : {
         "Authorization" : `Bearer ${currentUser.username}`,
       },
-    } break;
+    };
+    break;
   default:
     throw new SyntaxError("Wrong endpoint type provided.");
   }
