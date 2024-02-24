@@ -1,6 +1,6 @@
 # Top Ten
 
-Python and React-based implementation of "Top Ten" game from Cocktail Games (https://www.cocktailgames.com/en/game/top-ten/).
+Python and React-based implementation of ["Top Ten" game from Cocktail Games](https://www.cocktailgames.com/en/game/top-ten/).
 
 **Table of Contents**
 
