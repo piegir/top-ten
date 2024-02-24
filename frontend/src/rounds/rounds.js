@@ -1,6 +1,6 @@
 import './rounds.css';
 import {makeGetCall, repeat} from "../common/common.js";
-import React, {Component} from "react";
+import {Component} from "react";
 import {GameProgress} from "../game/game_progress.js";
 import {currentUser, Username} from "../authentication/authentication.js";
 import {Users} from "../authentication/users.js";

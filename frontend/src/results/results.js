@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import {Component} from "react";
 import {makeGetCall, repeat} from "../common/common.js";
 import {Username} from "../authentication/authentication.js";
 import {GameProgress, GameSummary} from "../game/game_progress.js";

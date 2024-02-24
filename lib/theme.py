@@ -18,4 +18,4 @@ class Theme(BaseModel):
         example="Plus grande menace")
 
     def __str__(self) -> str:
-        return f"{self.title}\nTop 1 : {self.top1}\nTop 10 : {self.top10}"
+        return f"- Title: {self.title}\n- Top 1 : {self.top1}\n- Top 10 : {self.top10}"

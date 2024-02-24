@@ -1,4 +1,3 @@
-import React from "react";
 import {currentUser} from "../authentication/authentication.js";
 
 export const colors = {
@@ -63,8 +62,13 @@ export function repeat(handler, timeout) {
     }
 }
 
-let restApiIp = "https://top-ten-rest-api.onrender.com";
-//let restApiIp = "http://0.0.0.0:80"; // For local testing
+let restApiIp;
+if (process.env.REACT_APP_LOCAL_TESTING) {
+    restApiIp = "http://0.0.0.0:80";
+}
+else {
+    restApiIp = "https://top-ten-rest-api.onrender.com";
+}
 
 let endpointTypes = {
     GET: 0,

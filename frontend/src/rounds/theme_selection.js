@@ -1,7 +1,7 @@
 import './theme_selection.css'
 import "./current_theme.css"
 
-import React, {Component} from "react";
+import {Component} from "react";
 import {getColorFromScale, makeGetCall, makePostCall, repeat} from "../common/common";
 
 function getCard() {

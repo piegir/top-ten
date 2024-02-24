@@ -5,7 +5,7 @@ from typing import Annotated
 from app.authentication.authentication import oauth2_scheme
 from app.utils import ActionStatus
 from app.game import game
-from lib.player_proposition import Proposition, PlayerProposition, NumberedPlayerProposition
+from lib.player_proposition import PlayerProposition, NumberedPlayerProposition
 from lib.theme import Theme
 
 router = APIRouter(prefix="/rounds", tags=["Round control"])
@@ -154,7 +154,7 @@ def get_current_player(
 
 @router.post("/set_player_proposition")
 def set_player_proposition(
-        proposition: Proposition,
+        proposition: str,
         current_username: Annotated[str,
                                     Depends(oauth2_scheme)]) -> ActionStatus:
     """

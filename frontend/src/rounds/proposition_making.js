@@ -1,6 +1,6 @@
 import "./player_propositions.css"
 
-import React, {Component} from "react";
+import {Component} from "react";
 import {colors, getColorFromScale, makeGetCall, makePostCall, repeat} from "../common/common";
 import {currentUser} from "../authentication/authentication";
 
@@ -9,7 +9,7 @@ function getUserNumber() {
 }
 
 function setPlayerProposition(proposition) {
-    return makePostCall("/rounds/set_player_proposition", {proposition: proposition});
+    return makePostCall("/rounds/set_player_proposition", proposition);
 }
 
 export function getPlayerPropositions() {

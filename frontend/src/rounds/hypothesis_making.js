@@ -1,6 +1,6 @@
 import "./player_propositions.css"
 
-import React, {Component} from "react";
+import {Component} from "react";
 import {getPlayerPropositions} from "./proposition_making.js"
 import {getRoundPlayers} from "./rounds";
 import {currentUser} from "../authentication/authentication";
