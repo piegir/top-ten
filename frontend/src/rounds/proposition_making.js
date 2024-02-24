@@ -14,7 +14,8 @@ import {
 function getUserNumber() { return makeGetCall("/rounds/get_number"); }
 
 function setPlayerProposition(proposition) {
-  return makePostCall("/rounds/set_player_proposition", proposition);
+  return makePostCall("/rounds/set_player_proposition",
+                      {proposition : proposition});
 }
 
 export function getPlayerPropositions() {

@@ -163,14 +163,13 @@ export class ThemeSelection extends Component {
                     <PlayerPropositions/>
                     {
       this.state.theme === null ? <WaitThemeSelected firstRoundPlayer = {
-        this.state.firstRoundPlayer
+      this.state.firstRoundPlayer
       } /> :
-                        <MakeProposition currentPlayer={this.state.currentPlayer}/>}
-                  }
+                            <MakeProposition currentPlayer={this.state.currentPlayer}/>}
                 </div>
             </div>
         );
-                }
+                  }
                 }
 
                 export class HypothesisMaking extends Component {
