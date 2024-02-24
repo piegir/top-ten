@@ -30,7 +30,7 @@ The Python REST API is contained in the [app](app) folder. It is based on FastAP
 
 It also handles most of the login logic. For example, it ensures that users are connected when playing and that there are no duplicate users.
 
-This can be called the backend of the whole game. A single instance of that API is run for the full game.
+This is the backend of the whole game. A single instance of that API is run for the full game.
 
 ### React Frontend
 
