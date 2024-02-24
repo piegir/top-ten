@@ -1,5 +1,5 @@
 import './authentication.css';
-import React, {Component} from "react";
+import {Component} from "react";
 import {makeGetCall, makePostCall, repeat} from "../common/common.js";
 
 export let currentUser = {

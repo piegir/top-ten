@@ -1,6 +1,6 @@
 import "./player_top_table.css"
 
-import React, {Component} from "react";
+import {Component} from "react";
 import {getRoundPlayers} from "../rounds/rounds.js";
 import {currentUser} from "../authentication/authentication";
 import {colors, getColorFromScale, makeGetCall, makePostCall} from "../common/common";
