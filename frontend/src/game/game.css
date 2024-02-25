@@ -1,29 +1,29 @@
 .UserActionBox {
-    grid-column-start: 2;
+  grid-column-start: 2;
 }
 
 .GamePreparation {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    column-gap: 20px;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  column-gap: 20px;
 }
 
 .GamePreparationOption {
-    grid-column-start: 1;
-    text-align: right;
-    padding-top: 30px;
+  grid-column-start: 1;
+  text-align: right;
+  padding-top: 30px;
 }
 
 .GamePreparationField {
-    grid-column-start: 2;
-    text-align: left;
-    padding-top: 30px;
+  grid-column-start: 2;
+  text-align: left;
+  padding-top: 30px;
 }
 
 .NumberInput {
-    width: 40px;
-    text-align: center;
-    font-size: 1.5vw;
-    padding: 3px;
-    border-radius: 10px;
+  width: 40px;
+  text-align: center;
+  font-size: 1.5vw;
+  padding: 3px;
+  border-radius: 10px;
 }

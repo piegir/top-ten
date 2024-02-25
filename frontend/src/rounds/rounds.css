@@ -1,12 +1,12 @@
 .PropositionMaking {
-    display: flex;
+  display: flex;
 }
 
 .ShowCurrentUserNumber {
-    grid-column-start: 1;
-    text-align: center;
+  grid-column-start: 1;
+  text-align: center;
 }
 
 .CurrentUserNumber {
-    font-size: 2vw;
+  font-size: 2vw;
 }

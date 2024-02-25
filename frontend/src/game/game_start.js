@@ -1,46 +1,47 @@
-import {Component} from "react";
+import {Component} from 'react';
 
-import {currentUser, userLogout} from "../authentication/authentication";
-import {getConnectedUsers} from "../authentication/users";
-import {makeGetCall, makePostCall, repeat} from "../common/common";
+import {currentUser, userLogout} from '../authentication/authentication';
+import {getConnectedUsers} from '../authentication/users';
+import {makeGetCall, makePostCall, repeat} from '../common/common';
 
-import {getGamePlayers} from "./game";
+import {getGamePlayers} from './game';
 
 function createGameConfigFromOptions(gameOptions) {
   return getConnectedUsers().then((usersList) => {
     return {
-      "players_list" : usersList,
-      "max_nb_rounds" : gameOptions["Number of rounds"],
-      "starting_player_index" : gameOptions["Starting Player Index"],
-      "nb_themes_per_card" : gameOptions["Number of themes per card"],
+      players_list: usersList,
+      max_nb_rounds: gameOptions['Number of rounds'],
+      starting_player_index: gameOptions['Starting Player Index'],
+      nb_themes_per_card: gameOptions['Number of themes per card'],
     };
   });
 }
 
 export function getGameOptionsFromConfig(gameConfig) {
   return {
-    "Number of rounds" : gameConfig["max_nb_rounds"],
-    "Starting Player Index" : gameConfig["starting_player_index"],
-    "Number of themes per card" : gameConfig["nb_themes_per_card"],
+    'Number of rounds': gameConfig['max_nb_rounds'],
+    'Starting Player Index': gameConfig['starting_player_index'],
+    'Number of themes per card': gameConfig['nb_themes_per_card'],
   };
 }
 
 function setTempGameConfig(gameOptions) {
   return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
-    return makePostCall("/game/set_temp_config", gameConfig);
+    return makePostCall('/game/set_temp_config', gameConfig);
   });
 }
 
 function getTempGameOptions() {
-  return makeGetCall("/game/get_temp_config")
-      .then((gameConfig) => { return getGameOptionsFromConfig(gameConfig); });
+  return makeGetCall('/game/get_temp_config').then((gameConfig) => {
+    return getGameOptionsFromConfig(gameConfig);
+  });
 }
 
 function startGame(gameOptions) {
   return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
-    return makePostCall("/game/start", gameConfig).then((startGameSuccess) => {
+    return makePostCall('/game/start', gameConfig).then((startGameSuccess) => {
       if (startGameSuccess.status) {
-        return makePostCall("/game/start_new_round");
+        return makePostCall('/game/start_new_round');
       } else {
         alert(startGameSuccess.message);
         return startGameSuccess;
@@ -49,17 +50,20 @@ function startGame(gameOptions) {
   });
 }
 
-function isGameStarted() { return makeGetCall("/game/is_started"); }
+function isGameStarted() {
+  return makeGetCall('/game/is_started');
+}
 
-function isGameComplete() { return makeGetCall("/game/is_game_complete"); }
+function isGameComplete() {
+  return makeGetCall('/game/is_game_complete');
+}
 
 export class GameSetup extends Component {
-
   state = {
-    gameOptions : {
-      "Number of rounds" : null,
-      "Number of themes per card": null,
-      "Starting Player Index": null,
+    gameOptions: {
+      'Number of rounds': null,
+      'Number of themes per card': null,
+      'Starting Player Index': null,
     },
     gameStarted: false,
     gameComplete: false,
@@ -73,11 +77,11 @@ export class GameSetup extends Component {
         if (!gameStarted) {
           // A user is allowed to join if no game is started
           this.setState({
-            gameOptions : gameOptions,
-            gameStarted : gameStarted,
-            gameComplete : false,
-            firstPlayer : this.state.firstPlayer,
-            allowedUser : true,
+            gameOptions: gameOptions,
+            gameStarted: gameStarted,
+            gameComplete: false,
+            firstPlayer: this.state.firstPlayer,
+            allowedUser: true,
           });
           return;
         }
@@ -85,11 +89,11 @@ export class GameSetup extends Component {
           if (gameComplete) {
             // A user is allowed to join if the previous game has been completed
             this.setState({
-              gameOptions : gameOptions,
-              gameStarted : gameStarted,
-              gameComplete : true,
-              firstPlayer : this.state.firstPlayer,
-              allowedUser : true,
+              gameOptions: gameOptions,
+              gameStarted: gameStarted,
+              gameComplete: true,
+              firstPlayer: this.state.firstPlayer,
+              allowedUser: true,
             });
             return;
           }
@@ -98,18 +102,18 @@ export class GameSetup extends Component {
               // A user is allowed to join if he is part of the current started
               // game, he is sent to the next step of the game
               this.setState({
-                gameOptions : gameOptions,
-                gameStarted : this.state.gameStarted,
-                gameComplete : false,
-                firstPlayer : this.state.firstPlayer,
-                allowedUser : true,
+                gameOptions: gameOptions,
+                gameStarted: this.state.gameStarted,
+                gameComplete: false,
+                firstPlayer: this.state.firstPlayer,
+                allowedUser: true,
               });
               this.props.goToThemeSelectionHandler();
               return;
             }
             // In any other case, the user is not allowed to join. Log him out
             // and send him back to login page.
-            alert(`You cannot join a game that you are not part of.`);
+            alert('You cannot join a game that you are not part of.');
             userLogout().then((logoutSuccess) => {
               if (logoutSuccess.status) {
                 currentUser.username = null;
@@ -133,158 +137,160 @@ export class GameSetup extends Component {
    * the game options
    * - Does the live visual update of options for other users
    */
-  checkGameStatus =
-      () => {
-        if (!this.state.allowedUser) {
-          this.gameCheckingId = repeat(this.checkGameStatus, 100);
-          return;
-        }
-        isGameStarted().then((gameStarted) => {
-          if (gameStarted && !this.state.gameComplete) {
-            this.props.goToThemeSelectionHandler();
-            return;
-          }
-          getConnectedUsers().then((usersList) => {
-            let firstPlayer = usersList[0];
-            if (firstPlayer === currentUser.username) {
-              this.setState({
-                gameOptions : this.state.gameOptions,
-                gameStarted : gameStarted,
-                gameComplete : this.state.gameComplete,
-                firstPlayer : firstPlayer,
-                allowedUser : this.state.allowedUser,
-              });
-              this.gameCheckingId = repeat(this.checkGameStatus, 100);
-            } else {
-              getTempGameOptions().then((gameOptions) => {
-                this.setState({
-                  gameOptions : gameOptions,
-                  gameStarted : gameStarted,
-                  gameComplete : this.state.gameComplete,
-                  firstPlayer : firstPlayer,
-                  allowedUser : this.state.allowedUser,
-                });
-                this.gameCheckingId = repeat(this.checkGameStatus, 100);
-              });
-            }
-          });
-        });
+  checkGameStatus = () => {
+    if (!this.state.allowedUser) {
+      this.gameCheckingId = repeat(this.checkGameStatus, 100);
+      return;
+    }
+    isGameStarted().then((gameStarted) => {
+      if (gameStarted && !this.state.gameComplete) {
+        this.props.goToThemeSelectionHandler();
+        return;
       }
+      getConnectedUsers().then((usersList) => {
+        let firstPlayer = usersList[0];
+        if (firstPlayer === currentUser.username) {
+          this.setState({
+            gameOptions: this.state.gameOptions,
+            gameStarted: gameStarted,
+            gameComplete: this.state.gameComplete,
+            firstPlayer: firstPlayer,
+            allowedUser: this.state.allowedUser,
+          });
+          this.gameCheckingId = repeat(this.checkGameStatus, 100);
+        } else {
+          getTempGameOptions().then((gameOptions) => {
+            this.setState({
+              gameOptions: gameOptions,
+              gameStarted: gameStarted,
+              gameComplete: this.state.gameComplete,
+              firstPlayer: firstPlayer,
+              allowedUser: this.state.allowedUser,
+            });
+            this.gameCheckingId = repeat(this.checkGameStatus, 100);
+          });
+        }
+      });
+    });
+  };
 
   gameCheckingId = repeat(this.checkGameStatus, 100);
 
-  componentWillUnmount() { clearTimeout(this.gameCheckingId); }
+  componentWillUnmount() {
+    clearTimeout(this.gameCheckingId);
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if ((this.state.firstPlayer === currentUser.username) &&
-        (this.state.gameOptions !== prevState.gameOptions)) {
+    if (
+      this.state.firstPlayer === currentUser.username &&
+      this.state.gameOptions !== prevState.gameOptions
+    ) {
       setTempGameConfig(this.state.gameOptions).then();
     }
   }
 
-  liveUpdateNumberOfRounds =
-      (event) => {
-        this.setState({
-          gameOptions : {
-            "Number of rounds" : event.target.value,
-            "Number of themes per card" :
-                this.state.gameOptions["Number of themes per card"],
-            "Starting Player Index" :
-                this.state.gameOptions["Starting Player Index"],
-          },
-          gameStarted : this.state.gameStarted,
-          gameComplete : this.state.gameComplete,
-          firstPlayer : this.state.firstPlayer,
-          allowedUser : this.state.allowedUser,
-        });
-      }
+  liveUpdateNumberOfRounds = (event) => {
+    this.setState({
+      gameOptions: {
+        'Number of rounds': event.target.value,
+        'Number of themes per card':
+          this.state.gameOptions['Number of themes per card'],
+        'Starting Player Index':
+          this.state.gameOptions['Starting Player Index'],
+      },
+      gameStarted: this.state.gameStarted,
+      gameComplete: this.state.gameComplete,
+      firstPlayer: this.state.firstPlayer,
+      allowedUser: this.state.allowedUser,
+    });
+  };
 
-  liveUpdateNumberOfThemesPerCard =
-      (event) => {
-        this.setState({
-          gameOptions : {
-            "Number of rounds" : this.state.gameOptions["Number of rounds"],
-            "Number of themes per card" : event.target.value,
-            "Starting Player Index" :
-                this.state.gameOptions["Starting Player Index"],
-          },
-          gameStarted : this.state.gameStarted,
-          gameComplete : this.state.gameComplete,
-          firstPlayer : this.state.firstPlayer,
-          allowedUser : this.state.allowedUser,
-        });
-      }
+  liveUpdateNumberOfThemesPerCard = (event) => {
+    this.setState({
+      gameOptions: {
+        'Number of rounds': this.state.gameOptions['Number of rounds'],
+        'Number of themes per card': event.target.value,
+        'Starting Player Index':
+          this.state.gameOptions['Starting Player Index'],
+      },
+      gameStarted: this.state.gameStarted,
+      gameComplete: this.state.gameComplete,
+      firstPlayer: this.state.firstPlayer,
+      allowedUser: this.state.allowedUser,
+    });
+  };
 
-  liveUpdateStartingPlayerIndex =
-      (event) => {
-        this.setState({
-          gameOptions : {
-            "Number of rounds" : this.state.gameOptions["Number of rounds"],
-            "Number of themes per card" :
-                this.state.gameOptions["Number of themes per card"],
-            "Starting Player Index" : event.target.value,
-          },
-          gameStarted : this.state.gameStarted,
-          gameComplete : this.state.gameComplete,
-          firstPlayer : this.state.firstPlayer,
-          allowedUser : this.state.allowedUser,
-        });
-      }
+  liveUpdateStartingPlayerIndex = (event) => {
+    this.setState({
+      gameOptions: {
+        'Number of rounds': this.state.gameOptions['Number of rounds'],
+        'Number of themes per card':
+          this.state.gameOptions['Number of themes per card'],
+        'Starting Player Index': event.target.value,
+      },
+      gameStarted: this.state.gameStarted,
+      gameComplete: this.state.gameComplete,
+      firstPlayer: this.state.firstPlayer,
+      allowedUser: this.state.allowedUser,
+    });
+  };
 
   optionsCallbacks = {
-    "Number of rounds" : this.liveUpdateNumberOfRounds,
-    "Number of themes per card": this.liveUpdateNumberOfThemesPerCard,
-    "Starting Player Index": this.liveUpdateStartingPlayerIndex,
-  }
+    'Number of rounds': this.liveUpdateNumberOfRounds,
+    'Number of themes per card': this.liveUpdateNumberOfThemesPerCard,
+    'Starting Player Index': this.liveUpdateStartingPlayerIndex,
+  };
 
-  startGameHandler =
-      () => {
-        startGame(this.state.gameOptions).then((startSuccess) => {
-          if (startSuccess.status) {
-            this.props.goToThemeSelectionHandler();
-          } else {
-            alert(startSuccess.message);
-          }
-        });
+  startGameHandler = () => {
+    startGame(this.state.gameOptions).then((startSuccess) => {
+      if (startSuccess.status) {
+        this.props.goToThemeSelectionHandler();
+      } else {
+        alert(startSuccess.message);
       }
+    });
+  };
 
   render() {
     if (!this.state.allowedUser) {
       return null;
     }
-        return (
-            <div className="UserActionBox">
-                <div className="SubTitle">
-                    {this.state.firstPlayer === currentUser.username ?
-                        <>Game Preparation</> :
-                        <>{this.state.firstPlayer} is preparing the game...</>}
+    return (
+      <div className="UserActionBox">
+        <div className="SubTitle">
+          {this.state.firstPlayer === currentUser.username ? (
+            <>Game Preparation</>
+          ) : (
+            <>{this.state.firstPlayer} is preparing the game...</>
+          )}
+        </div>
+        <div>
+          {Object.keys(this.optionsCallbacks).map((optionName) => {
+            return (
+              <div className="GamePreparation">
+                <div className="GamePreparationOption">{optionName}:</div>
+                <div className="GamePreparationField">
+                  {this.state.firstPlayer === currentUser.username ? (
+                    <input
+                      type="text"
+                      value={this.state.gameOptions[optionName]}
+                      className="NumberInput"
+                      onChange={this.optionsCallbacks[optionName]}
+                    />
+                  ) : (
+                    this.state.gameOptions[optionName]
+                  )}
                 </div>
-                <div>
-                    {Object.keys(this.optionsCallbacks).map((optionName) => {
-                        return (
-                            <div className="GamePreparation">
-                                <div className="GamePreparationOption">
-                                    {optionName}:
-                                </div>
-                                <div className="GamePreparationField">
-                                    {
-      this.state.firstPlayer === currentUser.username ? < input
-      type = "text"
-      value = {this.state.gameOptions[optionName]} className = "NumberInput"
-      onChange =
-      { this.optionsCallbacks[optionName]
-      } /> : this.state.gameOptions[optionName]}
-                                </div >
+              </div>
+            );
+          })}
+        </div>
+        {this.state.firstPlayer === currentUser.username ? (
+          <div className="ButtonBox">
+            <button onClick={this.startGameHandler}>Start Game</button>
           </div>
-                        )
-                    })}
-                </div>{
-              this.state.firstPlayer === currentUser.username
-              ? <div className = "ButtonBox">
-              <button onClick = {this.startGameHandler}>Start
-                    Game</button>
-                </div>
-                : null} < /div>
-        );
-    }
+        ) : null}{' '}
+      </div>
+    );
+  }
 }

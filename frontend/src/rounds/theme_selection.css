@@ -1,63 +1,65 @@
 .ThemesTable {
-    width: 100%;
-    word-break: break-word;
-    border-color: var(--subtitle-color);
+  width: 100%;
+  word-break: break-word;
+  border-color: var(--subtitle-color);
 }
 
 .ThemesTable td:first-child {
-    width: 55%;
-    border-left: solid 2px var(--subtitle-color);
+  width: 55%;
+  border-left: solid 2px var(--subtitle-color);
 }
 
 .ThemesTable td:last-child {
-    text-align: center;
-    width: 1%;
-    white-space: nowrap;
+  text-align: center;
+  width: 1%;
+  white-space: nowrap;
 }
 
-.ThemesTable td:nth-child(2), .ThemesTable td:nth-child(3) {
-    width: fit-content;
+.ThemesTable td:nth-child(2),
+.ThemesTable td:nth-child(3) {
+  width: fit-content;
 }
 
 .ThemesTable td {
-    border: solid 1px;
-    padding: 5px;
-    padding-left: 5px;
-    border-color: var(--subtitle-color);
+  border: solid 1px;
+  padding: 5px;
+  padding-left: 5px;
+  border-color: var(--subtitle-color);
 }
 
 .ThemesTable tr:first-child td {
-    text-align: center;
-    color: var(--subtitle-color);
-    border-top: solid 2px var(--subtitle-color);;
+  text-align: center;
+  color: var(--subtitle-color);
+  border-top: solid 2px var(--subtitle-color);
 }
 
 .ThemesTable tr:first-child td:first-child {
-    border-top-left-radius: 5px;
-    border-left: solid 2px var(--subtitle-color);
+  border-top-left-radius: 5px;
+  border-left: solid 2px var(--subtitle-color);
 }
 
-.ThemesTable tr:first-child td:last-child, .ThemesTable tr:nth-child(2) td:last-child {
-    border-top-right-radius: 5px;
-    border-right: solid 2px var(--subtitle-color);
+.ThemesTable tr:first-child td:last-child,
+.ThemesTable tr:nth-child(2) td:last-child {
+  border-top-right-radius: 5px;
+  border-right: solid 2px var(--subtitle-color);
 }
 
 .ThemesTable tr:last-child td:first-child {
-    border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .ThemesTable tr:last-child td:last-child {
-    border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .ThemesTable tr:last-child td {
-    border-bottom: solid 2px var(--subtitle-color);
+  border-bottom: solid 2px var(--subtitle-color);
 }
 
 .ThemesTable tr:not(:first-child) td:last-child {
-    border-right: solid 2px var(--subtitle-color);
+  border-right: solid 2px var(--subtitle-color);
 }
 
 .ThemesTable tr:nth-child(2) td:last-child {
-    border-top: solid 2px var(--subtitle-color);
+  border-top: solid 2px var(--subtitle-color);
 }

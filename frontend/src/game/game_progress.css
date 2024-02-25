@@ -1,43 +1,43 @@
 .CenteredGameProgressBox {
-    grid-row-start: 1;
-    grid-column: 1 / span 3;
-    margin: auto;
+  grid-row-start: 1;
+  grid-column: 1 / span 3;
+  margin: auto;
 }
 
 .GameProgressBox {
-    grid-row-start: 1;
-    grid-column-start: 3;
-    display: flex;
-    justify-content: flex-end;
+  grid-row-start: 1;
+  grid-column-start: 3;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .GameProgress {
-    line-height: fit-content;
-    color: var(--title-color);
-    width: fit-content;
+  line-height: fit-content;
+  color: var(--title-color);
+  width: fit-content;
 }
 
 .GameProgress td {
-    padding-right: 10px;
-    padding-left: 10px;
-    border: solid 1px var(--subtitle-color);
-    text-align: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: solid 1px var(--subtitle-color);
+  text-align: center;
 }
 
 .GameProgress tr:first-child td {
-    border-top: solid 2px var(--subtitle-color);
+  border-top: solid 2px var(--subtitle-color);
 }
 
 .GameProgress tr:last-child td {
-    border-bottom: solid 2px var(--subtitle-color);
+  border-bottom: solid 2px var(--subtitle-color);
 }
 
 .GameProgress td:first-child {
-    border-left: solid 2px var(--subtitle-color);
+  border-left: solid 2px var(--subtitle-color);
 }
 
 .GameProgress td:last-child {
-    border-right: solid 2px var(--subtitle-color);
+  border-right: solid 2px var(--subtitle-color);
 }
 
 .GameProgress tr:first-child td:first-child {

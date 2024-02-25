@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "Cookies";
-  src: url("Cookies.woff2");
+  font-family: 'Cookies';
+  src: url('Cookies.woff2');
 }
 
 @font-face {
-    font-family: "Lemonberry";
-    src: url("Lemonberry.woff2");
+  font-family: 'Lemonberry';
+  src: url('Lemonberry.woff2');
 }
 
 body {

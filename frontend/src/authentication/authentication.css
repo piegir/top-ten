@@ -1,22 +1,22 @@
 .LoginBox {
-    grid-row: 2 / span 2;
+  grid-row: 2 / span 2;
 
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
-    margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  margin-bottom: auto;
 
-    border: solid 1px;
-    padding: 15px;
-    border-radius: 15px;
+  border: solid 1px;
+  padding: 15px;
+  border-radius: 15px;
 
-    text-align: center;
+  text-align: center;
 }
 
 .UsernameCreation {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .SmallButton {
-    font-size: 1vw;
+  font-size: 1vw;
 }
