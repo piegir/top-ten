@@ -1,5 +1,6 @@
 from lib.round import Round
 from lib.theme import Theme
+from database.database import supported_languages
 
 
 class Game:
@@ -8,7 +9,8 @@ class Game:
                  players_list: list[str],
                  max_nb_rounds: int,
                  starting_player_index: int = 0,
-                 nb_themes_per_card: int = 3):
+                 nb_themes_per_card: int = 3,
+                 themes_language: str = "en"):
         if len(players_list) > 10 or len(players_list) < 4:
             raise ValueError(
                 f"Incorrect number of players {len(players_list)}. There needs to be between 4 and 10 players."
@@ -21,10 +23,15 @@ class Game:
             raise ValueError(
                 f"Incorrect number of themes per card {nb_themes_per_card}. "
                 f"Number of themes per card should be between 1 and 6.")
+        if themes_language not in supported_languages:
+            raise ValueError(
+                f"Provided language must be one of the supported languages: {supported_languages}"
+            )
         self.players_list: list[str] = players_list
         self.max_nb_rounds: int = max_nb_rounds
         self.starting_player_index: int = starting_player_index
         self.nb_themes_per_card: int = nb_themes_per_card
+        self.themes_language: str = themes_language
         self.played_themes: list[Theme] = []
         self.rounds: list[Round] = []
 
@@ -48,7 +55,7 @@ class Game:
                                                         starting_player_index]
         current_round: Round = Round(shifted_players_list,
                                      self.nb_themes_per_card,
-                                     self.played_themes)
+                                     self.themes_language, self.played_themes)
         self.rounds.append(current_round)
 
     def is_round_in_progress(self) -> bool:

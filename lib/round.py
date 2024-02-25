@@ -1,6 +1,6 @@
 import random
 
-from database.database import database
+from database.database import pick_random_card
 from lib.player_proposition import PlayerProposition, NumberedPlayerProposition
 from lib.theme import Theme
 
@@ -8,10 +8,11 @@ from lib.theme import Theme
 class Round:
 
     def __init__(self, players_list: list[str], nb_themes_per_card: int,
-                 played_themes: list[Theme]):
+                 themes_language: str, played_themes: list[Theme]):
         self.players_list: list[str] = players_list
-        self.card: list[Theme] = database.pick_random_card(
-            nb_themes_per_card, played_themes)
+        self.card: list[Theme] = pick_random_card(nb_themes_per_card,
+                                                  themes_language,
+                                                  played_themes)
 
         self.numbered_player_propositions: list[
             NumberedPlayerProposition] = self.assign_numbers()

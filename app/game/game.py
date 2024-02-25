@@ -39,6 +39,10 @@ class GameConfig(BaseModel):
         description="Index of starting player in the players list.", default=0)
     nb_themes_per_card: int = Field(
         description="Number of themes provided per card.", default=3)
+    themes_language: str = Field(
+        description=
+        "Language to be used for the themes of the game (as a IETF language tag).",
+        default="en")
 
 
 temp_game_config: GameConfig = GameConfig(players_list=[])
@@ -130,7 +134,8 @@ def start_game(
         current_game = Game(game_config.players_list,
                             game_config.max_nb_rounds,
                             game_config.starting_player_index,
-                            game_config.nb_themes_per_card)
+                            game_config.nb_themes_per_card,
+                            game_config.themes_language)
         return ActionStatus(status=True, message="Game was properly started.")
     except Exception as error:
         return ActionStatus(status=False,
