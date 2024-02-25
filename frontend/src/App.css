@@ -1,138 +1,144 @@
-:root { /* Creation of variables for colors */
-    --subtitle-color: rgba(22, 49, 114, 1);
-    --title-color: rgba(18, 37, 81, 1);
-    --text-color: rgba(30, 86, 160, 1);
-    --background-color: rgba(214, 228, 240, 1);
-    --headbox-color: rgba(30, 86, 160, 0.6);
-    --box-color: rgba(30, 86, 160, 0.2);
+:root {
+  /* Creation of variables for colors */
+  --subtitle-color: rgba(22, 49, 114, 1);
+  --title-color: rgba(18, 37, 81, 1);
+  --text-color: rgba(30, 86, 160, 1);
+  --background-color: rgba(214, 228, 240, 1);
+  --headbox-color: rgba(30, 86, 160, 0.6);
+  --box-color: rgba(30, 86, 160, 0.2);
 }
 
-*{ /* Apply on whole game */
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-size: 1.3vw;
-    font-family: "Lemonberry";
-    font-weight: bold;
+* {
+  /* Apply on whole game */
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-size: 1.3vw;
+  font-family: 'Lemonberry';
+  font-weight: bold;
 }
 
-.GlobalGrid { /* The page content is directly the grid */
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    grid-template: 10% fit-content(21%) 1fr / 100%; /* rows / columns */
-    background-color: var(--background-color);
-    padding: 10px;
-    margin: 0;
-    grid-gap: 5px;
-    overflow-y: auto;
+.GlobalGrid {
+  /* The page content is directly the grid */
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template: 10% fit-content(21%) 1fr / 100%; /* rows / columns */
+  background-color: var(--background-color);
+  padding: 10px;
+  margin: 0;
+  grid-gap: 5px;
+  overflow-y: auto;
 }
 
-.HeadBox { /*The first row of the grid, for title, menu and username*/
-    grid-row-start: 1;
-    display: grid;
-    grid-template: 100% / 10% 1fr 10%;
-    background: var(--headbox-color);
-    border-radius: 10px;
+.HeadBox {
+  /*The first row of the grid, for title, menu and username*/
+  grid-row-start: 1;
+  display: grid;
+  grid-template: 100% / 10% 1fr 10%;
+  background: var(--headbox-color);
+  border-radius: 10px;
 }
 
 .MiddleBox {
-    grid-row-start: 2;
-    display: grid;
-    grid-template: fit-content(40%) 1fr / 12% 1fr fit-content(50%); /* rows / columns */
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin: 0;
+  grid-row-start: 2;
+  display: grid;
+  grid-template: fit-content(40%) 1fr / 12% 1fr fit-content(50%); /* rows / columns */
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin: 0;
 }
 
 .BottomBox {
-    grid-row-start: 3;
-    display: grid;
-    grid-template-columns: 50% 1fr;
-    grid-gap: 5px;
+  grid-row-start: 3;
+  display: grid;
+  grid-template-columns: 50% 1fr;
+  grid-gap: 5px;
 }
 
-.PlayersBox, .UserActionBox {
-    border-style: solid;
-    border-color: var(--title-color);
-    border-radius: 10px;
-    padding-right: 15px;
-    padding-left: 15px;
-    background-color: var(--box-color);
+.PlayersBox,
+.UserActionBox {
+  border-style: solid;
+  border-color: var(--title-color);
+  border-radius: 10px;
+  padding-right: 15px;
+  padding-left: 15px;
+  background-color: var(--box-color);
 }
 
 .Title {
-    grid-column-start: 2;
-    align-self: center;
-    justify-self: center;
-    font-size: 5vw;
-    color: var(--title-color);
-    font-family: "Cookies";
+  grid-column-start: 2;
+  align-self: center;
+  justify-self: center;
+  font-size: 5vw;
+  color: var(--title-color);
+  font-family: 'Cookies';
 }
 
-.SubTitle, .ResultText {
-    text-align: center;
-    color: var(--subtitle-color);
-    font-size: 2.5vw;
-    font-family: "Cookies";
+.SubTitle,
+.ResultText {
+  text-align: center;
+  color: var(--subtitle-color);
+  font-size: 2.5vw;
+  font-family: 'Cookies';
 }
 
 .SubTitle {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .InputBox {
-    border-radius: 10px;
-    padding: 5px;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 .ButtonBox {
-    text-align: center;
-    padding-top: 10px;
+  text-align: center;
+  padding-top: 10px;
 }
 
 .Result {
-    grid-row-start: 1;
-    grid-column: 1 / span 3;
+  grid-row-start: 1;
+  grid-column: 1 / span 3;
 }
 
 button {
-    font-size: 1.3vw;
-    background-color: var(--subtitle-color);
-    border-radius: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    color: var(--background-color);
-    border: solid 1px var(--background-color);
-    width: fit-content;
+  font-size: 1.3vw;
+  background-color: var(--subtitle-color);
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color: var(--background-color);
+  border: solid 1px var(--background-color);
+  width: fit-content;
 }
 
 button:hover {
-    background-color: var(--background-color);
-    color: var(--subtitle-color);
-    border: solid 1px var(--subtitle-color);
+  background-color: var(--background-color);
+  color: var(--subtitle-color);
+  border: solid 1px var(--subtitle-color);
 }
 
 table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border-color: var(--subtitle-color);
-    color: var(--text-color);
-    word-break: break-word;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-color: var(--subtitle-color);
+  color: var(--text-color);
+  word-break: break-word;
 }
 
 table th {
-    color: var(--subtitle-color);
+  color: var(--subtitle-color);
 }
 
 textarea {
-    padding: 10px;
-    margin: auto;
-    line-height: 1.5;
-    border-radius: 5px;
-    border: 1px solid var(--title-color);
-    box-shadow: 1px 1px 1px #999;
-    font-size: 1.3vw
+  padding: 10px;
+  margin: auto;
+  line-height: 1.5;
+  border-radius: 5px;
+  border: 1px solid var(--title-color);
+  box-shadow: 1px 1px 1px #999;
+  font-size: 1.3vw;
 }
