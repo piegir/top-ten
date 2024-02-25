@@ -1,5 +1,4 @@
 title,top1,top10
-Invente une application sur téléphone,Utile,Inutile
 "Tu es perdu dans le désert, tu aperçois derrière une dune...",Utile,Inutile
 "Ton partenaire fouille ton historique internet, il découvre...",Génant,Génial
 "Soirée déguisée de dernière minute, il ne reste qu'un seul costume chez le vendeur",Génant,Génial
@@ -156,7 +155,7 @@ Citez un programme de TV.,Plus stupide,Plus intello
 Citez un diplôme (existant ou inventé) accroché au-dessus de votre cheminée.,Moins prestigieux,Plus prestigieux
 Lisez un plat du menu d'un restaurant.,Resto bas de gamme,Resto 3 étoiles
 Que font les élèves quand le prof écrit au tableau ?,Classe calme,Classe très agitée
-"Dans la suite du film Dans avec les loups, le héros danse avec...",Idée la moins vendeuse,Film à succès
+"Dans un spin-off du film ""Danse avec les loups"", le héros danse avec...",Idée la moins vendeuse,Film à succès
 Quel objet fallait-il avoir lors du naufrage du Titanic ?,Moins utile,Plus utile
 Vous hypnotisez quelqu'un pour qu'il fasse quelque chose... Quoi ?,Sympa,Il va énormément vous en vouloir
 "En claquant des doigts, là, tout de suite, vous pouvez faire pleuvoir quelque chose. Que choisissez-vous ?",Pire,Plus sympa
@@ -184,7 +183,7 @@ Quel documentaire passe à la TV ce soir ?,Sujet qui ne vous intéresse pas du t
 Inventez un nom de Batgadget (comme la Batmobile) pour aider Batman.,Inutile,Indispensable
 "Complétez la brochure de tourisme : ""Paris, ville de...""",Peu flatteur,Très attrayant
 La sonnerie de votre réveil est inefficace pour vous tirer du lit. Quelle méthode originale utilisez-vous le matin ?,Réveil tranquille,Réveil violent
-Vous êtes en pleine scène de ménage avec le joueur suivant. Que jetez-vous par la fenêtre de colère ?,Il s'en contrefiche,Ça lui brise le coeur pour toujours
+Vous êtes en pleine scène de ménage. De colère, que jetez-vous par la fenêtre ?,Votre partenaire s'en contrefiche,Ça lui brise le coeur pour toujours
 Réagissez au bulletin de notes de votre enfant.,Gros cancre,1er de la classe
 "Complétez la phrase affichée à l'arrière de votre véhicule pour faire ralentir les voitures. ""Attention, ... au volant !""",Ce qui ne fait pas ralentir,Ce qui fait ralentir
 "Un Terminator frappe à votre porte et annonce : ""Je viens du futur. Ma mission est...""",Plus ridicule,Plus importante
@@ -203,7 +202,7 @@ Citez un personnage (réel ou fictif) à qui vous laisseriez vos enfants en baby
 "Hier, vous avez encore raté votre permis. Que s'est-il passé ?",Raté de peu,Vous êtes un danger public
 "Le baby-sitter vous appelle au téléphone en urgence : ""C'est affreux...""",Souci pas gênant,Catastrophe
 Le football a maintenant une règle supplémentaire. Laquelle ?,L'audience s'écroule,L'audience explose
-Écrivez un SMS imaginaire envoyé par votre conjoint(e). ,Celui qu'on ne voudrait jamais recevoir,Celui qui faire le plus plaisir
+Écrivez un SMS imaginaire envoyé par votre conjoint(e). ,Celui qu'on ne voudrait jamais recevoir,Celui qui fait le plus plaisir
 Vous créez une startup pour une nouvelle appli smartphone révolutionnaire ! Que fait cette appli ?,Moins utile,Plus utile
 "En soirée, présentez en une phrase le joueur précédent à quelqu'un qui lui plaît.",Râteau assuré,"Grâce à vous, il va pécho"
 "Cette semaine, quelle star est en couverture du magazine people ?",Moins vendeur,Plus vendeur
@@ -228,7 +227,7 @@ Vous êtes maire de Paris. Que faites-vous construire pour marquer votre mandat 
 "Il ne faut pas pousser mémé dans les orties, mais on peut la pousser dans...",Très méchant,Très gentil
 "Mister Bond, si vous ne me donnez pas le code secret, je vais...",Petite menace,Grande menace
 Vous êtes invité(e) pour le dîner dans un temple maudit au milieu de la jungle... Vos voisins de table ont eu droit à une cervelle de singe en sorbet. Et vous ?,Beurk,Miam
-Vous êtes un super vilain du prochain blockbuster ! Quels sont votre vom et votre pouvoir ?,Pas très nuisible,Méga vilain qui fait très peur
+Vous êtes un super vilain du prochain blockbuster ! Quels sont votre nom et votre pouvoir ?,Pas très nuisible,Méga vilain qui fait très peur
 "En une du Closer : ""Une célébrité retrouvée complètement ivre dans un caniveau, voir page 12"" Qui allez-vous trouver page 12 ?",Moins probable,Plus probable
 Vous êtes en speed dating : dites une phrase pour vous mettre en valeur.,Pire phrase,Meilleure phrase
 Où se cacher en cas d'invasion zombie ?,Survie assurée,Mort assurée
@@ -263,7 +262,7 @@ Chopé(e) au radar ! Quelle raison donnez-vous au gendarme pour éviter le PV po
 Citez une personnalité en fonction de son nombre d'abonnés Instagram.,Moins de fan,Plus de fans
 Vive les mariés ! Quel cadeau offrez-vous à l'heureux couple ?,Moins impressionnant,Plus impressionnant
 Quelle photo mettriez-vous sur votre cible de fléchettes ?,"Non, jamais","Oui, évidemment"
-"Pour interpréter le rôle du dieu de la beauté et de la bogossitude, quel acteur (homme réel, vivant ou mort) recrutez-vous ?",Pire choix,Meilleur choix
+"Pour interpréter le rôle du dieu de la beauté et de la classe, quel acteur (homme réel, vivant ou mort) recrutez-vous ?",Pire choix,Meilleur choix
 Racontez une situation qui fait peur au Cap'Ten.,Petite frayeur,Grande trouille
 Vous avez le pouvoir de rendre réel un personnage fictif ! Lequel ?,Pire idée,Meilleure idée
 Quelle phrase prononce l'agent immobilier lors de la visite d'un nouvel appartement ?,Ça fait fuir,Ça fait acheter
