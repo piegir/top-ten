@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 from typing import Annotated
 
-from app.authentication.authentication import oauth2_scheme, user_connected
+from app.authentication.authentication import oauth2_scheme, user_connected, connected_users
 from app.utils import ActionStatus
 from lib.game import Game
 from lib.theme import Theme
@@ -32,11 +32,11 @@ class GameConfig(BaseModel):
         description=
         "List of usernames of the players that will participate in the game.",
         example=["player1", "player2", "player3", "player4"])
+    starting_player: str | None = Field(
+        description="Name of the starting player.", example="John Doe")
     max_nb_rounds: int = Field(
         description="Total number of rounds to be played in the game.",
         default=5)
-    starting_player_index: int = Field(
-        description="Index of starting player in the players list.", default=0)
     nb_themes_per_card: int = Field(
         description="Number of themes provided per card.", default=3)
     themes_language: str = Field(
@@ -45,7 +45,8 @@ class GameConfig(BaseModel):
         default="en")
 
 
-temp_game_config: GameConfig = GameConfig(players_list=[])
+temp_game_config: GameConfig = GameConfig(players_list=[],
+                                          starting_player=None)
 
 
 def game_created():
@@ -101,6 +102,9 @@ def get_temp_game_config(
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: The temporary game configuration.
     """
+    global temp_game_config
+    if temp_game_config.starting_player is None and len(connected_users) > 0:
+        temp_game_config.starting_player = connected_users[0]
     return temp_game_config
 
 
@@ -133,7 +137,7 @@ def start_game(
     try:
         current_game = Game(game_config.players_list,
                             game_config.max_nb_rounds,
-                            game_config.starting_player_index,
+                            game_config.starting_player,
                             game_config.nb_themes_per_card,
                             game_config.themes_language)
         return ActionStatus(status=True, message="Game was properly started.")
@@ -166,7 +170,7 @@ def get_game_config(
     """
     return GameConfig(players_list=current_game.players_list,
                       max_nb_rounds=current_game.max_nb_rounds,
-                      starting_player_index=current_game.starting_player_index,
+                      starting_player=current_game.starting_player,
                       nb_themes_per_card=current_game.nb_themes_per_card)
 
 

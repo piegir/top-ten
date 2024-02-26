@@ -1,13 +1,14 @@
 import {Component} from 'react';
 
-import {Username} from '../authentication/authentication.js';
+import {currentUser, Username} from '../authentication/authentication.js';
 import {Users} from '../authentication/users';
 import {makeGetCall, repeat} from '../common/common.js';
-import {getGamePlayers} from '../game/game.js';
+import {getGamePlayers} from '../game/utils.js';
 import {GameProgress, GameSummary} from '../game/game_progress.js';
 import {CurrentTheme} from '../rounds/theme_selection.js';
 
 import {Hypothesis, Reality, RoundResult} from './round_result.js';
+import {getRoundPlayers} from '../rounds/rounds';
 
 function checkRoundResult() {
   return makeGetCall('/rounds/check_round_result');
@@ -78,6 +79,14 @@ export class RoundResultChecking extends Component {
 }
 
 export class GameResultChecking extends Component {
+  state = {playersList: []};
+
+  componentDidMount() {
+    getGamePlayers().then((playersList) => {
+      this.setState({playersList: playersList});
+    });
+  }
+
   render() {
     return (
       <div className="GlobalGrid">
@@ -93,11 +102,7 @@ export class GameResultChecking extends Component {
           </div>
         </div>
         <div className="BottomBox">
-          <Users
-            getUsersListHandler={getGamePlayers}
-            checkOnlyOnce={true}
-            displayNumbers={false}
-          />
+          <Users usersList={this.state.playersList} displayNumbers={false} />
           <div className="UserActionBox">
             <div className="SubTitle">Setup a new game?</div>
             <div className="ButtonBox">

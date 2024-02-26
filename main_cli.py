@@ -2,8 +2,6 @@ from lib.game import Game
 
 # Game config
 max_nb_rounds = 3
-starting_player_index = 0
-nb_themes_per_card = 3
 
 
 def play():
@@ -14,8 +12,7 @@ def play():
         )
         if player_name == "":
             try:
-                game = Game(players, max_nb_rounds, starting_player_index,
-                            nb_themes_per_card)
+                game = Game(players, max_nb_rounds)
                 break
             except Exception as e:
                 print(e)

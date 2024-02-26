@@ -4,15 +4,25 @@ import {Component} from 'react';
 
 import {Username} from '../authentication/authentication.js';
 import {getConnectedUsers, Users} from '../authentication/users.js';
-import {makeGetCall} from '../common/common.js';
+import {repeat} from '../common/common.js';
 
 import {GameSetup} from './game_start.js';
 
-export let getGamePlayers = () => {
-  return makeGetCall('/game/get_players');
-};
-
 export class GamePreparation extends Component {
+  state = {usersList: []};
+
+  fetchUsers = () => {
+    getConnectedUsers().then((usersList) => {
+      this.setState({usersList: usersList});
+      this.userFetchingId = repeat(this.fetchUsers, 100);
+    });
+  };
+
+  userFetchingId = repeat(this.fetchUsers, 100);
+
+  componentWillUnmount() {
+    clearTimeout(this.userFetchingId);
+  }
   render() {
     return (
       <div className="GlobalGrid">
@@ -23,12 +33,9 @@ export class GamePreparation extends Component {
           />
         </div>
         <div className="BottomBox">
-          <Users
-            getUsersListHandler={getConnectedUsers}
-            checkOnlyOnce={false}
-            displayNumbers={true}
-          />
+          <Users usersList={this.state.usersList} displayNumbers={true} />
           <GameSetup
+            usersList={this.state.usersList}
             goToThemeSelectionHandler={this.props.goToThemeSelectionHandler}
             goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}
           />

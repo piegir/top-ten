@@ -8,7 +8,7 @@ class Game:
     def __init__(self,
                  players_list: list[str],
                  max_nb_rounds: int,
-                 starting_player_index: int = 0,
+                 starting_player: str = None,
                  nb_themes_per_card: int = 3,
                  themes_language: str = "en"):
         if len(players_list) > 10 or len(players_list) < 4:
@@ -19,6 +19,12 @@ class Game:
             raise ValueError(
                 f"Incorrect number of rounds {max_nb_rounds}. Number of rounds should be between 1 and 9."
             )
+        if starting_player is None:
+            starting_player = players_list[0]
+        if starting_player not in players_list:
+            raise ValueError(
+                f"Incorrect starting player '{starting_player}'. "
+                f"Player should be part of the players list {players_list}.")
         if nb_themes_per_card > 6 or nb_themes_per_card < 1:
             raise ValueError(
                 f"Incorrect number of themes per card {nb_themes_per_card}. "
@@ -29,7 +35,8 @@ class Game:
             )
         self.players_list: list[str] = players_list
         self.max_nb_rounds: int = max_nb_rounds
-        self.starting_player_index: int = starting_player_index
+        self.starting_player_index: int = players_list.index(starting_player)
+        self.starting_player: str = starting_player
         self.nb_themes_per_card: int = nb_themes_per_card
         self.themes_language: str = themes_language
         self.played_themes: list[Theme] = []
@@ -48,6 +55,8 @@ class Game:
             self.played_themes.append(self.rounds[-1].theme)
             self.starting_player_index = (self.starting_player_index +
                                           1) % len(self.players_list)
+            self.starting_player = self.players_list[
+                self.starting_player_index]
 
         shifted_players_list: list[
             str] = self.players_list[self.starting_player_index:len(

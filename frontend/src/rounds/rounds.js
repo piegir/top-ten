@@ -35,12 +35,16 @@ function checkAllPropositionsMade() {
 export class ThemeSelection extends Component {
   state = {
     firstRoundPlayer: null,
+    playersList: [],
   };
 
   componentDidMount() {
     getRoundPlayers().then((playersList) => {
       let firstRoundPlayer = playersList[0];
-      this.setState({firstRoundPlayer: firstRoundPlayer});
+      this.setState({
+        firstRoundPlayer: firstRoundPlayer,
+        playersList: playersList,
+      });
       if (firstRoundPlayer !== currentUser.username) {
         this.props.goToPropositionMakingHandler();
       }
@@ -65,11 +69,7 @@ export class ThemeSelection extends Component {
           </div>
         </div>
         <div className="BottomBox">
-          <Users
-            getUsersListHandler={getRoundPlayers}
-            checkOnlyOnce={true}
-            displayNumbers={false}
-          />
+          <Users usersList={this.state.playersList} displayNumbers={false} />
           {this.state.firstRoundPlayer === currentUser.username ? (
             <SelectTheme
               goToPropositionMakingHandler={

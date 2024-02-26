@@ -5,7 +5,7 @@ import {currentUser, userLogout} from '../authentication/authentication';
 import {getConnectedUsers} from '../authentication/users';
 import {makeGetCall, makePostCall, repeat} from '../common/common';
 
-import {getGamePlayers} from './game';
+import {getGamePlayers} from './utils.js';
 
 function createGameConfigFromOptions(gameOptions) {
   return getConnectedUsers().then((usersList) => {
@@ -55,7 +55,7 @@ function isGameComplete() {
 export class GameSetup extends Component {
   gameOptionsNames = {
     max_nb_rounds: 'Number of rounds',
-    starting_player_index: 'Starting player index',
+    starting_player: 'Starting player',
     nb_themes_per_card: 'Number of themes per card',
     themes_language: 'Themes language',
   };
@@ -143,20 +143,18 @@ export class GameSetup extends Component {
         this.props.goToThemeSelectionHandler();
         return;
       }
-      getConnectedUsers().then((usersList) => {
-        let firstPlayer = usersList[0];
-        newState.firstPlayer = firstPlayer;
-        if (firstPlayer === currentUser.username) {
+      let firstPlayer = this.props.usersList[0];
+      newState.firstPlayer = firstPlayer;
+      if (firstPlayer === currentUser.username) {
+        this.setState(newState);
+        this.gameCheckingId = repeat(this.checkGameStatus, 100);
+      } else {
+        getTempGameOptions().then((gameOptions) => {
+          newState.gameOptions = gameOptions;
           this.setState(newState);
           this.gameCheckingId = repeat(this.checkGameStatus, 100);
-        } else {
-          getTempGameOptions().then((gameOptions) => {
-            newState.gameOptions = gameOptions;
-            this.setState(newState);
-            this.gameCheckingId = repeat(this.checkGameStatus, 100);
-          });
-        }
-      });
+        });
+      }
     });
   };
 
@@ -172,7 +170,7 @@ export class GameSetup extends Component {
     newGameOptions.max_nb_rounds = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
-    setTempGameConfig(newState).then();
+    setTempGameConfig(newGameOptions).then();
   };
 
   liveUpdateNumberOfThemesPerCard = (newValue) => {
@@ -181,16 +179,16 @@ export class GameSetup extends Component {
     newGameOptions.nb_themes_per_card = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
-    setTempGameConfig(newState).then();
+    setTempGameConfig(newGameOptions).then();
   };
 
-  liveUpdateStartingPlayerIndex = (newValue) => {
+  liveUpdateStartingPlayer = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.starting_player_index = newValue;
+    newGameOptions.starting_player = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
-    setTempGameConfig(newState).then();
+    setTempGameConfig(newGameOptions).then();
   };
 
   liveUpdateThemesLanguage = (newValue) => {
@@ -199,12 +197,12 @@ export class GameSetup extends Component {
     newGameOptions.themes_language = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
-    setTempGameConfig(newState).then();
+    setTempGameConfig(newGameOptions).then();
   };
 
   optionsCallbacks = {
     max_nb_rounds: this.liveUpdateNumberOfRounds,
-    starting_player_index: this.liveUpdateStartingPlayerIndex,
+    starting_player: this.liveUpdateStartingPlayer,
     nb_themes_per_card: this.liveUpdateNumberOfThemesPerCard,
     themes_language: this.liveUpdateThemesLanguage,
   };
@@ -222,7 +220,7 @@ export class GameSetup extends Component {
   optionDropDownMenu = (optionName) => {
     let optionsAvailableValues = {
       max_nb_rounds: Array.from(new Array(9), (x, i) => i + 1),
-      starting_player_index: Array.from(new Array(10), (x, i) => i),
+      starting_player: this.props.usersList,
       nb_themes_per_card: Array.from(new Array(6), (x, i) => i + 1),
       themes_language: ['en', 'fr'],
     };

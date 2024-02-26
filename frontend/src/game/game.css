@@ -53,12 +53,13 @@
 
 .DropDownMenu {
   padding: 0;
+  text-align: left;
   /*bootstrap options from dropdown-menu in bootstrap.css:3427*/
   --bs-dropdown-zindex: 1000; /*On what layer to display the menu. 1000-> over everything*/
   --bs-dropdown-min-width: 0;
   --bs-dropdown-padding-x: 0;
-  --bs-dropdown-padding-y: 0.5rem;
-  --bs-dropdown-spacer: 0.125rem;
+  --bs-dropdown-padding-y: 0;
+  --bs-dropdown-spacer: 0;
   --bs-dropdown-font-size: 1rem;
   --bs-dropdown-color: var(--background-color);
   --bs-dropdown-bg: var(--subtitle-color);
@@ -77,13 +78,9 @@
   --bs-dropdown-link-active-color: var(--subtitle-color);
   --bs-dropdown-link-active-bg: var(--background-color);
   --bs-dropdown-link-disabled-color: var(--title-color);
-  --bs-dropdown-item-padding-x: 1rem;
+  --bs-dropdown-item-padding-x: 0.75rem;
   --bs-dropdown-item-padding-y: 0.25rem;
   --bs-dropdown-header-color: #6c757d;
-  --bs-dropdown-header-padding-x: 1rem;
-  --bs-dropdown-header-padding-y: 0.5rem;
-}
-
-.DropDownItem {
-  width: 100px;
+  --bs-dropdown-header-padding-x: 0;
+  --bs-dropdown-header-padding-y: 0;
 }
