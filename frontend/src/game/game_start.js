@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import {currentUser, userLogout} from '../authentication/authentication';
 import {getConnectedUsers} from '../authentication/users';
@@ -167,21 +166,13 @@ export class GameSetup extends Component {
     clearTimeout(this.gameCheckingId);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.state.firstPlayer === currentUser.username &&
-      this.state.gameOptions !== prevState.gameOptions
-    ) {
-      setTempGameConfig(this.state.gameOptions).then();
-    }
-  }
-
   liveUpdateNumberOfRounds = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
     newGameOptions.max_nb_rounds = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
+    setTempGameConfig(newState).then();
   };
 
   liveUpdateNumberOfThemesPerCard = (newValue) => {
@@ -190,6 +181,7 @@ export class GameSetup extends Component {
     newGameOptions.nb_themes_per_card = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
+    setTempGameConfig(newState).then();
   };
 
   liveUpdateStartingPlayerIndex = (newValue) => {
@@ -198,6 +190,7 @@ export class GameSetup extends Component {
     newGameOptions.starting_player_index = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
+    setTempGameConfig(newState).then();
   };
 
   liveUpdateThemesLanguage = (newValue) => {
@@ -206,6 +199,7 @@ export class GameSetup extends Component {
     newGameOptions.themes_language = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
+    setTempGameConfig(newState).then();
   };
 
   optionsCallbacks = {
@@ -234,22 +228,25 @@ export class GameSetup extends Component {
     };
 
     return (
-      <DropdownButton
-        id="dropdown-basic-button"
-        title={this.state.gameOptions[optionName]}
-      >
-        {optionsAvailableValues[optionName].map((availableValue) => {
-          return (
-            <Dropdown.Item
-              onClick={() => {
-                this.optionsCallbacks[optionName](availableValue);
-              }}
-            >
-              {availableValue}
-            </Dropdown.Item>
-          );
-        })}
-      </DropdownButton>
+      <Dropdown>
+        <Dropdown.Toggle id="dropdown-basic" className="DropDownButton">
+          {this.state.gameOptions[optionName]}
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="DropDownMenu">
+          {optionsAvailableValues[optionName].map((availableValue) => {
+            return (
+              <Dropdown.Item
+                className="DropDownItem"
+                onClick={() => {
+                  this.optionsCallbacks[optionName](availableValue);
+                }}
+              >
+                {availableValue}
+              </Dropdown.Item>
+            );
+          })}
+        </Dropdown.Menu>
+      </Dropdown>
     );
   };
 
