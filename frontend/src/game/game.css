@@ -2,25 +2,25 @@
   grid-column-start: 2;
 }
 
-.GamePreparation {
+.GamePreparationOption {
   display: grid;
   grid-template-columns: 60% 40%;
   column-gap: 20px;
 }
 
-.GamePreparationOption {
+.GamePreparationOptionName {
   grid-column-start: 1;
   text-align: right;
   padding-top: 30px;
 }
 
-.GamePreparationField {
+.GamePreparationOptionField {
   grid-column-start: 2;
   text-align: left;
   padding-top: 30px;
 }
 
-.NumberInput {
+.OptionInput {
   width: 40px;
   text-align: center;
   font-size: 1.5vw;
