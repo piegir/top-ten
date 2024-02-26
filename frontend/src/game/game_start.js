@@ -208,8 +208,8 @@ export class GameSetup extends Component {
 
   optionsCallbacks = {
     max_nb_rounds: this.liveUpdateNumberOfRounds,
-    starting_player_index: this.liveUpdateNumberOfThemesPerCard,
-    nb_themes_per_card: this.liveUpdateStartingPlayerIndex,
+    starting_player_index: this.liveUpdateStartingPlayerIndex,
+    nb_themes_per_card: this.liveUpdateNumberOfThemesPerCard,
     themes_language: this.liveUpdateThemesLanguage,
   };
 
