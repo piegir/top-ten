@@ -13,13 +13,15 @@ current_game: Game | None = None
 
 
 class RoundSummary(BaseModel):
-    result: float = Field(
+    result: float | None = Field(
         description="-1 if the round is still in progress."
         "A number between 0 and 1 representing the accuracy of the round otherwise.",
-        example=-1)
-    capten: str = Field(
+        example=-1,
+        default=None)
+    capten: str | None = Field(
         description="The Cap'Ten of the round, i.e. the first player.",
-        example="John Doe")
+        example="John Doe",
+        default=None)
     theme: Theme | None = Field(description="The theme of the round.",
                                 default=None)
 
@@ -158,22 +160,6 @@ def is_started(
     return game_created()
 
 
-@router.get("/get_config")
-def get_game_config(
-        current_username: Annotated[str,
-                                    Depends(oauth2_scheme)]) -> GameConfig:
-    """
-    API call to access the current game config.
-
-    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
-    :return: The game configuration.
-    """
-    return GameConfig(players_list=current_game.players_list,
-                      max_nb_rounds=current_game.max_nb_rounds,
-                      starting_player=current_game.starting_player,
-                      nb_themes_per_card=current_game.nb_themes_per_card)
-
-
 @router.get("/get_players")
 def get_players(
         current_username: Annotated[str, Depends(oauth2_scheme)]) -> list[str]:
@@ -232,19 +218,19 @@ def is_round_in_progress(
 @router.get("/get_rounds_history")
 def get_rounds_history(
     current_username: Annotated[str, Depends(oauth2_scheme)]
-) -> list[RoundSummary]:
+) -> list[RoundSummary | None]:
     """
     API call to obtain the history of the different rounds of the game represented as summaries (result + capten name).
 
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: The list of round summaries.
     """
-    return [
-        RoundSummary(result=this_round.result,
-                     capten=this_round.players_list[0],
-                     theme=this_round.theme)
-        for this_round in current_game.rounds
-    ]
+    rounds_history = [RoundSummary()] * current_game.max_nb_rounds
+    for i, game_round in enumerate(current_game.rounds):
+        rounds_history[i] = RoundSummary(result=game_round.result,
+                                         capten=game_round.players_list[0],
+                                         theme=game_round.theme)
+    return rounds_history
 
 
 @router.get("/is_game_complete")
