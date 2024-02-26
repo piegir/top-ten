@@ -2,45 +2,29 @@ import {Component} from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import {currentUser, userLogout} from '../authentication/authentication';
-import {getConnectedUsers} from '../authentication/users';
 import {makeGetCall, makePostCall, repeat} from '../common/common';
 
 import {getGamePlayers} from './utils.js';
 
-function createGameConfigFromOptions(gameOptions) {
-  return getConnectedUsers().then((usersList) => {
-    gameOptions.players_list = usersList;
-    return gameOptions;
-  });
-}
-
-export function getGameOptionsFromConfig(gameConfig) {
-  delete gameConfig.players_list;
-  return gameConfig;
-}
-
-function setTempGameConfig(gameOptions) {
-  return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
-    return makePostCall('/game/set_temp_config', gameConfig);
-  });
+function setTempGameConfig(gameConfig) {
+  return makePostCall('/game/set_temp_config', gameConfig);
 }
 
 function getTempGameOptions() {
   return makeGetCall('/game/get_temp_config').then((gameConfig) => {
-    return getGameOptionsFromConfig(gameConfig);
+    delete gameConfig.players_list;
+    return gameConfig;
   });
 }
 
-function startGame(gameOptions) {
-  return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
-    return makePostCall('/game/start', gameConfig).then((startGameSuccess) => {
-      if (startGameSuccess.status) {
-        return makePostCall('/game/start_new_round');
-      } else {
-        alert(startGameSuccess.message);
-        return startGameSuccess;
-      }
-    });
+function startGame(gameConfig) {
+  return makePostCall('/game/start', gameConfig).then((startGameSuccess) => {
+    if (startGameSuccess.status) {
+      return makePostCall('/game/start_new_round');
+    } else {
+      alert(startGameSuccess.message);
+      return startGameSuccess;
+    }
   });
 }
 
@@ -170,7 +154,9 @@ export class GameSetup extends Component {
     newGameOptions.max_nb_rounds = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
-    setTempGameConfig(newGameOptions).then();
+    let gameConfig = {...newGameOptions};
+    gameConfig.players_list = this.props.usersList;
+    setTempGameConfig(gameConfig).then();
   };
 
   liveUpdateNumberOfThemesPerCard = (newValue) => {
@@ -179,7 +165,9 @@ export class GameSetup extends Component {
     newGameOptions.nb_themes_per_card = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
-    setTempGameConfig(newGameOptions).then();
+    let gameConfig = {...newGameOptions};
+    gameConfig.players_list = this.props.usersList;
+    setTempGameConfig(gameConfig).then();
   };
 
   liveUpdateStartingPlayer = (newValue) => {
@@ -188,7 +176,9 @@ export class GameSetup extends Component {
     newGameOptions.starting_player = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
-    setTempGameConfig(newGameOptions).then();
+    let gameConfig = {...newGameOptions};
+    gameConfig.players_list = this.props.usersList;
+    setTempGameConfig(gameConfig).then();
   };
 
   liveUpdateThemesLanguage = (newValue) => {
@@ -197,7 +187,9 @@ export class GameSetup extends Component {
     newGameOptions.themes_language = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
-    setTempGameConfig(newGameOptions).then();
+    let gameConfig = {...newGameOptions};
+    gameConfig.players_list = this.props.usersList;
+    setTempGameConfig(gameConfig).then();
   };
 
   optionsCallbacks = {
@@ -208,7 +200,9 @@ export class GameSetup extends Component {
   };
 
   startGameHandler = () => {
-    startGame(this.state.gameOptions).then((startSuccess) => {
+    let gameConfig = {...this.state.gameOptions};
+    gameConfig.players_list = this.props.usersList;
+    startGame(gameConfig).then((startSuccess) => {
       if (startSuccess.status) {
         this.props.goToThemeSelectionHandler();
       } else {
