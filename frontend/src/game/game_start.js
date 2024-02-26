@@ -1,4 +1,6 @@
 import {Component} from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import {currentUser, userLogout} from '../authentication/authentication';
 import {getConnectedUsers} from '../authentication/users';
@@ -174,34 +176,34 @@ export class GameSetup extends Component {
     }
   }
 
-  liveUpdateNumberOfRounds = (event) => {
+  liveUpdateNumberOfRounds = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.max_nb_rounds = event.target.value;
+    newGameOptions.max_nb_rounds = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
   };
 
-  liveUpdateNumberOfThemesPerCard = (event) => {
+  liveUpdateNumberOfThemesPerCard = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.nb_themes_per_card = event.target.value;
+    newGameOptions.nb_themes_per_card = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
   };
 
-  liveUpdateStartingPlayerIndex = (event) => {
+  liveUpdateStartingPlayerIndex = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.starting_player_index = event.target.value;
+    newGameOptions.starting_player_index = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
   };
 
-  liveUpdateThemesLanguage = (event) => {
+  liveUpdateThemesLanguage = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.themes_language = event.target.value;
+    newGameOptions.themes_language = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
   };
@@ -221,6 +223,34 @@ export class GameSetup extends Component {
         alert(startSuccess.message);
       }
     });
+  };
+
+  optionDropDownMenu = (optionName) => {
+    let optionsAvailableValues = {
+      max_nb_rounds: Array.from(new Array(9), (x, i) => i + 1),
+      starting_player_index: Array.from(new Array(10), (x, i) => i),
+      nb_themes_per_card: Array.from(new Array(6), (x, i) => i + 1),
+      themes_language: ['en', 'fr'],
+    };
+
+    return (
+      <DropdownButton
+        id="dropdown-basic-button"
+        title={this.state.gameOptions[optionName]}
+      >
+        {optionsAvailableValues[optionName].map((availableValue) => {
+          return (
+            <Dropdown.Item
+              onClick={() => {
+                this.optionsCallbacks[optionName](availableValue);
+              }}
+            >
+              {availableValue}
+            </Dropdown.Item>
+          );
+        })}
+      </DropdownButton>
+    );
   };
 
   render() {
@@ -244,16 +274,9 @@ export class GameSetup extends Component {
                   {this.gameOptionsNames[optionName]}:
                 </div>
                 <div className="GamePreparationOptionField">
-                  {this.state.firstPlayer === currentUser.username ? (
-                    <input
-                      type="text"
-                      value={this.state.gameOptions[optionName]}
-                      className="OptionInput"
-                      onChange={this.optionsCallbacks[optionName]}
-                    />
-                  ) : (
-                    this.state.gameOptions[optionName]
-                  )}
+                  {this.state.firstPlayer === currentUser.username
+                    ? this.optionDropDownMenu(optionName)
+                    : this.state.gameOptions[optionName]}
                 </div>
               </div>
             );
