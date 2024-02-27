@@ -9,23 +9,6 @@ export let getConnectedUsers = () => {
 };
 
 export class Users extends Component {
-  state = {usersList: []};
-
-  fetchUser = () => {
-    this.props.getUsersListHandler().then((listOfUsers) => {
-      this.setState({usersList: listOfUsers});
-      if (!this.props.checkOnlyOnce) {
-        this.userFetchingId = repeat(this.fetchUser, 100);
-      }
-    });
-  };
-
-  userFetchingId = repeat(this.fetchUser, 100);
-
-  componentWillUnmount() {
-    clearTimeout(this.userFetchingId);
-  }
-
   render() {
     return (
       <div className="PlayersBox">
@@ -36,13 +19,13 @@ export class Users extends Component {
               Players{' '}
               {this.props.displayNumbers ? (
                 <span style={{fontSize: '1vw'}}>
-                  ({this.state.usersList.length} /10)
+                  ({this.props.usersList.length} /10)
                 </span>
               ) : null}
             </th>
             <th></th>
           </tr>
-          {this.state.usersList.map((username, index) => {
+          {this.props.usersList.map((username, index) => {
             return (
               <tr>
                 <td>{username}</td>

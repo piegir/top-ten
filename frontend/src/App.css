@@ -4,6 +4,8 @@
   --title-color: rgba(18, 37, 81, 1);
   --text-color: rgba(30, 86, 160, 1);
   --background-color: rgba(214, 228, 240, 1);
+  --border-color: rgba(255, 255, 255, 1);
+  --disabled-color: rgba(70, 130, 180, 1);
   --headbox-color: rgba(30, 86, 160, 0.6);
   --box-color: rgba(30, 86, 160, 0.2);
 }

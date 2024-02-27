@@ -1,45 +1,30 @@
 import {Component} from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import {currentUser, userLogout} from '../authentication/authentication';
-import {getConnectedUsers} from '../authentication/users';
 import {makeGetCall, makePostCall, repeat} from '../common/common';
 
-import {getGamePlayers} from './game';
+import {getGamePlayers} from './utils.js';
 
-function createGameConfigFromOptions(gameOptions) {
-  return getConnectedUsers().then((usersList) => {
-    gameOptions.players_list = usersList;
-    return gameOptions;
-  });
-}
-
-export function getGameOptionsFromConfig(gameConfig) {
-  delete gameConfig.players_list;
-  return gameConfig;
-}
-
-function setTempGameConfig(gameOptions) {
-  return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
-    return makePostCall('/game/set_temp_config', gameConfig);
-  });
+function setTempGameConfig(gameConfig) {
+  return makePostCall('/game/set_temp_config', gameConfig);
 }
 
 function getTempGameOptions() {
   return makeGetCall('/game/get_temp_config').then((gameConfig) => {
-    return getGameOptionsFromConfig(gameConfig);
+    delete gameConfig.players_list;
+    return gameConfig;
   });
 }
 
-function startGame(gameOptions) {
-  return createGameConfigFromOptions(gameOptions).then((gameConfig) => {
-    return makePostCall('/game/start', gameConfig).then((startGameSuccess) => {
-      if (startGameSuccess.status) {
-        return makePostCall('/game/start_new_round');
-      } else {
-        alert(startGameSuccess.message);
-        return startGameSuccess;
-      }
-    });
+function startGame(gameConfig) {
+  return makePostCall('/game/start', gameConfig).then((startGameSuccess) => {
+    if (startGameSuccess.status) {
+      return makePostCall('/game/start_new_round');
+    } else {
+      alert(startGameSuccess.message);
+      return startGameSuccess;
+    }
   });
 }
 
@@ -54,7 +39,7 @@ function isGameComplete() {
 export class GameSetup extends Component {
   gameOptionsNames = {
     max_nb_rounds: 'Number of rounds',
-    starting_player_index: 'Starting player index',
+    starting_player: 'Starting player',
     nb_themes_per_card: 'Number of themes per card',
     themes_language: 'Themes language',
   };
@@ -142,20 +127,18 @@ export class GameSetup extends Component {
         this.props.goToThemeSelectionHandler();
         return;
       }
-      getConnectedUsers().then((usersList) => {
-        let firstPlayer = usersList[0];
-        newState.firstPlayer = firstPlayer;
-        if (firstPlayer === currentUser.username) {
+      let firstPlayer = this.props.usersList[0];
+      newState.firstPlayer = firstPlayer;
+      if (firstPlayer === currentUser.username) {
+        this.setState(newState);
+        this.gameCheckingId = repeat(this.checkGameStatus, 100);
+      } else {
+        getTempGameOptions().then((gameOptions) => {
+          newState.gameOptions = gameOptions;
           this.setState(newState);
           this.gameCheckingId = repeat(this.checkGameStatus, 100);
-        } else {
-          getTempGameOptions().then((gameOptions) => {
-            newState.gameOptions = gameOptions;
-            this.setState(newState);
-            this.gameCheckingId = repeat(this.checkGameStatus, 100);
-          });
-        }
-      });
+        });
+      }
     });
   };
 
@@ -165,62 +148,98 @@ export class GameSetup extends Component {
     clearTimeout(this.gameCheckingId);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.state.firstPlayer === currentUser.username &&
-      this.state.gameOptions !== prevState.gameOptions
-    ) {
-      setTempGameConfig(this.state.gameOptions).then();
-    }
-  }
-
-  liveUpdateNumberOfRounds = (event) => {
+  liveUpdateNumberOfRounds = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.max_nb_rounds = event.target.value;
+    newGameOptions.max_nb_rounds = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
+    let gameConfig = {...newGameOptions};
+    gameConfig.players_list = this.props.usersList;
+    setTempGameConfig(gameConfig).then();
   };
 
-  liveUpdateNumberOfThemesPerCard = (event) => {
+  liveUpdateNumberOfThemesPerCard = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.nb_themes_per_card = event.target.value;
+    newGameOptions.nb_themes_per_card = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
+    let gameConfig = {...newGameOptions};
+    gameConfig.players_list = this.props.usersList;
+    setTempGameConfig(gameConfig).then();
   };
 
-  liveUpdateStartingPlayerIndex = (event) => {
+  liveUpdateStartingPlayer = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.starting_player_index = event.target.value;
+    newGameOptions.starting_player = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
+    let gameConfig = {...newGameOptions};
+    gameConfig.players_list = this.props.usersList;
+    setTempGameConfig(gameConfig).then();
   };
 
-  liveUpdateThemesLanguage = (event) => {
+  liveUpdateThemesLanguage = (newValue) => {
     let newState = {...this.state};
     let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.themes_language = event.target.value;
+    newGameOptions.themes_language = newValue;
     newState.gameOptions = newGameOptions;
     this.setState(newState);
+    let gameConfig = {...newGameOptions};
+    gameConfig.players_list = this.props.usersList;
+    setTempGameConfig(gameConfig).then();
   };
 
   optionsCallbacks = {
     max_nb_rounds: this.liveUpdateNumberOfRounds,
-    starting_player_index: this.liveUpdateStartingPlayerIndex,
+    starting_player: this.liveUpdateStartingPlayer,
     nb_themes_per_card: this.liveUpdateNumberOfThemesPerCard,
     themes_language: this.liveUpdateThemesLanguage,
   };
 
   startGameHandler = () => {
-    startGame(this.state.gameOptions).then((startSuccess) => {
+    let gameConfig = {...this.state.gameOptions};
+    gameConfig.players_list = this.props.usersList;
+    startGame(gameConfig).then((startSuccess) => {
       if (startSuccess.status) {
         this.props.goToThemeSelectionHandler();
       } else {
         alert(startSuccess.message);
       }
     });
+  };
+
+  optionDropDownMenu = (optionName) => {
+    let optionsAvailableValues = {
+      max_nb_rounds: Array.from(new Array(9), (x, i) => i + 1),
+      starting_player: this.props.usersList,
+      nb_themes_per_card: Array.from(new Array(6), (x, i) => i + 1),
+      themes_language: ['en', 'fr'],
+    };
+
+    return (
+      <Dropdown>
+        <Dropdown.Toggle id="dropdown-basic" className="DropDownButton">
+          {this.state.gameOptions[optionName]}
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="DropDownMenu">
+          {optionsAvailableValues[optionName].map((availableValue) => {
+            return (
+              <Dropdown.Item
+                className="DropDownItem"
+                onClick={() => {
+                  this.optionsCallbacks[optionName](availableValue);
+                }}
+              >
+                {availableValue}
+              </Dropdown.Item>
+            );
+          })}
+        </Dropdown.Menu>
+      </Dropdown>
+    );
   };
 
   render() {
@@ -244,16 +263,9 @@ export class GameSetup extends Component {
                   {this.gameOptionsNames[optionName]}:
                 </div>
                 <div className="GamePreparationOptionField">
-                  {this.state.firstPlayer === currentUser.username ? (
-                    <input
-                      type="text"
-                      value={this.state.gameOptions[optionName]}
-                      className="OptionInput"
-                      onChange={this.optionsCallbacks[optionName]}
-                    />
-                  ) : (
-                    this.state.gameOptions[optionName]
-                  )}
+                  {this.state.firstPlayer === currentUser.username
+                    ? this.optionDropDownMenu(optionName)
+                    : this.state.gameOptions[optionName]}
                 </div>
               </div>
             );

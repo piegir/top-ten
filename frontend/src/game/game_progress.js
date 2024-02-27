@@ -4,16 +4,8 @@ import {Component} from 'react';
 
 import {colors, getColorFromScale, makeGetCall} from '../common/common';
 
-import {getGameOptionsFromConfig} from './game_start';
-
 function getRoundsHistory() {
   return makeGetCall('/game/get_rounds_history');
-}
-
-function getGameOptions() {
-  return makeGetCall('/game/get_config').then((gameConfig) => {
-    return getGameOptionsFromConfig(gameConfig);
-  });
 }
 
 let status = {
@@ -50,18 +42,8 @@ export class GameProgress extends Component {
   state = {roundsHistory: []};
 
   componentDidMount() {
-    getGameOptions().then((gameOptions) => {
-      let newRoundsHistory = Array(gameOptions['Number of rounds']).fill({
-        result: null,
-        capten: null,
-        theme: null,
-      });
-      getRoundsHistory().then((roundsHistory) => {
-        for (let roundIndex in roundsHistory) {
-          newRoundsHistory[roundIndex] = roundsHistory[roundIndex];
-        }
-        this.setState({roundsHistory: newRoundsHistory});
-      });
+    getRoundsHistory().then((roundsHistory) => {
+      this.setState({roundsHistory: roundsHistory});
     });
   }
 

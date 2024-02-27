@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 from typing import Annotated
 
-from app.authentication.authentication import oauth2_scheme, user_connected
+from app.authentication.authentication import oauth2_scheme, user_connected, connected_users
 from app.utils import ActionStatus
 from lib.game import Game
 from lib.theme import Theme
@@ -13,13 +13,15 @@ current_game: Game | None = None
 
 
 class RoundSummary(BaseModel):
-    result: float = Field(
+    result: float | None = Field(
         description="-1 if the round is still in progress."
         "A number between 0 and 1 representing the accuracy of the round otherwise.",
-        example=-1)
-    capten: str = Field(
+        example=-1,
+        default=None)
+    capten: str | None = Field(
         description="The Cap'Ten of the round, i.e. the first player.",
-        example="John Doe")
+        example="John Doe",
+        default=None)
     theme: Theme | None = Field(description="The theme of the round.",
                                 default=None)
 
@@ -32,11 +34,11 @@ class GameConfig(BaseModel):
         description=
         "List of usernames of the players that will participate in the game.",
         example=["player1", "player2", "player3", "player4"])
+    starting_player: str | None = Field(
+        description="Name of the starting player.", example="John Doe")
     max_nb_rounds: int = Field(
         description="Total number of rounds to be played in the game.",
         default=5)
-    starting_player_index: int = Field(
-        description="Index of starting player in the players list.", default=0)
     nb_themes_per_card: int = Field(
         description="Number of themes provided per card.", default=3)
     themes_language: str = Field(
@@ -45,7 +47,8 @@ class GameConfig(BaseModel):
         default="en")
 
 
-temp_game_config: GameConfig = GameConfig(players_list=[])
+temp_game_config: GameConfig = GameConfig(players_list=[],
+                                          starting_player=None)
 
 
 def game_created():
@@ -101,6 +104,9 @@ def get_temp_game_config(
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: The temporary game configuration.
     """
+    global temp_game_config
+    if temp_game_config.starting_player is None and len(connected_users) > 0:
+        temp_game_config.starting_player = connected_users[0]
     return temp_game_config
 
 
@@ -133,7 +139,7 @@ def start_game(
     try:
         current_game = Game(game_config.players_list,
                             game_config.max_nb_rounds,
-                            game_config.starting_player_index,
+                            game_config.starting_player,
                             game_config.nb_themes_per_card,
                             game_config.themes_language)
         return ActionStatus(status=True, message="Game was properly started.")
@@ -152,22 +158,6 @@ def is_started(
     :return: True if a game is started, False otherwise.
     """
     return game_created()
-
-
-@router.get("/get_config")
-def get_game_config(
-        current_username: Annotated[str,
-                                    Depends(oauth2_scheme)]) -> GameConfig:
-    """
-    API call to access the current game config.
-
-    :param current_username: Automatically check that the user requesting this is logged-in (value unused)
-    :return: The game configuration.
-    """
-    return GameConfig(players_list=current_game.players_list,
-                      max_nb_rounds=current_game.max_nb_rounds,
-                      starting_player_index=current_game.starting_player_index,
-                      nb_themes_per_card=current_game.nb_themes_per_card)
 
 
 @router.get("/get_players")
@@ -228,19 +218,19 @@ def is_round_in_progress(
 @router.get("/get_rounds_history")
 def get_rounds_history(
     current_username: Annotated[str, Depends(oauth2_scheme)]
-) -> list[RoundSummary]:
+) -> list[RoundSummary | None]:
     """
     API call to obtain the history of the different rounds of the game represented as summaries (result + capten name).
 
     :param current_username: Automatically check that the user requesting this is logged-in (value unused)
     :return: The list of round summaries.
     """
-    return [
-        RoundSummary(result=this_round.result,
-                     capten=this_round.players_list[0],
-                     theme=this_round.theme)
-        for this_round in current_game.rounds
-    ]
+    rounds_history = [RoundSummary()] * current_game.max_nb_rounds
+    for i, game_round in enumerate(current_game.rounds):
+        rounds_history[i] = RoundSummary(result=game_round.result,
+                                         capten=game_round.players_list[0],
+                                         theme=game_round.theme)
+    return rounds_history
 
 
 @router.get("/is_game_complete")
