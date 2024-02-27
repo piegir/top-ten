@@ -37,6 +37,10 @@ function isGameComplete() {
 }
 
 export class GameSetup extends Component {
+  /**
+   * Object containing the display names of each game option.
+   * @type {{max_nb_rounds: string, starting_player: string, nb_themes_per_card: string, themes_language: string}}
+   */
   gameOptionsNames = {
     max_nb_rounds: 'Number of rounds',
     starting_player: 'Starting player',
@@ -45,15 +49,18 @@ export class GameSetup extends Component {
   };
 
   /**
-   * Init game options object filled with null values and using predefined keys.
-   * @type {{[p: string]: null}}
+   * Initialize the game options with null values, to be filled and used later.
+   * @type {{max_nb_rounds: (number|null), starting_player: (string|null), nb_themes_per_card: (number|null), themes_language: (string|null)}}
    */
-  nullGameOptions = Object.keys(this.gameOptionsNames).reduce(
-    (obj, key) => Object.assign(obj, {[key]: null}),
-    {}
-  );
+  gameOptions = {
+    max_nb_rounds: null,
+    starting_player: null,
+    nb_themes_per_card: null,
+    themes_language: null,
+  };
+
   state = {
-    gameOptions: this.nullGameOptions,
+    gameOptionsChanged: false,
     gameStarted: false,
     gameComplete: false,
     firstPlayer: null,
@@ -63,12 +70,12 @@ export class GameSetup extends Component {
   componentDidMount() {
     let newState = {...this.state};
     getTempGameOptions().then((gameOptions) => {
-      newState.gameOptions = gameOptions;
       isGameStarted().then((gameStarted) => {
         newState.gameStarted = gameStarted;
         if (!gameStarted) {
           // A user is allowed to join if no game is started
           newState.allowedUser = true;
+          this.gameOptions = gameOptions;
           this.setState(newState);
           return;
         }
@@ -77,6 +84,7 @@ export class GameSetup extends Component {
           if (gameComplete) {
             // A user is allowed to join if the previous game has been completed
             newState.allowedUser = true;
+            this.gameOptions = gameOptions;
             this.setState(newState);
             return;
           }
@@ -85,6 +93,7 @@ export class GameSetup extends Component {
               // A user is allowed to join if he is part of the current started
               // game, he is sent to the next step of the game
               newState.allowedUser = true;
+              this.gameOptions = gameOptions;
               this.setState(newState);
               this.props.goToThemeSelectionHandler();
               return;
@@ -134,7 +143,8 @@ export class GameSetup extends Component {
         this.gameCheckingId = repeat(this.checkGameStatus, 100);
       } else {
         getTempGameOptions().then((gameOptions) => {
-          newState.gameOptions = gameOptions;
+          this.gameOptions = gameOptions;
+          newState.gameOptionsChanged = true;
           this.setState(newState);
           this.gameCheckingId = repeat(this.checkGameStatus, 100);
         });
@@ -148,59 +158,21 @@ export class GameSetup extends Component {
     clearTimeout(this.gameCheckingId);
   }
 
-  liveUpdateNumberOfRounds = (newValue) => {
+  updateGameOption(optionKey, newValue) {
+    // Update local value
+    this.gameOptions[optionKey] = newValue;
+    // Trigger component re-rendering
     let newState = {...this.state};
-    let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.max_nb_rounds = newValue;
-    newState.gameOptions = newGameOptions;
+    newState.gameOptionsChanged = true;
     this.setState(newState);
-    let gameConfig = {...newGameOptions};
+    // Update backend value
+    let gameConfig = {...this.gameOptions};
     gameConfig.players_list = this.props.usersList;
     setTempGameConfig(gameConfig).then();
-  };
-
-  liveUpdateNumberOfThemesPerCard = (newValue) => {
-    let newState = {...this.state};
-    let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.nb_themes_per_card = newValue;
-    newState.gameOptions = newGameOptions;
-    this.setState(newState);
-    let gameConfig = {...newGameOptions};
-    gameConfig.players_list = this.props.usersList;
-    setTempGameConfig(gameConfig).then();
-  };
-
-  liveUpdateStartingPlayer = (newValue) => {
-    let newState = {...this.state};
-    let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.starting_player = newValue;
-    newState.gameOptions = newGameOptions;
-    this.setState(newState);
-    let gameConfig = {...newGameOptions};
-    gameConfig.players_list = this.props.usersList;
-    setTempGameConfig(gameConfig).then();
-  };
-
-  liveUpdateThemesLanguage = (newValue) => {
-    let newState = {...this.state};
-    let newGameOptions = {...this.state.gameOptions};
-    newGameOptions.themes_language = newValue;
-    newState.gameOptions = newGameOptions;
-    this.setState(newState);
-    let gameConfig = {...newGameOptions};
-    gameConfig.players_list = this.props.usersList;
-    setTempGameConfig(gameConfig).then();
-  };
-
-  optionsCallbacks = {
-    max_nb_rounds: this.liveUpdateNumberOfRounds,
-    starting_player: this.liveUpdateStartingPlayer,
-    nb_themes_per_card: this.liveUpdateNumberOfThemesPerCard,
-    themes_language: this.liveUpdateThemesLanguage,
-  };
+  }
 
   startGameHandler = () => {
-    let gameConfig = {...this.state.gameOptions};
+    let gameConfig = {...this.gameOptions};
     gameConfig.players_list = this.props.usersList;
     startGame(gameConfig).then((startSuccess) => {
       if (startSuccess.status) {
@@ -211,26 +183,33 @@ export class GameSetup extends Component {
     });
   };
 
-  optionDropDownMenu = (optionName) => {
+  optionDropDownMenu = (optionKey) => {
+    /**
+     * Object containing the values a user is allowed to select for each game option.
+     * @type {{max_nb_rounds: Array.<number>, starting_player: Array.<string>, nb_themes_per_card: Array.<number>, themes_language: Array.<string>}}
+     */
     let optionsAvailableValues = {
-      max_nb_rounds: Array.from(new Array(9), (x, i) => i + 1),
+      max_nb_rounds: Array.from(new Array(9), (x, i) => i + 1) /* 1 to 9 */,
       starting_player: this.props.usersList,
-      nb_themes_per_card: Array.from(new Array(6), (x, i) => i + 1),
+      nb_themes_per_card: Array.from(
+        new Array(6),
+        (x, i) => i + 1
+      ) /* 1 to 6 */,
       themes_language: ['en', 'fr'],
     };
 
     return (
       <Dropdown>
         <Dropdown.Toggle id="dropdown-basic" className="DropDownButton">
-          {this.state.gameOptions[optionName]}
+          {this.gameOptions[optionKey]}
         </Dropdown.Toggle>
         <Dropdown.Menu className="DropDownMenu">
-          {optionsAvailableValues[optionName].map((availableValue) => {
+          {optionsAvailableValues[optionKey].map((availableValue) => {
             return (
               <Dropdown.Item
                 className="DropDownItem"
                 onClick={() => {
-                  this.optionsCallbacks[optionName](availableValue);
+                  this.updateGameOption(optionKey, availableValue);
                 }}
               >
                 {availableValue}
@@ -256,16 +235,16 @@ export class GameSetup extends Component {
           )}
         </div>
         <div>
-          {Object.keys(this.optionsCallbacks).map((optionName) => {
+          {Object.keys(this.gameOptionsNames).map((optionKey) => {
             return (
               <div className="GamePreparationOption">
                 <div className="GamePreparationOptionName">
-                  {this.gameOptionsNames[optionName]}:
+                  {this.gameOptionsNames[optionKey]}:
                 </div>
                 <div className="GamePreparationOptionField">
                   {this.state.firstPlayer === currentUser.username
-                    ? this.optionDropDownMenu(optionName)
-                    : this.state.gameOptions[optionName]}
+                    ? this.optionDropDownMenu(optionKey)
+                    : this.gameOptions[optionKey]}
                 </div>
               </div>
             );

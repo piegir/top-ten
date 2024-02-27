@@ -84,35 +84,29 @@ export class ThemeSelection extends Component {
 }
 
 export class PropositionMaking extends Component {
+  theme = null;
+  firstRoundPlayer = null;
+  currentPlayer = null;
+
   state = {
-    theme: null,
-    firstRoundPlayer: null,
-    currentPlayer: null,
-    allPropositionsMade: false,
+    updated: false,
   };
 
   componentDidMount() {
     getRoundPlayers().then((playersList) => {
-      this.setState({
-        firstRoundPlayer: playersList[0],
-        theme: this.state.theme,
-        currentPlayer: this.state.currentPlayer,
-        allPropositionsMade: this.state.allPropositionsMade,
-      });
+      this.firstRoundPlayer = playersList[0];
+      this.setState({updated: true});
     });
   }
 
   getCurrentTheme = () => {
     getTheme().then((theme) => {
-      this.setState({
-        theme: theme,
-        firstRoundPlayer: this.state.firstRoundPlayer,
-        currentPlayer: this.state.currentPlayer,
-        allPropositionsMade: this.state.allPropositionsMade,
-      });
       if (theme === null) {
         // Get theme until it's not null
         this.currentThemeGettingId = repeat(this.getCurrentTheme, 100);
+      } else {
+        this.theme = theme;
+        this.setState({updated: true});
       }
     });
   };
@@ -120,19 +114,15 @@ export class PropositionMaking extends Component {
   currentThemeGettingId = repeat(this.getCurrentTheme, 100);
 
   checkTurnStatus = () => {
-    getCurrentPlayer().then((currentPlayer) => {
-      checkAllPropositionsMade().then((allPropositionsMade) => {
-        this.setState({
-          theme: this.state.theme,
-          firstRoundPlayer: this.state.firstRoundPlayer,
-          currentPlayer: currentPlayer,
-          allPropositionsMade: allPropositionsMade,
-        });
-        if (allPropositionsMade) {
-          this.props.goToHypothesisMakingHandler();
-        } else {
-          this.turnStatusCheckingId = repeat(this.checkTurnStatus, 100);
-        }
+    checkAllPropositionsMade().then((allPropositionsMade) => {
+      if (allPropositionsMade) {
+        this.props.goToHypothesisMakingHandler();
+        return;
+      }
+      getCurrentPlayer().then((currentPlayer) => {
+        this.currentPlayer = currentPlayer;
+        this.setState({updated: true});
+        this.turnStatusCheckingId = repeat(this.checkTurnStatus, 100);
       });
     });
   };
@@ -162,10 +152,10 @@ export class PropositionMaking extends Component {
         </div>
         <div className="BottomBox">
           <PlayerPropositions />
-          {this.state.theme === null ? (
-            <WaitThemeSelected firstRoundPlayer={this.state.firstRoundPlayer} />
+          {this.theme === null ? (
+            <WaitThemeSelected firstRoundPlayer={this.firstRoundPlayer} />
           ) : (
-            <MakeProposition currentPlayer={this.state.currentPlayer} />
+            <MakeProposition currentPlayer={this.currentPlayer} />
           )}
         </div>
       </div>
