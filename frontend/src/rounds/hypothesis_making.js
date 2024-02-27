@@ -30,10 +30,10 @@ export function getTemporaryHypothesis() {
 }
 
 export class MakeHypothesis extends Component {
-  state = {
-    propositions: [],
-    hypothesis: [],
-  };
+  propositions = [];
+  hypothesis = [];
+
+  state = {updated: false};
 
   componentDidMount() {
     checkRoundComplete().then((complete) => {
@@ -43,37 +43,30 @@ export class MakeHypothesis extends Component {
       }
       getPlayerPropositions().then((playerPropositions) => {
         setTemporaryHypothesis(playerPropositions).then(() => {
-          this.setState({
-            propositions: [...playerPropositions],
-            hypothesis: [...playerPropositions],
-          });
+          this.propositions = [...playerPropositions];
+          this.hypothesis = [...playerPropositions];
+          this.setState({updated: true});
         });
       });
     });
   }
 
   lower = (index) => {
-    [this.state.hypothesis[index + 1], this.state.hypothesis[index]] = [
-      this.state.hypothesis[index],
-      this.state.hypothesis[index + 1],
+    [this.hypothesis[index + 1], this.hypothesis[index]] = [
+      this.hypothesis[index],
+      this.hypothesis[index + 1],
     ];
-    this.setState({
-      propositions: this.state.propositions,
-      hypothesis: this.state.hypothesis,
-    });
-    setTemporaryHypothesis(this.state.hypothesis).then();
+    this.setState({updated: true});
+    setTemporaryHypothesis(this.hypothesis).then();
   };
 
   raise = (index) => {
-    [this.state.hypothesis[index - 1], this.state.hypothesis[index]] = [
-      this.state.hypothesis[index],
-      this.state.hypothesis[index - 1],
+    [this.hypothesis[index - 1], this.hypothesis[index]] = [
+      this.hypothesis[index],
+      this.hypothesis[index - 1],
     ];
-    this.setState({
-      propositions: this.state.propositions,
-      hypothesis: this.state.hypothesis,
-    });
-    setTemporaryHypothesis(this.state.hypothesis).then();
+    this.setState({updated: true});
+    setTemporaryHypothesis(this.hypothesis).then();
   };
 
   row;
@@ -100,7 +93,7 @@ export class MakeHypothesis extends Component {
   };
 
   makeHypothesisHandler = () => {
-    makeHypothesis(this.state.hypothesis).then((success) => {
+    makeHypothesis(this.hypothesis).then((success) => {
       if (success.status) {
         this.props.goToRoundResultsCheckingHandler();
       } else {
@@ -110,6 +103,9 @@ export class MakeHypothesis extends Component {
   };
 
   render() {
+    if (!this.state.updated) {
+      return <div className="UserActionBox"></div>;
+    }
     return (
       <div className="UserActionBox">
         <div className="SubTitle">Make your hypothesis by dragging rows</div>
@@ -118,8 +114,8 @@ export class MakeHypothesis extends Component {
             <th>Players</th>
             <th>Propositions</th>
           </tr>
-          {this.state.propositions.map((proposition) => {
-            let propHypIndex = this.state.hypothesis.indexOf(proposition);
+          {this.propositions.map((proposition) => {
+            let propHypIndex = this.hypothesis.indexOf(proposition);
             return (
               <tr
                 draggable={true}
@@ -130,7 +126,7 @@ export class MakeHypothesis extends Component {
                   'background-color': getColorFromScale({
                     value: propHypIndex,
                     minValue: 0,
-                    maxValue: this.state.propositions.length - 1,
+                    maxValue: this.propositions.length - 1,
                     opacity: 0.5,
                   }),
                 }}
@@ -150,13 +146,8 @@ export class MakeHypothesis extends Component {
 }
 
 export class WaitHypothesisMade extends Component {
-  state = {hypothesis: []};
-
-  componentDidMount() {
-    getPlayerPropositions().then((playerPropositions) => {
-      this.setState({hypothesis: playerPropositions});
-    });
-  }
+  hypothesis = [];
+  state = {updated: false};
 
   checkHypothesisMade = () => {
     checkRoundComplete().then((complete) => {
@@ -165,7 +156,8 @@ export class WaitHypothesisMade extends Component {
         return;
       }
       getTemporaryHypothesis().then((hypothesis) => {
-        this.setState({hypothesis: hypothesis});
+        this.hypothesis = hypothesis;
+        this.setState({updated: true});
         this.hypothesisMadeCheckingId = repeat(this.checkHypothesisMade, 100);
       });
     });
@@ -178,6 +170,9 @@ export class WaitHypothesisMade extends Component {
   }
 
   render() {
+    if (!this.state.updated) {
+      return <div className="UserActionBox"></div>;
+    }
     return (
       <div className="UserActionBox">
         <div className="SubTitle">
@@ -188,14 +183,14 @@ export class WaitHypothesisMade extends Component {
             <th>Players</th>
             <th>Propositions</th>
           </tr>
-          {this.state.hypothesis.map((proposition, index) => {
+          {this.hypothesis.map((proposition, index) => {
             return (
               <tr
                 style={{
                   'background-color': getColorFromScale({
                     value: index,
                     minValue: 0,
-                    maxValue: this.state.hypothesis.length - 1,
+                    maxValue: this.hypothesis.length - 1,
                     opacity: 0.5,
                   }),
                 }}
