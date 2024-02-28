@@ -16,6 +16,7 @@ import {
   PropositionMaking,
   ThemeSelection,
 } from './rounds/rounds.js';
+import {currentLanguage} from './common/languages';
 
 let views = {
   AskCredentials: 0,
@@ -47,48 +48,64 @@ class App extends Component {
     };
   }
 
-  state = {view: views.AskCredentials};
+  view = views.AskCredentials;
+
+  state = {updated: false};
 
   /// Logic Handlers
+  switchLanguageHandler = (language) => {
+    currentLanguage.language = language;
+    this.setState({updated: true});
+  };
+
   goToGamePreparationHandler = () => {
-    this.setState({view: views.GamePreparation});
+    this.view = views.GamePreparation;
+    this.setState({updated: true});
   };
 
   goToAskCredentialsHandler = () => {
-    this.setState({view: views.AskCredentials});
+    this.view = views.AskCredentials;
+    this.setState({updated: true});
   };
 
   goToThemeSelectionHandler = () => {
-    this.setState({view: views.ThemeSelection});
+    this.view = views.ThemeSelection;
+    this.setState({updated: true});
   };
 
   goToPropositionMakingHandler = () => {
-    this.setState({view: views.PropositionMaking});
+    this.view = views.PropositionMaking;
+    this.setState({updated: true});
   };
 
   goToHypothesisMakingHandler = () => {
-    this.setState({view: views.HypothesisMaking});
+    this.view = views.HypothesisMaking;
+    this.setState({updated: true});
   };
 
   goToRoundResultsCheckingHandler = () => {
-    this.setState({view: views.RoundResultChecking});
+    this.view = views.RoundResultChecking;
+    this.setState({updated: true});
   };
 
   goToGameResultsCheckingHandler = () => {
-    this.setState({view: views.GameResultChecking});
+    this.view = views.GameResultChecking;
+    this.setState({updated: true});
   };
 
   render() {
-    switch (this.state.view) {
+    switch (this.view) {
       case views.AskCredentials:
         return (
           <AskCredentials
+            switchLanguageHandler={this.switchLanguageHandler}
             goToGamePreparationHandler={this.goToGamePreparationHandler}
           />
         );
       case views.GamePreparation:
         return (
           <GamePreparation
+            switchLanguageHandler={this.switchLanguageHandler}
             goToThemeSelectionHandler={this.goToThemeSelectionHandler}
             goToAskCredentialsHandler={this.goToAskCredentialsHandler}
           />
@@ -96,6 +113,7 @@ class App extends Component {
       case views.ThemeSelection:
         return (
           <ThemeSelection
+            switchLanguageHandler={this.switchLanguageHandler}
             goToPropositionMakingHandler={this.goToPropositionMakingHandler}
             goToAskCredentialsHandler={this.goToAskCredentialsHandler}
           />
@@ -103,6 +121,7 @@ class App extends Component {
       case views.PropositionMaking:
         return (
           <PropositionMaking
+            switchLanguageHandler={this.switchLanguageHandler}
             goToHypothesisMakingHandler={this.goToHypothesisMakingHandler}
             goToAskCredentialsHandler={this.goToAskCredentialsHandler}
           />
@@ -110,6 +129,7 @@ class App extends Component {
       case views.HypothesisMaking:
         return (
           <HypothesisMaking
+            switchLanguageHandler={this.switchLanguageHandler}
             goToRoundResultsCheckingHandler={
               this.goToRoundResultsCheckingHandler
             }
@@ -119,6 +139,7 @@ class App extends Component {
       case views.RoundResultChecking:
         return (
           <RoundResultChecking
+            switchLanguageHandler={this.switchLanguageHandler}
             goToThemeSelectionHandler={this.goToThemeSelectionHandler}
             goToGameResultsCheckingHandler={this.goToGameResultsCheckingHandler}
             goToAskCredentialsHandler={this.goToAskCredentialsHandler}
@@ -127,6 +148,7 @@ class App extends Component {
       case views.GameResultChecking:
         return (
           <GameResultChecking
+            switchLanguageHandler={this.switchLanguageHandler}
             goToGamePreparationHandler={this.goToGamePreparationHandler}
             goToAskCredentialsHandler={this.goToAskCredentialsHandler}
           />
@@ -136,11 +158,13 @@ class App extends Component {
           <div>
             {currentUser.username !== null ? (
               <GamePreparation
+                switchLanguageHandler={this.switchLanguageHandler}
                 goToThemeSelectionHandler={this.goToThemeSelectionHandler}
                 goToAskCredentialsHandler={this.goToAskCredentialsHandler}
               />
             ) : (
               <AskCredentials
+                switchLanguageHandler={this.switchLanguageHandler}
                 goToAskCredentialsHandler={this.goToAskCredentialsHandler}
               />
             )}

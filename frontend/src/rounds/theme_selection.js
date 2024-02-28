@@ -9,6 +9,7 @@ import {
   makePostCall,
   repeat,
 } from '../common/common';
+import {currentLanguage, dictionary} from '../common/languages';
 
 function getCard() {
   return makeGetCall('/rounds/get_card');
@@ -53,10 +54,12 @@ export class SelectTheme extends Component {
   render() {
     return (
       <div className="UserActionBox">
-        <div className="SubTitle">Select a theme</div>
+        <div className="SubTitle">
+          {dictionary.selectATheme[currentLanguage.language]}
+        </div>
         <table className="ThemesTable">
           <tr>
-            <td>Theme</td>
+            <td>{dictionary.theme[currentLanguage.language]}</td>
             <td
               style={{
                 color: getColorFromScale({
@@ -112,7 +115,7 @@ export class SelectTheme extends Component {
                       this.setThemeHandler(themeObject);
                     }}
                   >
-                    Select
+                    {dictionary.select[currentLanguage.language]}
                   </button>
                 </td>
               </tr>
@@ -129,7 +132,8 @@ export class WaitThemeSelected extends Component {
     return (
       <div className="UserActionBox">
         <div className="SubTitle">
-          Waiting for {this.props.firstRoundPlayer} to set the theme...
+          {this.props.firstRoundPlayer +
+            dictionary.isSelectingTheme[currentLanguage.language]}
         </div>
       </div>
     );
@@ -161,7 +165,7 @@ export class CurrentTheme extends Component {
         {this.state.theme !== null ? (
           <table className="CurrentTheme">
             <tr>
-              <th>Theme</th>
+              <th>{dictionary.theme[currentLanguage.language]}</th>
               <th
                 style={{
                   color: getColorFromScale({
@@ -182,9 +186,9 @@ export class CurrentTheme extends Component {
                   }),
                 }}
               >
-                Top 10{' '}
+                Top 10
               </th>
-            </tr>{' '}
+            </tr>
             <tr>
               <td>{this.state.theme.title} </td>
               <td
@@ -207,7 +211,7 @@ export class CurrentTheme extends Component {
                   }),
                 }}
               >
-                {this.state.theme.top10}{' '}
+                {this.state.theme.top10}
               </td>
             </tr>
           </table>

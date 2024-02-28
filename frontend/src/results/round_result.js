@@ -10,6 +10,7 @@ import {
   makePostCall,
 } from '../common/common';
 import {getRoundPlayers} from '../rounds/rounds.js';
+import {currentLanguage, dictionary} from '../common/languages';
 
 function checkGameComplete() {
   return makeGetCall('/game/is_game_complete');
@@ -31,7 +32,7 @@ export class RoundResult extends Component {
             }),
           }}
         >
-          Round Result: {this.roundResult}%
+          {dictionary.roundResult[currentLanguage.language] + this.roundResult}%
         </p>
       </div>
     );
@@ -42,10 +43,12 @@ export class Reality extends Component {
   render() {
     return (
       <div className="PlayersBox">
-        <div className="SubTitle">Reality</div>
+        <div className="SubTitle">
+          {dictionary.reality[currentLanguage.language]}
+        </div>
         <table className="PlayerTopTable">
           <tr>
-            <th>Players</th>
+            <th>{dictionary.players[currentLanguage.language]}</th>
             <th>Top</th>
             <th>Propositions</th>
           </tr>
@@ -113,11 +116,13 @@ export class Hypothesis extends Component {
   render() {
     return (
       <div className="UserActionBox">
-        <div className="SubTitle">Hypothesis</div>
+        <div className="SubTitle">
+          {dictionary.hypothesis[currentLanguage.language]}
+        </div>
         <div>
           <table className="PlayerTopTable">
             <tr>
-              <th>Players</th>
+              <th>{dictionary.players[currentLanguage.language]}</th>
               <th>Top</th>
               <th>Propositions</th>
             </tr>
@@ -148,9 +153,9 @@ export class Hypothesis extends Component {
                           textAlign: 'center',
                         }}
                       >
-                        {thisNumber}{' '}
+                        {thisNumber}
                       </td>
-                      <td>{proposition.proposition}</td>{' '}
+                      <td>{proposition.proposition}</td>
                     </tr>
                   );
                 })
@@ -163,7 +168,7 @@ export class Hypothesis extends Component {
               onClick={this.props.goToGameResultsCheckingHandler}
               className="UserActionButton"
             >
-              View game results
+              {dictionary.viewGameResults[currentLanguage.language]}
             </button>
           </div>
         ) : this.state.isFirstPlayer ? (
@@ -172,7 +177,7 @@ export class Hypothesis extends Component {
               onClick={this.roundStartingHandler}
               className="UserActionButton"
             >
-              Start a new round
+              {dictionary.startNewRound[currentLanguage.language]}
             </button>
           </div>
         ) : null}

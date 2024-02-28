@@ -2,7 +2,8 @@ import './users.css';
 
 import {Component} from 'react';
 
-import {makeGetCall, repeat} from '../common/common';
+import {makeGetCall} from '../common/common';
+import {currentLanguage, dictionary} from '../common/languages';
 
 export let getConnectedUsers = () => {
   return makeGetCall('/authentication/get_connected_users');
@@ -12,11 +13,13 @@ export class Users extends Component {
   render() {
     return (
       <div className="PlayersBox">
-        <div className="SubTitle">Who's playing?</div>
+        <div className="SubTitle">
+          {dictionary.whoPlaying[currentLanguage.language]}
+        </div>
         <table className="UsersTable">
           <tr>
             <th>
-              Players{' '}
+              {dictionary.players[currentLanguage.language]}
               {this.props.displayNumbers ? (
                 <span style={{fontSize: '1vw'}}>
                   ({this.props.usersList.length} /10)
@@ -25,7 +28,7 @@ export class Users extends Component {
             </th>
             <th></th>
           </tr>
-          {this.props.usersList.map((username, index) => {
+          {this.props.usersList.map((username) => {
             return (
               <tr>
                 <td>{username}</td>
