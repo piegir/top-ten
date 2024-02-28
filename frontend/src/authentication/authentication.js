@@ -3,11 +3,7 @@ import './authentication.css';
 import {Component} from 'react';
 
 import {makeGetCall, makePostCall, repeat} from '../common/common.js';
-import {
-  currentLanguage,
-  languagesDictionaries,
-  SelectLanguage,
-} from '../common/languages';
+import {currentLanguage, dictionary, SelectLanguage} from '../common/languages';
 
 export let currentUser = {
   username: null,
@@ -52,7 +48,7 @@ class Login extends Component {
     return (
       <div className="LoginBox">
         <div className="SubTitle">
-          {languagesDictionaries.askUsername[currentLanguage.language]}
+          {dictionary.askUsername[currentLanguage.language]}
         </div>
         <form onSubmit={this.loginHandler}>
           <input
@@ -63,7 +59,7 @@ class Login extends Component {
           />
           <div className="ButtonBox">
             <button type="submit">
-              {languagesDictionaries.login[currentLanguage.language]}
+              {dictionary.login[currentLanguage.language]}
             </button>
           </div>
         </form>
@@ -95,11 +91,7 @@ export class Username extends Component {
   }
 
   logoutHandler = () => {
-    if (
-      window.confirm(
-        languagesDictionaries.confirmLogout[currentLanguage.language]
-      )
-    ) {
+    if (window.confirm(dictionary.confirmLogout[currentLanguage.language])) {
       userLogout().then((logoutSuccess) => {
         if (logoutSuccess.status) {
           currentUser.username = null;
@@ -120,7 +112,7 @@ export class Username extends Component {
           <br />
         </span>
         <button onClick={this.logoutHandler}>
-          {languagesDictionaries.logout[currentLanguage.language]}
+          {dictionary.logout[currentLanguage.language]}
         </button>
       </div>
     );

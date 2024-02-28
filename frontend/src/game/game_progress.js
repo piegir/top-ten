@@ -3,6 +3,7 @@ import './game_progress.css';
 import {Component} from 'react';
 
 import {colors, getColorFromScale, makeGetCall} from '../common/common';
+import {currentLanguage, dictionary} from '../common/languages';
 
 function getRoundsHistory() {
   return makeGetCall('/game/get_rounds_history');
@@ -52,22 +53,22 @@ export class GameProgress extends Component {
       <div>
         <table className="GameProgress">
           <tr>
-            <td>Round</td>
+            <td>{dictionary.round[currentLanguage.language]}</td>
             {this.state.roundsHistory.map((roundSummary, roundIndex) => {
               return <td>{roundIndex + 1} </td>;
             })}
-          </tr>{' '}
+          </tr>
           <tr>
             <td>Cap'Ten </td>
             {this.state.roundsHistory.map((roundSummary) => {
               return <td>{roundSummary.capten}</td>;
-            })}{' '}
+            })}
           </tr>
           <tr>
-            <td>Status</td>
+            <td>{dictionary.result[currentLanguage.language]}</td>
             {this.state.roundsHistory.map((roundSummary) => {
               return displayRoundPercentage(roundSummary.result);
-            })}{' '}
+            })}
           </tr>
         </table>
       </div>
@@ -81,10 +82,10 @@ export class GameSummary extends GameProgress {
       <div>
         <table className="GameProgress">
           <tr>
-            <td>Round</td>
+            <td>{dictionary.round[currentLanguage.language]}</td>
             <td>Cap'Ten </td>
-            <td>Theme</td>
-            <td>Status</td>
+            <td>{dictionary.theme[currentLanguage.language]}</td>
+            <td>{dictionary.result[currentLanguage.language]}</td>
           </tr>
           {this.state.roundsHistory.map((roundSummary, roundIndex) => {
             return (
@@ -95,7 +96,7 @@ export class GameSummary extends GameProgress {
                 {displayRoundPercentage(roundSummary.result)}
               </tr>
             );
-          })}{' '}
+          })}
         </table>
       </div>
     );

@@ -5,7 +5,7 @@ import {currentUser, userLogout} from '../authentication/authentication';
 import {makeGetCall, makePostCall, repeat} from '../common/common';
 
 import {getGamePlayers} from './utils.js';
-import {currentLanguage, languagesDictionaries} from '../common/languages';
+import {currentLanguage, dictionary} from '../common/languages';
 
 function setTempGameConfig(gameConfig) {
   return makePostCall('/game/set_temp_config', gameConfig);
@@ -90,7 +90,7 @@ export class GameSetup extends Component {
             }
             // In any other case, the user is not allowed to join. Log him out
             // and send him back to login page.
-            alert(languagesDictionaries.cannotJoin[currentLanguage.language]);
+            alert(dictionary.cannotJoin[currentLanguage.language]);
             userLogout().then((logoutSuccess) => {
               if (logoutSuccess.status) {
                 currentUser.username = null;
@@ -219,17 +219,16 @@ export class GameSetup extends Component {
       <div className="UserActionBox">
         <div className="SubTitle">
           {this.state.firstPlayer === currentUser.username
-            ? languagesDictionaries.gamePreparation[currentLanguage.language]
+            ? dictionary.gamePreparation[currentLanguage.language]
             : this.state.firstPlayer +
-              ' ' +
-              languagesDictionaries.isPreparing[currentLanguage.language]}
+              dictionary.isPreparingGame[currentLanguage.language]}
         </div>
         <div>
           {Object.keys(this.gameOptions).map((optionKey) => {
             return (
               <div className="GamePreparationOption">
                 <div className="GamePreparationOptionName">
-                  {languagesDictionaries[optionKey][currentLanguage.language]}
+                  {dictionary[optionKey][currentLanguage.language]}
                 </div>
                 <div className="GamePreparationOptionField">
                   {this.state.firstPlayer === currentUser.username
@@ -243,10 +242,10 @@ export class GameSetup extends Component {
         {this.state.firstPlayer === currentUser.username ? (
           <div className="ButtonBox">
             <button onClick={this.startGameHandler}>
-              {languagesDictionaries.startGame[currentLanguage.language]}
+              {dictionary.startGame[currentLanguage.language]}
             </button>
           </div>
-        ) : null}{' '}
+        ) : null}
       </div>
     );
   }

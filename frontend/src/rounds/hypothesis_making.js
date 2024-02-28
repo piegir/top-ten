@@ -12,6 +12,7 @@ import {
 
 import {getPlayerPropositions} from './proposition_making.js';
 import {getRoundPlayers} from './rounds';
+import {currentLanguage, dictionary} from '../common/languages';
 
 function makeHypothesis(hypothesis) {
   return makePostCall('/rounds/make_hypothesis', hypothesis);
@@ -108,10 +109,12 @@ export class MakeHypothesis extends Component {
     }
     return (
       <div className="UserActionBox">
-        <div className="SubTitle">Make your hypothesis by dragging rows</div>
+        <div className="SubTitle">
+          {dictionary.makeHypothesis[currentLanguage.language]}
+        </div>
         <table className="PlayerPropositionsTable">
           <tr>
-            <th>Players</th>
+            <th>{dictionary.players[currentLanguage.language]}</th>
             <th>Propositions</th>
           </tr>
           {this.propositions.map((proposition) => {
@@ -132,13 +135,15 @@ export class MakeHypothesis extends Component {
                 }}
               >
                 <td>{proposition.player} </td>
-                <td>{proposition.proposition}</td>{' '}
+                <td>{proposition.proposition}</td>
               </tr>
             );
           })}
         </table>
         <div className="ButtonBox">
-          <button onClick={this.makeHypothesisHandler}>Submit</button>
+          <button onClick={this.makeHypothesisHandler}>
+            {dictionary.submit[currentLanguage.language]}
+          </button>
         </div>
       </div>
     );
@@ -176,11 +181,12 @@ export class WaitHypothesisMade extends Component {
     return (
       <div className="UserActionBox">
         <div className="SubTitle">
-          {this.props.firstRoundPlayer} is making a hypothesis...
+          {this.props.firstRoundPlayer +
+            dictionary.isMakingHypothesis[currentLanguage.language]}
         </div>
         <table className="PlayerPropositionsTable">
           <tr>
-            <th>Players</th>
+            <th>{dictionary.players[currentLanguage.language]}</th>
             <th>Propositions</th>
           </tr>
           {this.hypothesis.map((proposition, index) => {
@@ -199,7 +205,7 @@ export class WaitHypothesisMade extends Component {
                 <td>{proposition.proposition} </td>
               </tr>
             );
-          })}{' '}
+          })}
         </table>
       </div>
     );

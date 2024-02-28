@@ -1,6 +1,6 @@
 import {Component} from 'react';
 
-import {currentUser, Username} from '../authentication/authentication.js';
+import {Username} from '../authentication/authentication.js';
 import {Users} from '../authentication/users';
 import {makeGetCall, repeat} from '../common/common.js';
 import {getGamePlayers} from '../game/utils.js';
@@ -8,8 +8,7 @@ import {GameProgress, GameSummary} from '../game/game_progress.js';
 import {CurrentTheme} from '../rounds/theme_selection.js';
 
 import {Hypothesis, Reality, RoundResult} from './round_result.js';
-import {getRoundPlayers} from '../rounds/rounds';
-import {SelectLanguage} from '../common/languages';
+import {currentLanguage, dictionary, SelectLanguage} from '../common/languages';
 
 function checkRoundResult() {
   return makeGetCall('/rounds/check_round_result');
@@ -111,10 +110,12 @@ export class GameResultChecking extends Component {
         <div className="BottomBox">
           <Users usersList={this.state.playersList} displayNumbers={false} />
           <div className="UserActionBox">
-            <div className="SubTitle">Setup a new game?</div>
+            <div className="SubTitle">
+              {dictionary.newGameQuestion[currentLanguage.language]}
+            </div>
             <div className="ButtonBox">
               <button onClick={this.props.goToGamePreparationHandler}>
-                Setup new game
+                {dictionary.newGame[currentLanguage.language]}
               </button>
             </div>
           </div>

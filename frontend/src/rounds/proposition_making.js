@@ -10,6 +10,7 @@ import {
   makePostCall,
   repeat,
 } from '../common/common';
+import {currentLanguage, dictionary} from '../common/languages';
 
 function getUserNumber() {
   return makeGetCall('/rounds/get_number');
@@ -37,9 +38,9 @@ export class CurrentUserNumber extends Component {
   render() {
     return (
       <div>
-        <p className="ShowCurrentUserNumber">
-          Your Top Number: <br />
-          <span
+        <div className="ShowCurrentUserNumber">
+          <div>{dictionary.yourTop[currentLanguage.language]}</div>
+          <div
             className="CurrentUserNumber"
             style={{
               color: getColorFromScale({
@@ -50,9 +51,9 @@ export class CurrentUserNumber extends Component {
               }),
             }}
           >
-            {this.state.topNumber}{' '}
-          </span>
-        </p>
+            {this.state.topNumber}
+          </div>
+        </div>
       </div>
     );
   }
@@ -79,10 +80,12 @@ export class PlayerPropositions extends Component {
   render() {
     return (
       <div className="PlayersBox">
-        <div className="SubTitle">Player Propositions</div>
+        <div className="SubTitle">
+          {dictionary.playerPropositions[currentLanguage.language]}
+        </div>
         <table className="PlayerPropositionsTable">
           <tr>
-            <th>Players</th>
+            <th>{dictionary.players[currentLanguage.language]}</th>
             <th>Propositions</th>
           </tr>
           {this.state.playerPropositions.map((playerProposition) => {
@@ -128,11 +131,9 @@ export class MakeProposition extends Component {
         {this.state.propositionMade ? null : (
           <>
             <div className="SubTitle">
-              {this.props.currentPlayer === currentUser.username ? (
-                <>Make your proposition</>
-              ) : (
-                <>Prepare your proposition</>
-              )}
+              {this.props.currentPlayer === currentUser.username
+                ? dictionary.makeProposition[currentLanguage.language]
+                : dictionary.prepareProposition[currentLanguage.language]}
             </div>
             <div className="PropositionMaking">
               <textarea
@@ -150,11 +151,12 @@ export class MakeProposition extends Component {
               onClick={this.makePropositionHandler}
               className="UserActionButton"
             >
-              Submit
+              {dictionary.submit[currentLanguage.language]}
             </button>
           ) : (
             <div className="SubTitle">
-              Waiting for {this.props.currentPlayer} to make a proposition...
+              {this.props.currentPlayer +
+                dictionary.isMakingProposition[currentLanguage.language]}
             </div>
           )}
         </div>
