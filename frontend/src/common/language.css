@@ -1,0 +1,7 @@
+.LanguageSelection {
+  grid-column-start: 1;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}

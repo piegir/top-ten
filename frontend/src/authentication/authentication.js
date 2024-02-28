@@ -3,6 +3,11 @@ import './authentication.css';
 import {Component} from 'react';
 
 import {makeGetCall, makePostCall, repeat} from '../common/common.js';
+import {
+  currentLanguage,
+  languagesDictionaries,
+  SelectLanguage,
+} from '../common/languages';
 
 export let currentUser = {
   username: null,
@@ -46,7 +51,9 @@ class Login extends Component {
   render() {
     return (
       <div className="LoginBox">
-        <div className="SubTitle">Choose a username: </div>
+        <div className="SubTitle">
+          {languagesDictionaries.askUsername[currentLanguage.language]}
+        </div>
         <form onSubmit={this.loginHandler}>
           <input
             onChange={this.liveUpdateUsername}
@@ -55,7 +62,9 @@ class Login extends Component {
             className="InputBox"
           />
           <div className="ButtonBox">
-            <button type="submit">Confirm</button>
+            <button type="submit">
+              {languagesDictionaries.login[currentLanguage.language]}
+            </button>
           </div>
         </form>
       </div>
@@ -88,7 +97,7 @@ export class Username extends Component {
   logoutHandler = () => {
     if (
       window.confirm(
-        'Logging out will make you leave the game you are part of. Are you sure?'
+        languagesDictionaries.confirmLogout[currentLanguage.language]
       )
     ) {
       userLogout().then((logoutSuccess) => {
@@ -110,7 +119,9 @@ export class Username extends Component {
           {currentUser.username}
           <br />
         </span>
-        <button onClick={this.logoutHandler}>Logout</button>
+        <button onClick={this.logoutHandler}>
+          {languagesDictionaries.logout[currentLanguage.language]}
+        </button>
       </div>
     );
   }
@@ -121,6 +132,9 @@ export class AskCredentials extends Component {
     return (
       <div className="GlobalGrid">
         <div className="HeadBox">
+          <SelectLanguage
+            switchLanguageHandler={this.props.switchLanguageHandler}
+          />
           <div className="Title">Top Ten</div>
         </div>
         <Login

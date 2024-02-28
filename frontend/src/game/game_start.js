@@ -5,6 +5,7 @@ import {currentUser, userLogout} from '../authentication/authentication';
 import {makeGetCall, makePostCall, repeat} from '../common/common';
 
 import {getGamePlayers} from './utils.js';
+import {currentLanguage, languagesDictionaries} from '../common/languages';
 
 function setTempGameConfig(gameConfig) {
   return makePostCall('/game/set_temp_config', gameConfig);
@@ -37,17 +38,6 @@ function isGameComplete() {
 }
 
 export class GameSetup extends Component {
-  /**
-   * Object containing the display names of each game option.
-   * @type {{max_nb_rounds: string, starting_player: string, nb_themes_per_card: string, themes_language: string}}
-   */
-  gameOptionsNames = {
-    max_nb_rounds: 'Number of rounds',
-    starting_player: 'Starting player',
-    nb_themes_per_card: 'Number of themes per card',
-    themes_language: 'Themes language',
-  };
-
   /**
    * Initialize the game options with null values, to be filled and used later.
    * @type {{max_nb_rounds: (number|null), starting_player: (string|null), nb_themes_per_card: (number|null), themes_language: (string|null)}}
@@ -100,7 +90,7 @@ export class GameSetup extends Component {
             }
             // In any other case, the user is not allowed to join. Log him out
             // and send him back to login page.
-            alert('You cannot join a game that you are not part of.');
+            alert(languagesDictionaries.cannotJoin[currentLanguage.language]);
             userLogout().then((logoutSuccess) => {
               if (logoutSuccess.status) {
                 currentUser.username = null;
@@ -228,18 +218,18 @@ export class GameSetup extends Component {
     return (
       <div className="UserActionBox">
         <div className="SubTitle">
-          {this.state.firstPlayer === currentUser.username ? (
-            <>Game Preparation</>
-          ) : (
-            <>{this.state.firstPlayer} is preparing the game...</>
-          )}
+          {this.state.firstPlayer === currentUser.username
+            ? languagesDictionaries.gamePreparation[currentLanguage.language]
+            : this.state.firstPlayer +
+              ' ' +
+              languagesDictionaries.isPreparing[currentLanguage.language]}
         </div>
         <div>
-          {Object.keys(this.gameOptionsNames).map((optionKey) => {
+          {Object.keys(this.gameOptions).map((optionKey) => {
             return (
               <div className="GamePreparationOption">
                 <div className="GamePreparationOptionName">
-                  {this.gameOptionsNames[optionKey]}:
+                  {languagesDictionaries[optionKey][currentLanguage.language]}
                 </div>
                 <div className="GamePreparationOptionField">
                   {this.state.firstPlayer === currentUser.username
@@ -252,7 +242,9 @@ export class GameSetup extends Component {
         </div>
         {this.state.firstPlayer === currentUser.username ? (
           <div className="ButtonBox">
-            <button onClick={this.startGameHandler}>Start Game</button>
+            <button onClick={this.startGameHandler}>
+              {languagesDictionaries.startGame[currentLanguage.language]}
+            </button>
           </div>
         ) : null}{' '}
       </div>

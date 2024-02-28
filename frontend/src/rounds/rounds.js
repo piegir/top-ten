@@ -19,6 +19,7 @@ import {
   SelectTheme,
   WaitThemeSelected,
 } from './theme_selection.js';
+import {SelectLanguage} from '../common/languages';
 
 export let getRoundPlayers = () => {
   return makeGetCall('/rounds/get_players');
@@ -55,6 +56,9 @@ export class ThemeSelection extends Component {
     return (
       <div className="GlobalGrid">
         <div className="HeadBox">
+          <SelectLanguage
+            switchLanguageHandler={this.props.switchLanguageHandler}
+          />
           <div className="Title">Top Ten</div>
           <Username
             goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}
@@ -138,6 +142,9 @@ export class PropositionMaking extends Component {
     return (
       <div className="GlobalGrid">
         <div className="HeadBox">
+          <SelectLanguage
+            switchLanguageHandler={this.props.switchLanguageHandler}
+          />
           <div className="Title">Top Ten</div>
           <Username
             goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}
@@ -175,6 +182,9 @@ export class HypothesisMaking extends Component {
     return (
       <div className="GlobalGrid">
         <div className="HeadBox">
+          <SelectLanguage
+            switchLanguageHandler={this.props.switchLanguageHandler}
+          />
           <div className="Title">Top Ten</div>
           <Username
             goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}

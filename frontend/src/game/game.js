@@ -7,6 +7,7 @@ import {getConnectedUsers, Users} from '../authentication/users.js';
 import {repeat} from '../common/common.js';
 
 import {GameSetup} from './game_start.js';
+import {SelectLanguage} from '../common/languages';
 
 export class GamePreparation extends Component {
   state = {usersList: []};
@@ -27,6 +28,9 @@ export class GamePreparation extends Component {
     return (
       <div className="GlobalGrid">
         <div className="HeadBox">
+          <SelectLanguage
+            switchLanguageHandler={this.props.switchLanguageHandler}
+          />
           <div className="Title">Top Ten</div>
           <Username
             goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}

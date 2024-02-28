@@ -9,6 +9,7 @@ import {CurrentTheme} from '../rounds/theme_selection.js';
 
 import {Hypothesis, Reality, RoundResult} from './round_result.js';
 import {getRoundPlayers} from '../rounds/rounds';
+import {SelectLanguage} from '../common/languages';
 
 function checkRoundResult() {
   return makeGetCall('/rounds/check_round_result');
@@ -50,6 +51,9 @@ export class RoundResultChecking extends Component {
     return (
       <div className="GlobalGrid">
         <div className="HeadBox">
+          <SelectLanguage
+            switchLanguageHandler={this.props.switchLanguageHandler}
+          />
           <div className="Title">Top Ten</div>
           <Username
             goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}
@@ -91,6 +95,9 @@ export class GameResultChecking extends Component {
     return (
       <div className="GlobalGrid">
         <div className="HeadBox">
+          <SelectLanguage
+            switchLanguageHandler={this.props.switchLanguageHandler}
+          />
           <div className="Title">Top Ten</div>
           <Username
             goToAskCredentialsHandler={this.props.goToAskCredentialsHandler}
